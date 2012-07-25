@@ -10,11 +10,11 @@ window.Question = Backbone.Model.extend({
         id: null,
         question: '',
         options: '',
+        
     }
 });
 
 window.QuestionSet = Backbone.Collection.extend({
-    
 	model: Question,
 	url: '../api/questions'
 	
