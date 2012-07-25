@@ -10,7 +10,11 @@ window.Question = Backbone.Model.extend({
         id: null,
         question: '',
         options: '',
-        
+        answer:'',
+        comments:'',
+        difficulty:'',
+        average_time:'',
+        question_type_id:''
     }
 });
 
