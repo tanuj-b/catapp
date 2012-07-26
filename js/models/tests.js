@@ -12,7 +12,10 @@ window.Test = Backbone.Model.extend({
 
     defaults: {
         id: null,
-        name:''
+        name:'',
+        sync_time:'',
+        submit_time:'',
+        total_score:''
     }
 });
 

@@ -14,7 +14,12 @@ window.Question = Backbone.Model.extend({
         comments:'',
         difficulty:'',
         average_time:'',
-        question_type_id:''
+        question_type_id:'',
+        // we also store the details of the attempt
+        attempted_time:'',
+        option_selected:'',
+        time_taken:'',
+        attempted_at:'',
     }
 });
 
