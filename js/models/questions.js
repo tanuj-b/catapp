@@ -19,7 +19,7 @@ window.Question = Backbone.Model.extend({
         attempted_time:'',
         option_selected:'',
         time_taken:'',
-        attempted_at:'',
+        attempted_at:''
     }
 });
 

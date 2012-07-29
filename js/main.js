@@ -1,14 +1,15 @@
 var AppRouter = Backbone.Router.extend({
 
     routes: {
-        ""                  : "explore",
+        ""                  : "test",
     },
 
     initialize: function () {
     },
 
-	explore: function(page) {
-		questions.fetch({success: function(){
+	tests: function(page) {
+		tests.fetch({success: function(){
+			
 			new QuestionView({collection: questions, el:$('#content')});
 			//new SubmitQuestion({el:$('#submit-question')});
 			//new QuestionList({collection: questions, el:$('#question-list')});
