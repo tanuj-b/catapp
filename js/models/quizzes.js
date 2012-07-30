@@ -3,7 +3,7 @@
  */
 window.Quiz = Backbone.Model.extend({
 
-    urlRoot: '../api/quizzes',
+    urlRoot: '../api/quizzes/getnext/1',
 
     initialize: function () {
     	this.questionLists =new QuestionListSet();
@@ -31,8 +31,8 @@ window.Quiz = Backbone.Model.extend({
 });
 
 window.QuizSet = Backbone.Collection.extend({
-	model: Test,
-	url: '../api/quizzes/getNext/1'	
+	model: Quiz,
+	url: '../api/quizzes/getnext/1'	
 });
 
 var quizzes = new QuizSet();

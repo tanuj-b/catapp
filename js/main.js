@@ -12,6 +12,9 @@ var AppRouter = Backbone.Router.extend({
 		 * return false; });
 		 */
 		this.firstPage = true;
+		quizzes.fetch({success: function(){
+			//console.log(quizzes);
+        }});
 		// this.searchResults = new EmployeeCollection();
 
 	},
