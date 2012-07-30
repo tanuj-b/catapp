@@ -3,20 +3,24 @@ window.QuestionList = Backbone.Model.extend({
     urlRoot: '../api/questions',
 
     initialize: function () {
-    	this.questions =new QuestionSet();
-		this.questions.url = '../api/questions/getQuestionsByQuestionListId/' + this.id;
+   
     },
-
+    
+    idAttribute: 'id',
+    relations: [{
+        type: Backbone.HasMany,
+        key: 'questions',
+        relatedModel: 'Question',
+        reverseRelation: {
+            key: 'questionlist',
+            includeInJSON: 'id',
+        },
+    }],
+    
     defaults: {
         id: null,
         paragraph:'',
         question_count:'',
         difficulty:''
     }
-});
-
-window.QuestionListSet = Backbone.Collection.extend({
-	model: Question,
-	url: '../api/questions'
-	
 });

@@ -1,15 +1,25 @@
 /**
  * The quiz model
  */
-window.Quiz = Backbone.Model.extend({
+window.Quiz = Backbone.RelationalModel.extend({
 
-    urlRoot: '../api/quizzes/getnext/1',
+    urlRoot: '../api/quizzes/getnext/',
 
     initialize: function () {
-    	this.questionLists =new QuestionListSet();
-		this.questionLists.url = '../api/quizzes/getQuestionListByQuizId/' + this.id;
+    	
     },
-
+    
+    idAttribute: 'id',
+    relations: [{
+        type: Backbone.HasMany,
+        key: 'questionLists',
+        relatedModel: 'QuestionList',
+        reverseRelation: {
+            key: 'quiz',
+            includeInJSON: 'id',
+        },
+    }],
+    
     defaults: {
         id: null,
         l1_id:'',

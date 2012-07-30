@@ -1,11 +1,13 @@
-window.Question = Backbone.Model.extend({
+window.Question = Backbone.RelationalModel.extend({
 
     urlRoot: '../api/questions',
 
     initialize: function () {
 		
     },
-
+    
+    idAttribute: 'id',
+    
     defaults: {
         id: null,
         question: '',
@@ -22,11 +24,3 @@ window.Question = Backbone.Model.extend({
         attempted_at:''
     }
 });
-
-window.QuestionSet = Backbone.Collection.extend({
-	model: Question,
-	url: '../api/questions'
-	
-});
-
-var questions = new QuestionSet();
