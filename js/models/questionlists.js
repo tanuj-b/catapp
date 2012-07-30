@@ -1,4 +1,4 @@
-window.QuestionList = Backbone.Model.extend({
+window.QuestionList = Backbone.RelationalModel.extend({
 
     urlRoot: '../api/questions',
 
