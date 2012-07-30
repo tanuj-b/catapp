@@ -9,7 +9,9 @@ window.QuestionList = Backbone.Model.extend({
 
     defaults: {
         id: null,
-        paragraph:''
+        paragraph:'',
+        question_count:'',
+        difficulty:''
     }
 });
 

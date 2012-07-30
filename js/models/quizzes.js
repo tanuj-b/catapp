@@ -12,6 +12,7 @@ window.Quiz = Backbone.Model.extend({
 
     defaults: {
         id: null,
+        l1_id:'',
         send_time:'',
         sync_time:'',
         total_score:''
@@ -31,7 +32,7 @@ window.Quiz = Backbone.Model.extend({
 
 window.QuizSet = Backbone.Collection.extend({
 	model: Test,
-	url: '../api/quizzes'	
+	url: '../api/quizzes/getNext/1'	
 });
 
 var quizzes = new QuizSet();

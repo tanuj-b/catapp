@@ -12,11 +12,11 @@ window.Question = Backbone.Model.extend({
         options: '',
         answer:'',
         comments:'',
+        l3_id:'',
         difficulty:'',
         average_time:'',
         question_type_id:'',
         // we also store the details of the attempt
-        attempted_time:'',
         option_selected:'',
         time_taken:'',
         attempted_at:''

@@ -1,23 +1,60 @@
 var AppRouter = Backbone.Router.extend({
 
-    routes: {
-        ""                  : "test",
-    },
+	routes : {
+		"" : "landing",
+		"menu" : "menu",
+		"profile" : "profile",
+	},
 
-    initialize: function () {
-    },
+	initialize : function() {
+		/*
+		 * $('.back').live('click', function(event) { window.history.back();
+		 * return false; });
+		 */
+		this.firstPage = true;
+		// this.searchResults = new EmployeeCollection();
 
-	tests: function(page) {
-		tests.fetch({success: function(){
-			
-			new QuestionView({collection: questions, el:$('#content')});
-			//new SubmitQuestion({el:$('#submit-question')});
-			//new QuestionList({collection: questions, el:$('#question-list')});
-        }});
-	 },
+	},
+
+	landing : function() {
+		this.changePage(new LandingView());
+	},
+
+	menu : function() {
+		this.changePage(new MenuView());
+	},
+
+	profile : function(id) {
+		var employee = new Employee({
+			id : id
+		});
+		employee.reports.fetch();
+		this.changePage(new DirectReportPage({
+			model : employee.reports
+		}));
+	},
+
+	changePage : function(page) {
+		$(page.el).attr('data-role', 'page');
+		page.render();
+		$('body').append($(page.el));
+		var transition = $.mobile.defaultPageTransition;
+		// We don't want to slide the first page
+		if (this.firstPage) {
+			transition = 'none';
+			this.firstPage = false;
+		}
+		$.mobile.changePage($(page.el), {
+			changeHash : false,
+			transition : transition
+		});
+	}
+
 });
 
-utils.loadTemplate(['QuestionView','QuestionList','SubmitQuestion'], function() {
-    app = new AppRouter();
-    Backbone.history.start();
+$(document).ready(function() {
+	utils.loadTemplate([ 'LandingView' ], function() {
+		app = new AppRouter();
+		Backbone.history.start();
+	});
 });
