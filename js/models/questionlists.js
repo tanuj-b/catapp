@@ -12,8 +12,8 @@ window.QuestionList = Backbone.RelationalModel.extend({
         key: 'questions',
         relatedModel: 'Question',
         reverseRelation: {
-            key: 'questionlist',
-            includeInJSON: 'id',
+            key: '',
+            includeInJSON: '',
         },
     }],
     

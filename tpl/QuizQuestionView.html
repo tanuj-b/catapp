@@ -1,0 +1,6 @@
+	<h3><%= question %></h3>
+	<ul data-role="listview" data-inset="true" class="action-list">
+		<% var opts = options.split("|:"); for (opt in opts){ %>
+
+		<li><p><%= opts[opt] %></p></li> <% } %>
+	</ul>

@@ -13,14 +13,14 @@ var AppRouter = Backbone.Router.extend({
 		 */
 		this.firstPage = true;
 		quizzes.fetch({success: function(){
-			//console.log(quizzes);
+			new QuizView({collection: quizzes, el:$('body')});
         }});
 		// this.searchResults = new EmployeeCollection();
 
 	},
 
 	landing : function() {
-		this.changePage(new LandingView());
+		//this.changePage(new LandingView());
 	},
 
 	menu : function() {
@@ -56,7 +56,7 @@ var AppRouter = Backbone.Router.extend({
 });
 
 $(document).ready(function() {
-	utils.loadTemplate([ 'LandingView' ], function() {
+	utils.loadTemplate([ 'LandingView','QuizQuestionView' ], function() {
 		app = new AppRouter();
 		Backbone.history.start();
 	});
