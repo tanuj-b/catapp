@@ -28,6 +28,37 @@ window.QuizView = Backbone.View.extend({
 	}
 });
 
+
+window.QuizView = Backbone.View.extend({
+
+	initialize : function() {
+		this.render();
+	},
+
+	render : function() {
+		var quizzes = this.collection.models;
+		var len = quizzes.length;
+		for ( var i = 0; i < len; i++) {
+			var qLists = quizzes[i].get('questionLists').models;
+			var qlLen = qLists.length;
+			for ( var j = 0; j < qlLen; j++) {
+				var questions = qLists[j].get('questions').models;
+				var qlen = questions.length;
+				for ( var k = 0; k < qlen; k++) {
+					$('#qlist').append(new QuizQuestionView({
+						model : questions[k]
+					}).render().el);
+				}
+			}
+		}
+
+		/*
+		 * new QuizQuestionView({ model : questions[i]}).render().el);
+		 */
+		return this;
+	}
+});
+
 window.QuizQuestionView = Backbone.View.extend({
 	initialize : function() {
 		this.render();

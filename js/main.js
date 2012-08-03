@@ -4,6 +4,9 @@ var AppRouter = Backbone.Router.extend({
 		"" : "landing",
 		"menu" : "menu",
 		"profile" : "profile",
+		"quiz/:id" : "startQuiz",
+		"questions/:id" : "questions",
+
 	},
 
 	initialize : function() {
@@ -13,7 +16,11 @@ var AppRouter = Backbone.Router.extend({
 		 */
 		this.firstPage = true;
 		quizzes.fetch({success: function(){
-			new QuizView({collection: quizzes, el:$('body')});
+			$.mobile.changePage($('#quiz-topics'), {
+				changeHash : false,
+				transition : transition
+			});
+			//new QuizView({collection: quizzes, el:$('body')});
         }});
 		// this.searchResults = new EmployeeCollection();
 
@@ -36,7 +43,15 @@ var AppRouter = Backbone.Router.extend({
 			model : employee.reports
 		}));
 	},
-
+	
+	startQuiz : function(id){
+		
+	},
+	
+	questions : function(id){
+		//selected 
+	},
+	
 	changePage : function(page) {
 		$(page.el).attr('data-role', 'page');
 		page.render();
