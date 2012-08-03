@@ -1,20 +1,27 @@
-<div data-role="header">		
-	<div data-role="navbar" id="but">
-		<ul>
-			<li><a href="#previousQuizQuestion">Previous</a></li>
-			<li><a href="#nextQuizQuestion">Next</a></li>
-		</ul>
-	</div><!-- /navbar -->
-</div><!-- /header -->
 <div data-role="content">
-<h3><%= question %></h3>
-<ul data-role="listview" data-inset="true" class="action-list">
-	<% var opts = options.split("|:"); for (opt in opts){ %>
-	<li><p><%= opts[opt] %></p></li> <% } %>
-</ul>
+	<h3><%= question %></h3>
+	<ul data-role="listview" data-inset="true" class="action-list">
+		<% var opts = options.split("|:"); for (opt in opts){ %>
+		<li><p><%= opts[opt] %></p></li> <% } %>
+	</ul>
 </div>
-<div data-role="footer">		
-	<div data-role="navbar">
+<div data-role="footer">
+	<fieldset data-role="controlgroup" data-type="horizontal"
+		data-role="fieldcontain">
+		<% var len = opts.length;
+			 for(var i=0; i <len; i++){
+			%> <input type="radio" name="option"
+			id="<%=i %>" value="<%=i %>" 
+			<% if(option_selected!=null && option_selected==i)
+			{%> 
+			<%='checked="checked"'%>
+			<% } %> 
+			/> 
+			<label for="<%=i %>""><%=(i+1) %></label> 
+		<% } %> 
+	</fieldset>
+
+	<!--  <div data-role="navbar">
 		<ul>
 		<%	var len = opts.length
 		for(var i=1; i<=len; i++){
@@ -22,5 +29,7 @@
 			<li><a href="#"><%=i %></a></li>
 		<% } %>
 		</ul>
-	</div><!-- /navbar -->
-</div><!-- /footer -->
+	</div>-->
+	<!-- /navbar -->
+</div>
+<!-- /footer -->

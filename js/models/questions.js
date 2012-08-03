@@ -19,7 +19,7 @@ window.Question = Backbone.RelationalModel.extend({
         average_time:'',
         question_type_id:'',
         // we also store the details of the attempt
-        option_selected:'',
+        option_selected:null,
         time_taken:'',
         attempted_at:''
     }

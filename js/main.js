@@ -10,9 +10,7 @@ var AppRouter = Backbone.Router.extend({
 		"menu" : "menu",
 		"profile" : "profile",
 		"quiz/:id" : "startQuiz",
-		"questions/:id" : "questions",
-		"nextQuizQuestion" : "nextQuizQuestion",
-		"previousQuizQuestion" : "previousQuizQuestion"
+		"getQuestion/:index" : "getQuestion"
 	},
 
 	initialize : function() {
@@ -44,51 +42,38 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	profile : function(id) {
-		var employee = new Employee({
-			id : id
-		});
-		employee.reports.fetch();
-		this.changePage(new DirectReportPage({
-			model : employee.reports
+		var profile;
+		this.changePage(new ProfileView({
 		}));
 	},
 
 	startQuiz : function(id) {
 		currentQuiz = quizzes.models[id];
 		currentQuestionLists = currentQuiz.get('questionLists').models;
-		currentIndex = 0;
 		quizLen = currentQuestionLists.length;
-		this.displayQuestion();
-	},
-
-	previousQuizQuestion : function() {
-		currentIndex--;
-		console.log('currentIndex' + currentIndex);
-		this.displayQuestion();
-	},
-
-	nextQuizQuestion : function() {
-		currentIndex++;
-		console.log('currentIndex' + currentIndex);
-		this.displayQuestion();
+		this.getQuestion(0);
 	},
 
 	/*
 	 * displays the question at currentIndex;
 	 */
-	displayQuestion : function() {
-		if (currentIndex == quizLen) {
+	getQuestion : function(index) {
+		if (index == quizLen) {
 			alert('last question');
-			// return;
+			return;
+		} else if (index == -1) {
+			alert('first question');
+			return;
 		}
-
+		currentIndex = index;
 		var qList = currentQuestionLists[currentIndex];
 		if (qList.get('question_count') > 1) {
 
 		} else {
 			var question = qList.get('questions').models[0];
 			this.changePage(new QuizQuestionView({
-				model : question
+				model : question,
+				index : currentIndex
 			}));
 		}
 

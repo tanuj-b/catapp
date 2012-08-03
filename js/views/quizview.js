@@ -64,10 +64,15 @@ window.QuizQuestionView = Backbone.View.extend({
 		this.render();
 	},
 
-	events : {
-
+	events:{
+		"change input:radio[name=option]":"optionSelected"
 	},
-
+	
+	optionSelected : function(){
+		var optionSelected = $('input:radio[name=option]:checked').val();
+		this.model.set('option_selected',optionSelected);
+	},
+	
 	saveQuestion : function() {
 		var self = this;
 		this.model.save(null, {
@@ -87,7 +92,8 @@ window.QuizQuestionView = Backbone.View.extend({
 
 	render : function() {
 		 $(this.el).empty();
-		$(this.el).html(this.template(this.model.toJSON()));
+		 $(this.el).append('<div data-role="header"><div data-role="navbar" id="but"><ul><li><a href="#getQuestion/'+(parseInt(this.options.index)-1)+'">Previous</a></li>	<li><a href="#getQuestion/'+(parseInt(this.options.index)+1)+'">Next</a></li></ul></div><!-- /navbar --></div><!-- /header -->');
+		 $(this.el).append(this.template(this.model.toJSON()));
 		
 		return this;
 	}
