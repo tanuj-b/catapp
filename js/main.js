@@ -1,3 +1,8 @@
+var currentQuiz = null;
+var currentQuestionLists = null;
+var currentIndex = null;
+var quizLen = null;
+
 var AppRouter = Backbone.Router.extend({
 
 	routes : {
@@ -6,7 +11,8 @@ var AppRouter = Backbone.Router.extend({
 		"profile" : "profile",
 		"quiz/:id" : "startQuiz",
 		"questions/:id" : "questions",
-
+		"nextQuizQuestion" : "nextQuizQuestion",
+		"previousQuizQuestion" : "previousQuizQuestion"
 	},
 
 	initialize : function() {
@@ -15,19 +21,22 @@ var AppRouter = Backbone.Router.extend({
 		 * return false; });
 		 */
 		this.firstPage = true;
-		quizzes.fetch({success: function(){
-			$.mobile.changePage($('#quiz-topics'), {
-				changeHash : false,
-				transition : transition
-			});
-			//new QuizView({collection: quizzes, el:$('body')});
-        }});
+		quizzes.fetch({
+			success : function() {
+				$.mobile.changePage($('#quiz-topics'), {
+					changeHash : false,
+				// transition : transition
+				});
+				// new QuizView({collection: quizzes, el:$('body')});
+			}
+		});
 		// this.searchResults = new EmployeeCollection();
 
 	},
 
 	landing : function() {
-		//this.changePage(new LandingView());
+		return;
+		// this.changePage(new LandingView());
 	},
 
 	menu : function() {
@@ -43,19 +52,53 @@ var AppRouter = Backbone.Router.extend({
 			model : employee.reports
 		}));
 	},
-	
-	startQuiz : function(id){
-		
+
+	startQuiz : function(id) {
+		currentQuiz = quizzes.models[id];
+		currentQuestionLists = currentQuiz.get('questionLists').models;
+		currentIndex = 0;
+		quizLen = currentQuestionLists.length;
+		this.displayQuestion();
 	},
-	
-	questions : function(id){
-		//selected 
+
+	previousQuizQuestion : function() {
+		currentIndex--;
+		console.log('currentIndex' + currentIndex);
+		this.displayQuestion();
 	},
-	
+
+	nextQuizQuestion : function() {
+		currentIndex++;
+		console.log('currentIndex' + currentIndex);
+		this.displayQuestion();
+	},
+
+	/*
+	 * displays the question at currentIndex;
+	 */
+	displayQuestion : function() {
+		if (currentIndex == quizLen) {
+			alert('last question');
+			// return;
+		}
+
+		var qList = currentQuestionLists[currentIndex];
+		if (qList.get('question_count') > 1) {
+
+		} else {
+			var question = qList.get('questions').models[0];
+			this.changePage(new QuizQuestionView({
+				model : question
+			}));
+		}
+
+	},
+
 	changePage : function(page) {
 		$(page.el).attr('data-role', 'page');
 		page.render();
 		$('body').append($(page.el));
+		$(this.el).page();
 		var transition = $.mobile.defaultPageTransition;
 		// We don't want to slide the first page
 		if (this.firstPage) {
@@ -63,15 +106,16 @@ var AppRouter = Backbone.Router.extend({
 			this.firstPage = false;
 		}
 		$.mobile.changePage($(page.el), {
-			changeHash : false,
 			transition : transition
 		});
 	}
 
 });
 
+var app = null;
+
 $(document).ready(function() {
-	utils.loadTemplate([ 'LandingView','QuizQuestionView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView' ], function() {
 		app = new AppRouter();
 		Backbone.history.start();
 	});

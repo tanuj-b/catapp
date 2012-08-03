@@ -1,3 +1,11 @@
+<div data-role="header">		
+	<div data-role="navbar" id="but">
+		<ul>
+			<li><a href="#previousQuizQuestion">Previous</a></li>
+			<li><a href="#nextQuizQuestion">Next</a></li>
+		</ul>
+	</div><!-- /navbar -->
+</div><!-- /header -->
 <div data-role="content">
 <h3><%= question %></h3>
 <ul data-role="listview" data-inset="true" class="action-list">
@@ -5,3 +13,14 @@
 	<li><p><%= opts[opt] %></p></li> <% } %>
 </ul>
 </div>
+<div data-role="footer">		
+	<div data-role="navbar">
+		<ul>
+		<%	var len = opts.length
+		for(var i=1; i<=len; i++){
+			%>
+			<li><a href="#"><%=i %></a></li>
+		<% } %>
+		</ul>
+	</div><!-- /navbar -->
+</div><!-- /footer -->

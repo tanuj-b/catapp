@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="lib/|views/|models/" kind="src" path="js"/>
-	<classpathentry kind="src" path="js/lib"/>
+	<classpathentry excluding="*" kind="src" path="js/lib"/>
 	<classpathentry kind="src" path="js/models"/>
 	<classpathentry kind="src" path="js/views"/>
 	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
