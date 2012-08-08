@@ -9,7 +9,8 @@ var AppRouter = Backbone.Router.extend({
 		"" : "landing",
 		"menu" : "menu",
 		"profile" : "profile",
-		"quiz/:id" : "startQuiz",
+		"quiz" : "quiz",
+		//"quiz/:id" : "startQuiz",
 		"getQuestion/:index" : "getQuestion"
 	},
 
@@ -19,7 +20,7 @@ var AppRouter = Backbone.Router.extend({
 		 * return false; });
 		 */
 		this.firstPage = true;
-		quizzes.fetch({
+		/*quizzes.fetch({
 			success : function() {
 				$.mobile.changePage($('#quiz-topics'), {
 					changeHash : false,
@@ -28,13 +29,14 @@ var AppRouter = Backbone.Router.extend({
 				// new QuizView({collection: quizzes, el:$('body')});
 			}
 		});
+		*/
 		// this.searchResults = new EmployeeCollection();
 
 	},
 
 	landing : function() {
+		this.changePage(new LandingView());
 		return;
-		// this.changePage(new LandingView());
 	},
 
 	menu : function() {
@@ -42,11 +44,13 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	profile : function(id) {
-		var profile;
-		this.changePage(new ProfileView({
-		}));
+		this.changePage(new ProfileView({}));
 	},
-
+	
+	quiz : function(){
+		this.changePage(new QuizView({}));
+	},
+	
 	startQuiz : function(id) {
 		currentQuiz = quizzes.models[id];
 		currentQuestionLists = currentQuiz.get('questionLists').models;
@@ -78,7 +82,8 @@ var AppRouter = Backbone.Router.extend({
 		}
 
 	},
-
+	
+	
 	changePage : function(page) {
 		$(page.el).attr('data-role', 'page');
 		page.render();
@@ -100,7 +105,7 @@ var AppRouter = Backbone.Router.extend({
 var app = null;
 
 $(document).ready(function() {
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','QuizView' ], function() {
 		app = new AppRouter();
 		Backbone.history.start();
 	});

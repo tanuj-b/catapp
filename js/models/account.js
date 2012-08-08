@@ -1,26 +1,15 @@
-window.QuestionList = Backbone.RelationalModel.extend({
+window.Account = Backbone.Model.extend({
 
-    urlRoot: '../api/questions',
+    urlRoot: ' ',
 
     initialize: function () {
    
     },
-    
-    idAttribute: 'id',
-    relations: [{
-        type: Backbone.HasMany,
-        key: 'questions',
-        relatedModel: 'Question',
-        reverseRelation: {
-            key: '',
-            includeInJSON: '',
-        },
-    }],
-    
+        
     defaults: {
         id: null,
-        paragraph:'',
-        question_count:'',
-        difficulty:''
+        isAuthenticated:'false',
     }
 });
+
+var account = new Account();

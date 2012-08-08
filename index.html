@@ -22,23 +22,34 @@
 
 <script src="js/views/landingview.js"></script>
 <script src="js/views/quizview.js"></script>
+<script src="js/views/menuview.js"></script>
 
 <script src="js/utils.js"></script>
 <script src="js/main.js"></script>
 </head>
 <body>
+  <div id="fb-root"></div>
+  <script>
+    window.fbAsyncInit = function() {
+    	
+      console.info('FB jssdk loaded');
+      FB.init({
+        appId      : '345218642220354', // App ID
+        status     : true, // check login status
+        cookie     : true, // enable cookies to allow the server to access the session
+        xfbml      : true  // parse XFBML
+      });
+  
+    };
+  
+    // Load the SDK Asynchronously
+    (function(d){
+      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      d.getElementsByTagName('head')[0].appendChild(js);
+    }(document));
+  </script>
 
-<div data-role="page" id="quiz-topics">
-	<div data-role="content">
-		<ul data-role="listview">
-			<li><a href="#quiz/0">Quant</a></li>
-			<li><a href="#quiz/1">DI</a></li>
-			<li><a href="#quiz/2">Verbal</a></li>
-		</ul>
-	</div>
-	<!-- /content -->
-</div>
-	<!-- /end quiz topics -->
-		
 </body>
 </html>

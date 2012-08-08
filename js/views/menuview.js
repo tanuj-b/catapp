@@ -1,11 +1,7 @@
-window.LandingView = Backbone.View.extend({
+window.MenuView = Backbone.View.extend({
 
 	initialize : function() {
 		// this.render();
-	},
-
-	events : {
-		'click #glogin' : 'googleConnect'
 	},
 	
 	googleConnect : function (){
