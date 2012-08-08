@@ -48,7 +48,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	quiz : function(){
-		this.changePage(new QuizView({}));
+		this.changePage(new QuizView());
 	},
 	
 	startQuiz : function(id) {
