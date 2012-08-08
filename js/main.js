@@ -10,7 +10,7 @@ var AppRouter = Backbone.Router.extend({
 		"menu" : "menu",
 		"profile" : "profile",
 		"quiz" : "quiz",
-		//"quiz/:id" : "startQuiz",
+		"quiz/:id" : "startQuiz",
 		"getQuestion/:index" : "getQuestion"
 	},
 
@@ -20,17 +20,6 @@ var AppRouter = Backbone.Router.extend({
 		 * return false; });
 		 */
 		this.firstPage = true;
-		/*quizzes.fetch({
-			success : function() {
-				$.mobile.changePage($('#quiz-topics'), {
-					changeHash : false,
-				// transition : transition
-				});
-				// new QuizView({collection: quizzes, el:$('body')});
-			}
-		});
-		*/
-		// this.searchResults = new EmployeeCollection();
 
 	},
 
@@ -48,6 +37,15 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	quiz : function(){
+		quizzes.fetch({
+		success : function() {
+			/*$.mobile.changePage($('#quiz-topics'), {
+				changeHash : false,
+			// transition : transition
+			});*/
+			// new QuizView({collection: quizzes, el:$('body')});
+		}
+	});
 		this.changePage(new QuizView());
 	},
 	
