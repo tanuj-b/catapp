@@ -27,6 +27,7 @@ window.fbAsyncInit = function() {
 
 	user.on('change', function() {
 		console.info('change');
+		console.log(user.attributes);
 		app.menu();
 		var table = $('.table tbody').empty();
 

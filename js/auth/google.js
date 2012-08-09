@@ -55,6 +55,7 @@ function getUserInfo() {
 		success : function(resp) {
 			user = resp;
 			console.log(user);
+			app.menu();
 			$('#uName').text('Welcome ' + user.name);
 			$('#imgHolder').attr('src', user.picture);
 		},
