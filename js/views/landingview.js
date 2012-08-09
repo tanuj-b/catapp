@@ -16,7 +16,7 @@ window.LandingView = Backbone.View.extend({
 	},
 
 	gConnect : function() {
-		
+		glogin();
 	},
 
 	render : function() {

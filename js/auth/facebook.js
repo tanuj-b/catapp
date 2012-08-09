@@ -27,9 +27,6 @@ window.fbAsyncInit = function() {
 
 	user.on('change', function() {
 		console.info('change');
-		if(app==null){
-			app = new AppRouter();
-		}
 		app.menu();
 		var table = $('.table tbody').empty();
 
@@ -49,12 +46,9 @@ window.fbAsyncInit = function() {
 	});
 	
 	user.updateLoginStatus();
-
 };
 
 $('#login').click(function(){ user.login(); });
 
-$('#logout').click(function() {
-	user.logout();
-});
+$('#logout').click(function(){ user.logout(); });
 
