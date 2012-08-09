@@ -14,6 +14,7 @@
 <script src="js/lib/backbone-min.js"></script>
 <script src="js/lib/backbone.localStorage-min.js"></script>
 <script src="js/lib/backbone-relational.js"></script>
+<script src="js/lib/FacebookUser.js"></script>
 
 <script src="js/models/questions.js"></script>
 <script src="js/models/questionlists.js"></script>
@@ -26,22 +27,13 @@
 
 <script src="js/utils.js"></script>
 <script src="js/main.js"></script>
+<script src="js/facebook.js"></script>
+<script src="js/.js"></script>
+
 </head>
 <body>
   <div id="fb-root"></div>
   <script>
-    window.fbAsyncInit = function() {
-    	
-      console.info('FB jssdk loaded');
-      FB.init({
-        appId      : '345218642220354', // App ID
-        status     : true, // check login status
-        cookie     : true, // enable cookies to allow the server to access the session
-        xfbml      : true  // parse XFBML
-      });
-  
-    };
-  
     // Load the SDK Asynchronously
     (function(d){
       var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
@@ -50,6 +42,5 @@
       d.getElementsByTagName('head')[0].appendChild(js);
     }(document));
   </script>
-
 </body>
 </html>

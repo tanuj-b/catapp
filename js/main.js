@@ -2,6 +2,8 @@ var currentQuiz = null;
 var currentQuestionLists = null;
 var currentIndex = null;
 var quizLen = null;
+var user = null;
+var app = null; 
 
 var AppRouter = Backbone.Router.extend({
 
@@ -97,14 +99,14 @@ var AppRouter = Backbone.Router.extend({
 			transition : transition
 		});
 	}
-
 });
 
-var app = null;
 
 $(document).ready(function() {
 	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','QuizView' ], function() {
-		app = new AppRouter();
+		if(app==null){
+			app = new AppRouter();
+		}
 		Backbone.history.start();
 	});
 });
