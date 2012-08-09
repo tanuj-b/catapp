@@ -23,7 +23,7 @@
     _loginStatus: null,
 
     login: function(){
-      FB.login(function(){}, { scope: this.options.scope.join(',') });
+      FB.login(function(){}, { scope: 'email'}); //this.options.scope.join(',') }
     },
 
     logout: function(){
