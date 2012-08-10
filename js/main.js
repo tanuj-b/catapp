@@ -12,6 +12,7 @@ var AppRouter = Backbone.Router.extend({
 		"menu" : "menu",
 		"profile" : "profile",
 		"quiz" : "quiz",
+		"flashcards" : "flashcards",
 		"quiz/:id" : "startQuiz",
 		"getQuestion/:index" : "getQuestion"
 	},
@@ -36,6 +37,10 @@ var AppRouter = Backbone.Router.extend({
 
 	profile : function(id) {
 		this.changePage(new ProfileView({}));
+	},
+	
+	flashcards : function(){
+		this.changePage(new WordListView({}));
 	},
 	
 	quiz : function(){
@@ -103,7 +108,7 @@ var AppRouter = Backbone.Router.extend({
 
 
 $(document).ready(function() {
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','QuizView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','QuizView','WordListItemView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
