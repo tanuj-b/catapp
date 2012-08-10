@@ -108,7 +108,7 @@ var AppRouter = Backbone.Router.extend({
 
 
 $(document).ready(function() {
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','QuizView','WordListItemView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','QuizView','WordListItemView','ProfileView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
