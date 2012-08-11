@@ -68,7 +68,8 @@ var AppRouter = Backbone.Router.extend({
 	 */
 	getQuestion : function(index) {
 		if (index == quizLen) {
-			alert('last question');
+			this.changePage(new QuizAnalyticsView({}));
+			//alert('last question');
 			return;
 		} else if (index == -1) {
 			alert('first question');
@@ -108,7 +109,7 @@ var AppRouter = Backbone.Router.extend({
 
 
 $(document).ready(function() {
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','QuizView','WordListItemView','ProfileView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','QuizView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
