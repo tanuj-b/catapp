@@ -1,26 +1,15 @@
-window.Question = Backbone.RelationalModel.extend({
+window.Question = Backbone.Model.extend({
 
     urlRoot: '../api/questions',
 
     initialize: function () {
 		
-    },
-    
-    idAttribute: 'id',
-    
-    defaults: {
-        id: null,
-        question: '',
-        options: '',
-        answer:'',
-        comments:'',
-        l3_id:'',
-        difficulty:'',
-        average_time:'',
-        question_type_id:'',
-        // we also store the details of the attempt
-        option_selected:null,
-        time_taken:'',
-        attempted_at:''
     }
 });
+
+window.QuestionCollection = Backbone.Collection.extend({
+	model: Question,
+	url: '../api/questions'	
+});
+
+var questions = new QuestionCollection();

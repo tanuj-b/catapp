@@ -9,6 +9,17 @@ window.Word = Backbone.RelationalModel.extend({
     	
     },
     
+    idAttribute: 'id',
+    relations: [{
+        type: Backbone.HasMany,
+        key: 'questionLists',
+        relatedModel: 'QuestionList',
+        reverseRelation: {
+            key: '',
+            includeInJSON: '',
+        },
+    }],
+    
     defaults: {
         id: null,
         l1_id:'',
@@ -19,9 +30,9 @@ window.Word = Backbone.RelationalModel.extend({
 
 });
 
-window.WordList = Backbone.Collection.extend({
+window.WordSet = Backbone.Collection.extend({
 	model: Word,
 	url: '../api/words'	
 });
 
-var words = new WordList();
+var words = new WordSet();

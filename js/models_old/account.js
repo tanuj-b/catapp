@@ -8,7 +8,7 @@ window.Account = Backbone.Model.extend({
         
     defaults: {
         id: null,
-        isAuthenticated:'false'
+        isAuthenticated:'false',
     }
 });
 
