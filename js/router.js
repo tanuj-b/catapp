@@ -53,8 +53,14 @@ var AppRouter = Backbone.Router.extend({
 		currentQuiz = quizzes.models[id];
 		currentQuestionSetIds = currentQuiz.get('questionSetIds');
 		alert(currentQuestionSetIds);
-		quizzes.models[i].save();
-		
+		quizzes.models[id].save();
+		quizzes.models[id].remote=false;
+		localStorage.setItem('../api/quizzes1','{"id":"2","questionSetIds":"4|:4|:4|:4","l1Id":null,"accountId":null,"currentFlag":null,"mobileFlag":null}')
+		quizzes.models[id].fetch({
+			success : function() {
+				alert('yo');
+			}
+		});
 		
 		//quizLen = currentQuestionLists.length;
 		//this.getQuestion(0);
