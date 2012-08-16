@@ -51,9 +51,10 @@ var AppRouter = Backbone.Router.extend({
 	
 	startQuiz : function(id) {
 		currentQuiz = quizzes.models[id];
-		currentQuestionLists = currentQuiz.get('questionLists').models;
-		quizLen = currentQuestionLists.length;
-		this.getQuestion(0);
+		currentQuestionSetIds = currentQuiz.get('questionSetIds').models;
+		alert(currentQuestionSetIds);
+		//quizLen = currentQuestionLists.length;
+		//this.getQuestion(0);
 	},
 
 	/*

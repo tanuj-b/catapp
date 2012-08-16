@@ -1,10 +1,7 @@
 window.Quiz = Backbone.Model.extend({
 
     urlRoot: '../api/quizzes',
-    
-    local: true , // always fetched and saved only locally, never saves on remote
-    remote: true, // never cached, dualStorage is bypassed entirely
-    
+        
     initialize: function () {
     	
     },
@@ -13,7 +10,10 @@ window.Quiz = Backbone.Model.extend({
 
 window.QuizCollection = Backbone.Collection.extend({
 	model: Quiz,
-	url: '../api/quizzes'	
+	url: '../api/quizzes',
+	local: false , // always fetched and saved only locally, never saves on remote
+	remote: true, // never cached, dualStorage is bypassed entirely
+
 });
 
 var quizzes = new QuizCollection();
