@@ -37,6 +37,8 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	quiz : function(){
+		/*set to local, fetch quizzes, read attempted?, display all with attempted <> true,
+		those that need to be sync dimmed. */
 		quizzes.fetch({
 		success : function() {
 			/*$.mobile.changePage($('#quiz-topics'), {
@@ -52,15 +54,14 @@ var AppRouter = Backbone.Router.extend({
 	startQuiz : function(id) {
 		currentQuiz = quizzes.models[id];
 		currentQuestionSetIds = currentQuiz.get('questionSetIds');
-		alert(currentQuestionSetIds);
-		quizzes.models[id].save();
+		/*quizzes.models[id].save();
 		quizzes.models[id].remote=false;
-		localStorage.setItem('../api/quizzes1','{"id":"2","questionSetIds":"4|:4|:4|:4","l1Id":null,"accountId":null,"currentFlag":null,"mobileFlag":null}')
+		localStorage.setItem('../api/quizzes1','{"id":"2","questionSetIds":"4|:4|:4|:4","l1Id":null,"accountId":null,"currentFlag":null,"mobileFlag":null}');
 		quizzes.models[id].fetch({
 			success : function() {
 				alert('yo');
 			}
-		});
+		});*/
 		
 		//quizLen = currentQuestionLists.length;
 		//this.getQuestion(0);
