@@ -4,7 +4,13 @@ window.Question = Backbone.Model.extend({
 
     initialize: function () {
 		
-    }
+    },
+
+	defaults:{
+		optionSelected:null,
+		status : null,
+    	time:0,
+	}
 });
 
 window.QuestionCollection = Backbone.Collection.extend({

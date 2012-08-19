@@ -1,3 +1,8 @@
+/*
+ * THE GLOBALS
+ */
+var SEPARATOR = '|:';
+
 var currentQuiz = null;
 var currentQuestionLists = null;
 var currentIndex = null;

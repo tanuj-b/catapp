@@ -15,17 +15,18 @@ var AppRouter = Backbone.Router.extend({
 		 * To be replaced by sync. this is just for the demo
 		 */
 		localStorage.clear();
-		quizzes.local = true;
-		quizzes.remote = true;
 		quizzes.fetch({
 			success : function() {
 				console.log('init quizzes fetched');
-				//save quizzes in localstorage
-				questions.local=true;
-				questions.remote=true;
-				questions.fetch({
+				questionSets.fetch({
 					success : function() {
-						console.log('init questions fetched');
+						console.log('init question sets fetched');
+						questions.fetch({
+							success : function() {
+								console.log('init questions fetched');
+
+							}
+						});
 					}
 				});
 			}
@@ -46,25 +47,37 @@ var AppRouter = Backbone.Router.extend({
 	profile : function(id) {
 		this.changePage(new ProfileView({}));
 	},
-	
-	flashcards : function(){
+
+	flashcards : function() {
 		this.changePage(new WordListView({}));
 	},
-	
-	quiz : function(){
-		/*set to local, fetch quizzes, read attempted?, display all with attempted <> true,
-		those that need to be sync dimmed. */
+
+	quiz : function() {
+		/*
+		 * set to local, fetch quizzes, read attempted?, display all with
+		 * attempted <> true, those that need to be sync dimmed.
+		 */
 		quizzes.reset();
-		quizzes.remote=false;
+		questionSets.reset();
+		questions.reset();
 		console.log('after reset before second fetch');
+		quizzes.remote=false;
+		quizzes.local=true;
 		quizzes.fetch({
 			success : function() {
 				console.log('local quizzes fetched');
-				questions.reset();
-				questions.remote=false;
-				questions.fetch({
+				questionSets.remote=false;
+				questionSets.local=true;
+				questionSets.fetch({
 					success : function() {
-						console.log('local questions fetched');
+						console.log('local question sets fetched');
+						questions.remote=false;
+						questions.local=true;
+						questions.fetch({
+							success : function() {
+								console.log('local questions fetched');
+							}
+						});
 					}
 				});
 			}
@@ -72,22 +85,12 @@ var AppRouter = Backbone.Router.extend({
 
 		this.changePage(new QuizView());
 	},
-	
+
 	startQuiz : function(id) {
 		currentQuiz = quizzes.models[id];
-		currentQuestionSetIds = currentQuiz.get('questionSetIds');
-		
-		/*quizzes.models[id].save();
-		quizzes.models[id].remote=false;
-		localStorage.setItem('../api/quizzes1','{"id":"2","questionSetIds":"4|:4|:4|:4","l1Id":null,"accountId":null,"currentFlag":null,"mobileFlag":null}');
-		quizzes.models[id].fetch({
-			success : function() {
-				alert('yo');
-			}
-		});*/
-		
-		//quizLen = currentQuestionLists.length;
-		//this.getQuestion(0);
+		currentQuestionSetIds = currentQuiz.get('questionSetIds').split(SEPARATOR);
+		quizLen = currentQuestionSetIds.length;
+		this.getQuestion(0);
 	},
 
 	/*
@@ -96,18 +99,19 @@ var AppRouter = Backbone.Router.extend({
 	getQuestion : function(index) {
 		if (index == quizLen) {
 			this.changePage(new QuizAnalyticsView({}));
-			//alert('last question');
+			// alert('last question');
 			return;
 		} else if (index == -1) {
 			alert('first question');
 			return;
 		}
 		currentIndex = index;
-		var qList = currentQuestionLists[currentIndex];
-		if (qList.get('question_count') > 1) {
+		var qSet = questionSets.get(currentQuestionSetIds[currentIndex]);
+		if (qSet.get('question_count') > 1) {
 
 		} else {
-			var question = qList.get('questions').models[0];
+			var questionIds = qSet.get('questionIds');
+			var question = questions.get(questionIds);
 			this.changePage(new QuizQuestionView({
 				model : question,
 				index : currentIndex
@@ -115,8 +119,7 @@ var AppRouter = Backbone.Router.extend({
 		}
 
 	},
-	
-	
+
 	changePage : function(page) {
 		$(page.el).attr('data-role', 'page');
 		page.render();
