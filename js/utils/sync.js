@@ -1,4 +1,32 @@
-window.dao =  {
+function syncWithServer(userId)
+{
+	this.online = false;
+	this.userId = userId;
+	this.lastFullSync = null;
+	
+	this.pushResponses = function(){};
+	
+	this.fetchQuizIdsFromServer = function(){};
+	this.fetchQuizIdsFromLocal = function(){};
+	
+	this.fetchQuestionSetIdsFromModel = function(){};
+	this.fetchQuestionSetIdsFromLocal = function(){};
+	
+	this.fetchQuestionIdsFromModel = function(){};
+	this.fetchQuestionIdsFromLocal = function(){};
+	
+	this.fetchResourceIdsFromModel = function(){};
+	this.fetchResourceIdsFromLocal = function(){};
+	
+	this.fetchFlashCardIdsFromServer = function(){};
+	this.fetchFlashCardIdsFromLocal = function(){};
+	
+	this.OtherSyncFromServer = function(){};
+	
+}
+
+/*
+ window.dao =  {
 
     syncURL: "../api/employees",
 
@@ -207,4 +235,4 @@ function renderList(employees) {
 
 function log(msg) {
     $('#log').val($('#log').val() + msg + '\n');
-}
+}*/
