@@ -10,7 +10,7 @@ window.Response = Backbone.RelationalModel.extend({
     	questionId:null,
     	answer:null,
     	status : null,
-    	time:null,
+    	time:0,
     }
 });
 

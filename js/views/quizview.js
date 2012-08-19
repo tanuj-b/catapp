@@ -44,7 +44,6 @@ window.QuizQuestionView = Backbone.View.extend({
 		 $(this.el).empty();
 		 $(this.el).append('<div data-role="header"><div data-role="navbar" id="but"><ul><li><a href="#getQuestion/'+(parseInt(this.options.index)-1)+'">Previous</a></li>	<li><a href="#getQuestion/'+(parseInt(this.options.index)+1)+'">Next</a></li></ul></div><!-- /navbar --></div><!-- /header -->');
 		 $(this.el).append(this.template(this.model.toJSON()));
-		
-		return this;
+		 return this;
 	}
 });
