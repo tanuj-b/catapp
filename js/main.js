@@ -11,7 +11,7 @@ var user = null;
 var app = null; 
 
 $(document).ready(function() {
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','QuizView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','PracticeView','QuizView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
