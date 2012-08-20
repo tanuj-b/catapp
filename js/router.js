@@ -4,6 +4,7 @@ var AppRouter = Backbone.Router.extend({
 		"" : "landing",
 		"menu" : "menu",
 		"profile" : "profile",
+		"practice" : "practice",
 		"quiz" : "quiz",
 		"flashcards" : "flashcards",
 		"quiz/:id" : "startQuiz",
@@ -50,6 +51,10 @@ var AppRouter = Backbone.Router.extend({
 
 	flashcards : function() {
 		this.changePage(new WordListView({}));
+	},
+	
+	practice : function(id) {
+		this.changePage(new PracticeView({}));
 	},
 
 	quiz : function() {

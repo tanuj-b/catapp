@@ -1,4 +1,4 @@
-window.QuizView = Backbone.View.extend({
+window.PracticeView = Backbone.View.extend({
 
 	initialize : function() {
 	},
@@ -9,7 +9,7 @@ window.QuizView = Backbone.View.extend({
 	}
 });
 
-window.QuizQuestionView = Backbone.View.extend({
+window.PracticeQuestionView = Backbone.View.extend({
 	initialize : function() {
 		this.render();
 	},
@@ -23,8 +23,6 @@ window.QuizQuestionView = Backbone.View.extend({
 		var optionSelected = $('input:radio[name=option]:checked').val();
 		if (optionSelected == oldOptionSelected) {
 			this.model.set('optionSelected', null);
-			$('input:radio[name=option]:checked').attr('checked', false);
-
 		} else {
 			this.model.set('optionSelected', optionSelected);
 		}
