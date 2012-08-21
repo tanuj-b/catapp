@@ -88,13 +88,28 @@ var AppRouter = Backbone.Router.extend({
 			}
 		});
 
-		this.changePage(new QuizView());
+		this.changePage(new QuizTopicsView());
 	},
 
 	startQuiz : function(id) {
 		currentQuiz = quizzes.models[id];
+		this.changePage(new QuizView({
+			model : currentQuiz,
+			index : 0
+		}));
+		//currentQuestionSetIds = currentQuiz.get('questionSetIds').split(SEPARATOR);
+		//quizLen = currentQuestionSetIds.length;
+		//quizTimer = new Timer();
+		//quizTimer.init();
+		//this.getQuestion(0);
+	},
+	
+	startQuiz1 : function(id) {
+		currentQuiz = quizzes.models[id];
 		currentQuestionSetIds = currentQuiz.get('questionSetIds').split(SEPARATOR);
 		quizLen = currentQuestionSetIds.length;
+		quizTimer = new Timer();
+		quizTimer.init();
 		this.getQuestion(0);
 	},
 

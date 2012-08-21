@@ -9,7 +9,7 @@ window.Question = Backbone.Model.extend({
 	defaults:{
 		optionSelected:null,
 		status : null,
-    	time:0
+    	timer:null
 	}
 });
 

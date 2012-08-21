@@ -1,13 +1,45 @@
-window.QuizView = Backbone.View.extend({
+window.QuizTopicsView = Backbone.View.extend({
 
 	initialize : function() {
 	},
 
 	render : function() {
+		// $('header').html();
 		$(this.el).html(this.template());
 		return this;
 	}
 });
+
+window.QuizView = Backbone.View
+		.extend({
+
+			initialize : function() {
+				this.index = this.options.index;
+			},
+
+			events : {
+				'click input:radio[name=option]' : 'onOptionSelection'
+			},
+
+			render : function() {
+				var questionSetIds = currentQuiz.get('questionSetIds').split(
+						SEPARATOR);
+				$(this.el).append(
+								'<div data-role="header"><div data-role="navbar" id="but"><ul><li><a id="previous">Previous</a></li><li><a id="next">Next</a></li></ul></div><!-- /navbar --></div><!-- /header -->');
+
+				var qSet = questionSets.get(questionSetIds[this.index]);
+				if (qSet.get('question_count') > 1) {
+
+				} else {
+					var questionIds = qSet.get('questionIds');
+					var question = questions.get(questionIds);
+					$(this.el).append((new QuizQuestionView({
+						model : question,
+					})).el);
+				}
+				return this;
+			}
+		});
 
 window.QuizQuestionView = Backbone.View.extend({
 	initialize : function() {
@@ -32,30 +64,24 @@ window.QuizQuestionView = Backbone.View.extend({
 
 	saveQuestion : function() {
 		var self = this;
-		this.model.save(
-			null,
-			{
-				success : function(model) {
+		this.model.save(null, {
+			success : function(model) {
 				self.render();
-				app.navigate('wines/' + model.id,false);
-				utils.showAlert('Success!','Wine saved successfully','alert-success');},
-				error : function() {
-					utils.showAlert(	'Error',
-							'An error occurred while trying to delete this item',
-							'alert-error');
+				app.navigate('wines/' + model.id, false);
+				utils.showAlert('Success!', 'Wine saved successfully',
+						'alert-success');
+			},
+			error : function() {
+				utils.showAlert('Error',
+						'An error occurred while trying to delete this item',
+						'alert-error');
 			}
 		});
 	},
 
 	render : function() {
-				$(this.el).empty();
-				$(this.el).append(
-								'<div data-role="header"><div data-role="navbar" id="but"><ul><li><a href="#getQuestion/'
-										+ (parseInt(this.options.index) - 1)
-										+ '">Previous</a></li>	<li><a href="#getQuestion/'
-										+ (parseInt(this.options.index) + 1)
-										+ '">Next</a></li></ul></div><!-- /navbar --></div><!-- /header -->');
-				$(this.el).append(this.template(this.model.toJSON()));
-				return this;
-			}
-		});
+		$(this.el).empty();
+		$(this.el).append(this.template(this.model.toJSON()));
+		return this;
+	}
+});
