@@ -1,17 +1,17 @@
 <div data-role="header"><div data-role="navbar" id="but">
 </div><!-- /navbar --></div><!-- /header -->
-<div id="wordlist-nav"><ul id="word-list">
+
+<div id="wordlist-nav">
 	<h3><%= option.title %></h3>
-	<h4><%= option.description %></h4>
-	<ul>
+	<h4 style="font-style:italic"><%= option.description %></h4>
+	<ul id="word-list" data-role="listview" data-inset="true" data-filter="false" id="flash-card-menu-list">
 		<% flashCards.forEach(function(item){ %>
 		<li><a href="#"><%= item.get("word") %></a></li>
-		<% }); %>	
-	</ul>	
+		<% }); %>		
 </ul></div>
 
 <% flashCards.forEach(function(item){ %>
-<div data-role="content" id='flash-card-<%= item.get("id") %>'>
+<div data-role="content" class='flash-card' id='flash-card-<%= item.get("id") %>'>
 	<div data-role="content" class="flash-card-top">
 			<h2><%= item.get("word") %></h2>
 			<h3><%= item.get("pronunciation") %></h3>
@@ -39,7 +39,7 @@
 	</fieldset>
 	</div>	
 </div>
-<div data-role="content" id='flash-card-answer-<%= item.get("id") %>'>
+<div data-role="content" class='flash-card-answers' id='flash-card-answer-<%= item.get("id") %>'>
 	<div data-role="content" class="flash-card-answer-top">
 			<h2><%= item.get("word") %></h2>
 			<h3><%= item.get("pronunciation") %></h3>

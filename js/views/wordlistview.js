@@ -46,21 +46,6 @@ window.FlashCardView = Backbone.View.extend({
 		list= ["title","description"];
 		list.forEach(function(item){option[item] = context.options.flashCardList.get(item);});
 		
-		list = [
-		        "word",
-		        "meaning",
-		        "description",
-		        "pronunciation",
-		        "options",
-		        "correctOption",
-		        "usage"
-		        ];
-		/*list.forEach(function(value){option[value]=[];});
-		
-		context.options.flashCards.forEach(function(item){
-			list.forEach(function(value){option[value].push(context.options.flashCards.get(value));});
-		});*/
-		
 		$(this.el).append(this.template({option: option, flashCards: context.options.flashCards, flashCardList: context.options.flashCardList}));
 	}
 });

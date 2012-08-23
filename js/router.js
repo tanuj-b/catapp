@@ -85,7 +85,10 @@ var AppRouter = Backbone.Router.extend({
 									});
 								successCounter++;
 								});
-		$.when.apply(this,dfd).then(function(){context.changePage(new FlashCardView({flashCardList: currentFlashCardList, flashCards: currentFlashCards}));});
+		$.when.apply(this,dfd).then(function(){context.changePage(new FlashCardView({flashCardList: currentFlashCardList, flashCards: currentFlashCards}));
+		$(".flash-card-answers").addClass("hidden");
+		$(".flash-card").addClass("hidden");
+		$("#flash-card-1").removeClass("hidden");});
 		//Make provisions for failure
 	},
 	
