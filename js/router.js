@@ -73,8 +73,7 @@ var AppRouter = Backbone.Router.extend({
 		
 		//This is where flashCards are being fetched and stored into an object.
 		//The first fetch loads them and saves them
-		
-		//creating a deferred variable and a boolen array for calling final success callback
+		//creating a deferred variable and chaining them for calling final success callback
 		
 		var successCounter= 0,
 			dfd = [];
@@ -86,8 +85,8 @@ var AppRouter = Backbone.Router.extend({
 									});
 								successCounter++;
 								});
-		$.when.apply(this,dfd).then(function(){context.changePage(new FlashCardView({model: currentFlashCards}));});
-		
+		$.when.apply(this,dfd).then(function(){context.changePage(new FlashCardView({flashCardList: currentFlashCardList, flashCards: currentFlashCards}));});
+		//Make provisions for failure
 	},
 	
 	practice : function(id) {

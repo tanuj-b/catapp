@@ -1,15 +1,64 @@
 <div data-role="header"><div data-role="navbar" id="but">
 </div><!-- /navbar --></div><!-- /header -->
-<div data-role="listview" id="wordlist-nav"><ul id="word-list">
-	<%= "Test" %>
+<div id="wordlist-nav"><ul id="word-list">
+	<h3><%= option.title %></h3>
+	<h4><%= option.description %></h4>
+	<ul>
+		<% flashCards.forEach(function(item){ %>
+		<li><a href="#"><%= item.get("word") %></a></li>
+		<% }); %>	
+	</ul>	
 </ul></div>
-<div data-role="content">
-	<div data-role="content" id="flash-card-top">
-		<ul data-role="listview">
-			<%= "Hello" %>
-		</ul>
+
+<% flashCards.forEach(function(item){ %>
+<div data-role="content" id='flash-card-<%= item.get("id") %>'>
+	<div data-role="content" class="flash-card-top">
+			<h2><%= item.get("word") %></h2>
+			<h3><%= item.get("pronunciation") %></h3>
 	</div>
-	<div data-role="content" id="flash-card-bottom">
-		<%= "Hi" %>
+	
+	<div data-role="content" class="flash-card-bottom">
+		<ol>
+		<% var opts = item.get("options").split("|:");
+		    for (opt in opts){ %>
+			<li><p><%= opts[opt] %></p></li> <% } %>
+		</ol>	
+		<fieldset data-role="controlgroup" data-type="horizontal"
+		data-role="fieldcontain">
+		<% var len = opts.length;
+			 for(var i=0; i <len; i++){
+			%> <input type="radio" name="option"
+			id="<%=i %>" value="<%=i %>" 
+			<% //if(optionSelected!=null && optionSelected==i)
+			{%> 
+			<%='checked="checked"'%>
+			<% } %> 
+			/> 
+			<label for="<%=i %>""><%=(i+1) %></label> 
+		<% } %> 
+	</fieldset>
 	</div>	
 </div>
+<div data-role="content" id='flash-card-answer-<%= item.get("id") %>'>
+	<div data-role="content" class="flash-card-answer-top">
+			<h2><%= item.get("word") %></h2>
+			<h3><%= item.get("pronunciation") %></h3>
+	</div>
+	
+	<div data-role="content" class="flash-card-answer-bottom">
+		<ol>
+		<% var opts = item.get("options").split("|:"),correctOption = item.get("correctOption");
+		    for (i=0;i<opts.length;i++){ %>
+		    <% if(i == correctOption){ %>
+		    		<li class="correct-answer" id= "<%= i %>"><p><%= opts[i] %></p></li>		
+		    <% }else{ %>
+			<li id="<%= i %>"><p><%= opts[i] %></p></li>
+			<% } } %>
+		</ol>
+			
+		<h4><b>Meaning</b> : <%= item.get("meaning") %> </h4>
+		<h4><b>Desrciption</b> : <%= item.get("description") %> </h4>
+		<h4><b>Usage</b> : <%= item.get("usage") %> </h4>
+	</div>	
+</div>
+<% }); %>

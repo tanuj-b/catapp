@@ -32,14 +32,36 @@ window.FlashCardListItemView = Backbone.View.extend({
 
 window.FlashCardView = Backbone.View.extend({
 
-	tagName: "li",
+	tagName: "div",
+	
 	
 	initialize : function() {
 		// this.render();
 	},
 	
 	render : function() {
-		$(this.el).append(this.template(this.model.toJSON()));
+		//options[""] = flashCardList.get("");
+		var option = {};
+		var context = this;
+		list= ["title","description"];
+		list.forEach(function(item){option[item] = context.options.flashCardList.get(item);});
+		
+		list = [
+		        "word",
+		        "meaning",
+		        "description",
+		        "pronunciation",
+		        "options",
+		        "correctOption",
+		        "usage"
+		        ];
+		/*list.forEach(function(value){option[value]=[];});
+		
+		context.options.flashCards.forEach(function(item){
+			list.forEach(function(value){option[value].push(context.options.flashCards.get(value));});
+		});*/
+		
+		$(this.el).append(this.template({option: option, flashCards: context.options.flashCards, flashCardList: context.options.flashCardList}));
 	}
 });
 
