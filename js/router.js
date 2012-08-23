@@ -6,7 +6,8 @@ var AppRouter = Backbone.Router.extend({
 		"profile" : "profile",
 		"practice" : "practice",
 		"quiz" : "quiz",
-		"flashcards" : "flashcards",
+		"flashcards" : "flashcardlist",
+		"flashcards/:id" : "flashcards",
 		"quiz/:id" : "startQuiz",
 		"getQuestion/:index" : "getQuestion"
 	},
@@ -15,7 +16,8 @@ var AppRouter = Backbone.Router.extend({
 		/*
 		 * To be replaced by sync. this is just for the demo
 		 */
-		localStorage.clear();
+		localStorage.clear(); //remove this line in final product.
+		/*
 		quizzes.fetch({
 			success : function() {
 				console.log('init quizzes fetched');
@@ -31,7 +33,7 @@ var AppRouter = Backbone.Router.extend({
 					}
 				});
 			}
-		});
+		});*/
 		this.firstPage = true;
 
 	},
@@ -49,8 +51,43 @@ var AppRouter = Backbone.Router.extend({
 		this.changePage(new ProfileView({}));
 	},
 
-	flashcards : function() {
-		this.changePage(new WordListView({}));
+	flashcardlist : function() {
+		var context =this;
+		flashCardLists.fetch({
+			success : function() {
+				console.log('flash cards fetched');
+				context.changePage(new FlashCardListView({model: flashCardLists}));
+			}});
+	},
+	
+	flashcards : function(id) {
+		var context = this;
+		var currentFlashCardList = flashCardLists.get(id);
+		flashCardIDs = currentFlashCardList.get("wordIds").split("|:");
+		
+		currentFlashCards = new FlashCardCollection();
+		
+		_.each(flashCardIDs, function(id){
+			currentFlashCards.add({id: id});
+			});
+		
+		//This is where flashCards are being fetched and stored into an object.
+		//The first fetch loads them and saves them
+		
+		//creating a deferred variable and a boolen array for calling final success callback
+		
+		var successCounter= 0,
+			dfd = [];
+		currentFlashCards.forEach(
+				function(item){	
+								dfd[successCounter] = item.fetch({
+									add: true,
+									success:function(){console.log("success"+item.get("id"));}
+									});
+								successCounter++;
+								});
+		$.when.apply(this,dfd).then(function(){context.changePage(new FlashCardView({model: currentFlashCards}));});
+		
 	},
 	
 	practice : function(id) {
@@ -137,7 +174,7 @@ var AppRouter = Backbone.Router.extend({
 			this.firstPage = false;
 		}
 		$.mobile.changePage($(page.el), {
-			transition : transition
+			transition : 'pop'
 		});
 	}
 });

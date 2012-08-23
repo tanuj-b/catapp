@@ -1,22 +1,36 @@
-window.WordListView = Backbone.View.extend({
+window.FlashCardListView = Backbone.View.extend({
 
 	initialize : function() {
 		// this.render();
 	},
 
 	render : function() {
-		$(this.el).empty();
-		$(this.el).append('<div data-role="header"><div data-role="navbar" id="but"><ul>');
-		var words = this.collection;
-		var len = words.length;
-	        for (var i = 0; i < len; i++) {
-	        	$(this.el).append(new WordListItemView({model: words[i]}).render().el);
-	    }
-		$(this.el).append('</ul></div><!-- /navbar --></div><!-- /header -->');
+		currentEl = this.el;
+		$(currentEl).empty();
+		var output = '';
+		this.model.forEach(function(words){
+				output = output + (new FlashCardListItemView({model: words}).render().el.innerHTML);
+			});
+	        
+	        $(currentEl).append(this.template({output: output}));
 	}
 });
 
-window.WordListItemView = Backbone.View.extend({
+window.FlashCardListItemView = Backbone.View.extend({
+	
+	tagName: "ul",
+	
+	initialize: function() {
+		
+	},
+	
+	render: function(){
+		$(this.el).append(this.template(this.model.toJSON()));
+		return this;
+	}
+});
+
+window.FlashCardView = Backbone.View.extend({
 
 	tagName: "li",
 	
@@ -28,3 +42,4 @@ window.WordListItemView = Backbone.View.extend({
 		$(this.el).append(this.template(this.model.toJSON()));
 	}
 });
+

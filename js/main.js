@@ -11,7 +11,7 @@ var user = null;
 var app = null; 
 
 $(document).ready(function() {
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','PracticeView','QuizView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'FlashCardListView', 'FlashCardListItemView', 'MenuView','PracticeView','QuizView','FlashCardView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 var onDeviceReady = function(){
 	console.log('on device ready');
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','PracticeView','QuizView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'FlashCardListItemView', 'MenuView','PracticeView','QuizView','FlashCardView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
