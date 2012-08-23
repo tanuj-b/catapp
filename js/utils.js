@@ -77,6 +77,22 @@ window.utils = {
 
     hideAlert: function() {
         $('.alert').hide();
-    }
-
+    },
+    
+    updateTimer: function(){
+    	var timer = currentQuiz.get('timer');
+    	$('#time').html(timer);
+    	timer++;
+    	currentQuiz.set('timer',timer);
+    	if(timer==20){
+    		alert('time up');
+    		app.quizStop();
+    	}
+    },
+    
+    /*
+    testTimer: function(){
+    	alert('etr');
+    },
+    */
 };

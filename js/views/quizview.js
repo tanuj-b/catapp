@@ -1,51 +1,90 @@
+var questionTimer = null;
+
 window.QuizTopicsView = Backbone.View.extend({
 
 	initialize : function() {
 	},
 
 	render : function() {
-		// $('header').html();
 		$(this.el).html(this.template());
 		return this;
 	}
 });
 
-window.QuizView = Backbone.View
-		.extend({
+window.QuizView = Backbone.View.extend({
 
-			initialize : function() {
-				this.index = this.options.index;
-			},
+	initialize : function() {
+		this.index = this.options.index;
+		this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
+		this.length = this.questionSetIds.length;
+		this.quizTimer = '0';
+		this.model.set('timer',this.quizTimer);
+	},
+	
+	events : {
+		'click #previous' : 'onPreviousClick',
+		'click #next' : 'onNextClick'
+	},
+    
+	onPreviousClick : function() {
+		if (this.index == 0) {
+			alert('at the start dude');
+		} else {
+			this.index--;
+			$('#question').empty();
+			questionTimer.stop();
+			this.renderQuestion();
+		}
+	},
 
-			events : {
-				'click input:radio[name=option]' : 'onOptionSelection'
-			},
+	onNextClick : function() {
+		if (this.index == (this.length-1)) {
+			alert('at the end dude');
+		} else {
+			this.index++;
+			$('#question').empty();
+			questionTimer.stop();
+			this.renderQuestion();
+			//$('#question').trigger('create');
+		}
+	},
 
-			render : function() {
-				var questionSetIds = currentQuiz.get('questionSetIds').split(
-						SEPARATOR);
-				$(this.el).append(
-								'<div data-role="header"><div data-role="navbar" id="but"><ul><li><a id="previous">Previous</a></li><li><a id="next">Next</a></li></ul></div><!-- /navbar --></div><!-- /header -->');
+	render : function() {
+		$(this.el).append('<div data-role="header"><div data-role="navbar" id="but"><ul><li><a id="previous">Previous</a></li><li>Time : <span id="time"></span>|<span id="qtime"></span></li><li><a id="next">Next</a></li></ul></div><!-- /navbar --></div><!-- /header -->');
+		$(this.el).append('<div data-role="content" id="question"></div>');
+		$(this.el).append('<div data-role="footer" id="footer"></div>');
 
-				var qSet = questionSets.get(questionSetIds[this.index]);
-				if (qSet.get('question_count') > 1) {
+		//$(this.el).append('<div id="question"></div>');
+		return this;
+	},
 
-				} else {
-					var questionIds = qSet.get('questionIds');
-					var question = questions.get(questionIds);
-					$(this.el).append((new QuizQuestionView({
-						model : question,
-					})).el);
-				}
-				return this;
+	renderQuestion : function() {
+		var questionSet = questionSets.get(this.questionSetIds[this.index]);
+		if (questionSet.get('question_count') > 1) {
+					
+		} else {
+			var questionIds = questionSet.get('questionIds');
+			var question = questions.get(questionIds);
+			if(question.get('timer')==null){
+				question.set('timer',new Timer(1000,utils.updateTimer,[]));
 			}
-		});
+			questionTimer = question.get('timer');
+			new QuizQuestionView({
+				model : question,
+				el:$('#question'),
+			});
+			questionTimer.start();
+		}
+		return null;
+	}
+});
 
 window.QuizQuestionView = Backbone.View.extend({
+	
 	initialize : function() {
 		this.render();
 	},
-
+	
 	events : {
 		'change input:radio[name=option]' : 'onOptionSelection'
 	},
@@ -56,32 +95,53 @@ window.QuizQuestionView = Backbone.View.extend({
 		if (optionSelected == oldOptionSelected) {
 			this.model.set('optionSelected', null);
 			$('input:radio[name=option]:checked').attr('checked', false);
-
 		} else {
 			this.model.set('optionSelected', optionSelected);
 		}
 	},
 
-	saveQuestion : function() {
-		var self = this;
-		this.model.save(null, {
-			success : function(model) {
-				self.render();
-				app.navigate('wines/' + model.id, false);
-				utils.showAlert('Success!', 'Wine saved successfully',
-						'alert-success');
-			},
-			error : function() {
-				utils.showAlert('Error',
-						'An error occurred while trying to delete this item',
-						'alert-error');
-			}
-		});
-	},
-
 	render : function() {
-		$(this.el).empty();
-		$(this.el).append(this.template(this.model.toJSON()));
+		$('#question').html(this.template(this.model.toJSON()));
+		$('#footer').empty();
+		$('#footer').append('<fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">');
+		var len = (this.model.get('options').split(SEPARATOR)).length;
+		var optionSelected = this.model.get('optionSelected');
+		for(var i=0; i <len; i++){
+			if(optionSelected!=null && optionSelected==i){
+				$('#footer').append('<input type="radio" name="option" id='+i+' value='+i+' checked="checked">');
+			}else{
+				$('#footer').append('<input type="radio" name="option" id='+i+' value='+i+'>');
+			}
+			$('#footer').append('<label for="'+i+'">'+i+'</label>'); 
+		}
+		return this;
+	}
+});
+
+
+window.QuizResultsView = Backbone.View.extend({
+	initialize : function() {
+		this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
+	},
+	
+	render : function() {
+		var len = this.questionSetIds.length;
+		for (var i = 0; i < len; i++) {
+			var questionSet = questionSets.get(this.questionSetIds[i]);
+			if (questionSet.get('question_count') > 1) {
+					
+			} else {
+				var questionIds = questionSet.get('questionIds');
+				var question = questions.get(questionIds);
+				var qtime=null;
+				if(question.get('timer')==null){
+					qtime='not seen';
+				}else {
+					qtime = question.get('timer').count;
+				}
+				$(this.el).append(i+'. selected :'+question.get('optionSelected')+' | correct :'+question.get('correctOption')+' | time :'+qtime+'<br>');
+			}
+		}
 		return this;
 	}
 });

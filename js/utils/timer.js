@@ -3,7 +3,6 @@
 function Timer(interval,f,args) {
 	this.init(interval,f,args);
 }
-
 Timer.prototype = {
 	init:function(interval,f,args) {
 		this.setUpdateFunction(f,args);
@@ -23,15 +22,14 @@ Timer.prototype = {
 		}
 		this.count++;
 		this.updateFunc.apply(null,this.updateArgs);
-		var self=this;
+		self=this;
 		setTimeout(function(){self._run(self.ms);},this.ms);
 	},
 	start:function() {
 		if (!this.running) {
 			this.running = true;
 			this._run();
-			if (this.startFunc != null)
-				this.startFunc.apply(null,this.startArgs);
+			if (this.startFunc != null) this.startFunc.apply(null,this.startArgs);
 		}
 	},
 	stop:function() {

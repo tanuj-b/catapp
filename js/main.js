@@ -4,15 +4,11 @@
 var SEPARATOR = '|:';
 
 var currentQuiz = null;
-var currentQuestionLists = null;
-var currentIndex = null;
-var quizLen = null;
 var user = null;
-var app = null; 
-var quizTimer = null;
+var app = null;
 
 $(document).ready(function() {
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','PracticeView','QuizTopicsView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','PracticeView','QuizTopicsView','QuizResultsView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}

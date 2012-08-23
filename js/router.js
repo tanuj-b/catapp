@@ -32,6 +32,14 @@ var AppRouter = Backbone.Router.extend({
 				});
 			}
 		});
+		
+		practiceTests.fetch({
+			success : function() {
+				console.log('init quizzes fetched');
+				
+				
+			}
+		});
 		this.firstPage = true;
 
 	},
@@ -87,64 +95,36 @@ var AppRouter = Backbone.Router.extend({
 				});
 			}
 		});
-
 		this.changePage(new QuizTopicsView());
 	},
 
 	startQuiz : function(id) {
 		currentQuiz = quizzes.models[id];
-		this.changePage(new QuizView({
+		var quizView = new QuizView({
 			model : currentQuiz,
-			index : 0
-		}));
-		//currentQuestionSetIds = currentQuiz.get('questionSetIds').split(SEPARATOR);
-		//quizLen = currentQuestionSetIds.length;
-		//quizTimer = new Timer();
-		//quizTimer.init();
-		//this.getQuestion(0);
+			index : 0,
+		});	
+		this.changePage(quizView);
+		quizView.renderQuestion();
+		//questionTimer.start();
 	},
 	
-	startQuiz1 : function(id) {
-		currentQuiz = quizzes.models[id];
-		currentQuestionSetIds = currentQuiz.get('questionSetIds').split(SEPARATOR);
-		quizLen = currentQuestionSetIds.length;
-		quizTimer = new Timer();
-		quizTimer.init();
-		this.getQuestion(0);
-	},
-
-	/*
-	 * displays the question at currentIndex;
-	 */
-	getQuestion : function(index) {
-		if (index == quizLen) {
-			this.changePage(new QuizAnalyticsView({}));
-			// alert('last question');
-			return;
-		} else if (index == -1) {
-			alert('first question');
-			return;
-		}
-		currentIndex = index;
-		var qSet = questionSets.get(currentQuestionSetIds[currentIndex]);
-		if (qSet.get('question_count') > 1) {
-
-		} else {
-			var questionIds = qSet.get('questionIds');
-			var question = questions.get(questionIds);
-			this.changePage(new QuizQuestionView({
-				model : question,
-				index : currentIndex
-			}));
-		}
-
+	quizStop: function(){
+    	questionTimer.stop();
+    	app.changePage(new QuizResultsView({
+			model : currentQuiz
+		}));
+    },
+    
+	quizAnalyticsView : function (){
+		this.changePage(new QuizAnalyticsView({}));
 	},
 
 	changePage : function(page) {
 		$(page.el).attr('data-role', 'page');
 		page.render();
 		$('body').append($(page.el));
-		$(this.el).page();
+		$(page.el).page();
 		var transition = $.mobile.defaultPageTransition;
 		// We don't want to slide the first page
 		if (this.firstPage) {

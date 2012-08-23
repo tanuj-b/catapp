@@ -8,6 +8,10 @@ window.Quiz = Backbone.Model.extend({
     	
     },
     
+    defaults:{
+    	timer : null
+    }
+    
 });
 
 window.QuizCollection = Backbone.Collection.extend({
