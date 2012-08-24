@@ -13,6 +13,7 @@ window.FlashCardListView = Backbone.View.extend({
 			});
 	        
 	        $(currentEl).append(this.template({output: output}));
+	        return this;
 	}
 });
 
@@ -53,7 +54,6 @@ window.FlashCardView = Backbone.View.extend({
 		
 		list.forEach(function(item){option[item] = context.options.flashCardList.get(item);});
 		$(this.el).append(this.template({option: option, flashCards: context.options.flashCards, flashCardList: context.options.flashCardList}));
-		console.log(context.options.flashCardList.get("currentFlashCard"));
 	},
 	
 	showCard: function(id){
@@ -62,35 +62,76 @@ window.FlashCardView = Backbone.View.extend({
 		$(".flash-card").addClass("hidden");
 		$("#flash-card-"+id).removeClass("hidden");
 		this.options.flashCardList.set("currentFlashCard",id);
-		//make button bind to answer of this card
 	},
 	showAnswer: function(id){
 		
 		$(".flash-card-answers").addClass("hidden");
 		$(".flash-card").addClass("hidden");
 		$("#flash-card-answer-"+id).removeClass("hidden");
+
+		//read user answer
+
+		var userAnswer = $("#fc-fs-"+id).find("input:checked").attr("value");
+		var modelId = (this.options.flashCardList.get("wordIds").split("|:")[id-1])
+		var correctOption = this.options.flashCards.get(modelId).get('correctOption')
+
+		$("#flash-card-answer-"+id).find("li").removeClass("user-answer");
+		if(userAnswer != correctOption)
+		{
+			$("#flash-card-answer-"+id).find("#answer-opt-"+userAnswer).addClass("user-answer");
+		}
+
 		this.options.flashCardList.set("currentFlashCard",id+"A");
 		//make button bind to next card, if last bind to home
 	},
-	showLastAnswer: function(id){
-		
-		$("#answer-btn-"+id).trigger('refresh');
-		$(".flash-card-answers").addClass("hidden");
-		$(".flash-card").addClass("hidden");
-		$("#flash-card-answer-"+id).removeClass("hidden");
-		
-		this.options.flashCardList.set("currentFlashCard",id+"A");
-	},
-	
 	buttonHandler: function(event){
-		currentCard = ''+this.options.flashCardList.get("currentFlashCard");
+		
+		var context = this, match = false;
+		
+		/*
+		if(currentCard.substr(1,1)==="A")
+			{
+				//if it's an answer card, clear user-answer and possibly uncheck field for the previous question.
+				//This code to be populated only if we decide to show the question and not answer on clicking on the menus.
+			}
+		*/
+
+		$(event.currentTarget).attr("class").split(" ").forEach(function (argument) {
+			if(argument=="word-btn")
+				{
+				  var btnid = '' + $(event.currentTarget).attr("id");
+				  var condition = true; //put actual condition to check if unattempted or not here.
+				  						//if it evaluates to true, we'll show question, else answer.
+				  if(condition)
+				  	{
+				  		context.showCard(btnid.substr(btnid.length-1,1));
+					}
+				  else
+				  	{
+				  		context.showAnswer(btnid.substr(btnid.length-1,1));	
+				  	}
+				  match =true;
+				  return this;
+				}
+
+		});
 		length = this.options.flashCardList.get("wordCount");
+		if(event.currentTarget.id=="answer-btn-"+length)
+			{
+				app.navigate("", {trigger: true});
+				return this;
+			}
+		if(match)
+			{return this;}
+		currentCard = ''+this.options.flashCardList.get("currentFlashCard");
+		
 		if(currentCard.substr(1,1)==="A")
 			{
 			//	if(parseInt(currentCard.substr(0,1))==length)
 			//		{
 			//			return this;
 			//		}
+
 				this.showCard(parseInt(currentCard.substr(0,1))+1);
 			}
 		else

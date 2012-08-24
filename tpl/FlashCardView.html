@@ -7,16 +7,16 @@
 		<h3><%= option.title %></h3>
 		<h4 style="font-style:italic"><%= option.description %></h4>
 		<ul id="word-list" data-role="listview" data-inset="true" data-filter="false" id="flash-card-menu-list">
-			<% flashCards.forEach(function(item){ %>
-			<li><a href="#"><%= item.get("word") %></a></li>
-			<% });
-			var j=1; %>		
+			<% var j=1; flashCards.forEach(function(item){ %>
+			<li><a class="word-btn" id="word-btn-<%=j%>"><%= item.get("word") %></a></li>
+			<% j++});
+			j=1; %>		
 		</ul>
 	</div>
 	<% flashCards.forEach(function(item){ %>	
 	<div data-role="content" class='flash-card hidden ui-block-b' id='flash-card-<%= j %>'>
 		<div data-role="content" class="flash-card-top">
-				<a data-role="button" data-inline="true" id="btn-<%= j %>">Submit</a>
+				<a class="flash-card-btn" data-role="button" data-inline="true" id="btn-<%= j %>">Submit</a>
 				<h2><%= item.get("word") %></h2>
 				<h3><%= item.get("pronunciation") %></h3>
 		</div>
@@ -27,18 +27,10 @@
 				for (opt in opts){ %>
 				<li><p><%= opts[opt] %></p></li> <% } %>
 			</ol>	
-			<fieldset data-role="controlgroup" data-type="horizontal"
-			data-role="fieldcontain">
-			<% var len = opts.length;
-				 for(var i=0; i <len; i++){
-				%> <input type="radio" name="option"
-				id="<%=i %>" value="<%=i %>" 
-				<% //if(optionSelected!=null && optionSelected==i)
-				{%> 
-				<%='checked="checked"'%>
-				<% } %> 
-				/> 
-				<label for="<%=i %>""><%=(i+1) %></label> 
+			<fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain" id="fc-fs-<%=j%>">
+			<% for(var i=1; i <=opts.length; i++){
+				%> <input type="radio" name = "fc-cb-<%=j%>" id="fc-cb-<%= j+'-'+i %>" value="<%=i%>" /> 
+				<label for="fc-cb-<%= j+'-'+ i %>""><%=i%></label> 
 			<% } %> 
 		</fieldset>
 		</div>	
@@ -46,7 +38,7 @@
 	<div data-role="content" class='flash-card-answers hidden ui-block-b' id='flash-card-answer-<%= j %>'>
 		<div data-role="content" class="flash-card-answer-top">
 			<% if(j== option.wordCount){ %>
-			<a href="#" data-role="button" data-inline="true" id="answer-btn-<%= j %>">Home</a>	
+			<a class="answer-btn" data-role="button" data-inline="true" id="answer-btn-<%= j %>">Home</a>	
 				<% } else { %>
 			<a data-role="button" data-inline="true" id="answer-btn-<%= j %>">Next</a>
 				<% } %>
@@ -57,11 +49,11 @@
 		<div data-role="content" class="flash-card-answer-bottom">
 			<ol>
 			<% var opts = item.get("options").split("|:"),correctOption = item.get("correctOption");
-				for (i=0;i<opts.length;i++){ %>
+				for (i=1;i<=opts.length;i++){ %>
 				<% if(i == correctOption){ %>
-						<li class="correct-answer" id="answer-opt-<%= i %>"><p><%= opts[i] %></p></li>		
+						<li class="correct-answer" id="answer-opt-<%= i %>"><p><%= opts[i-1] %></p></li>		
 				<% }else{ %>
-				<li id="answer-opt-<%= i %>"><p><%= opts[i] %></p></li>
+				<li id="answer-opt-<%= i %>"><p><%= opts[i-1] %></p></li>
 				<% } } %>
 			</ol>
 				

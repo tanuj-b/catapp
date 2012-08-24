@@ -28,5 +28,9 @@ header {
 {
 	background: green;
 }
+.user-answer
+{
+	background: red;
+}
 .hidden
 {display: none}

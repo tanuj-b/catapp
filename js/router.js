@@ -40,6 +40,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	landing : function() {
+		this.firstPage = true;
 		this.changePage(new LandingView());
 		return;
 	},
@@ -166,6 +167,14 @@ var AppRouter = Backbone.Router.extend({
 		}
 
 	},
+
+	showView: function(selector, view) {
+    if (this.currentView)
+        this.currentView.close();
+    $(selector).html(view.render().el);
+    this.currentView = view;
+    return view;
+	},	
 
 	changePage : function(page) {
 		$(page.el).attr('data-role', 'page');

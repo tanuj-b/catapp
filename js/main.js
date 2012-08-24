@@ -10,6 +10,33 @@ var quizLen = null;
 var user = null;
 var app = null; 
 
+var AppView = function AppView(){
+
+   this.showView(view) = function(){
+    if (this.currentView){
+      this.currentView.close();
+    }
+
+    this.currentView = view;
+    return this.currentView.render();
+
+    //$("#mainContent").html(this.currentView.el);
+    //think about what to do with this
+  }
+
+};
+
+Backbone.View.prototype.close = function(){
+  if (this.beforeClose){
+    this.beforeClose();
+  };
+  this.remove();
+  this.unbind();
+  if (this.onClose){
+    this.onClose();
+  }
+};
+
 $(document).ready(function() {
 	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'FlashCardListView', 'FlashCardListItemView', 'MenuView','PracticeView','QuizView','FlashCardView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
