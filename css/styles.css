@@ -21,37 +21,12 @@ header {
 }
 
 [data-role="content"] {
-	margin-top: 40px;
+	margin-top: 5px;
 }
 
-#wordlist-nav
+.correct-answer
 {
-	float: left;
-	width: 160px;
-	margin-left: 10px;
-	padding-top: 1em;
+	background: green;
 }
-
-.flash-card
-{
-	padding-top: 1em;
-	margin: 0 2em 0 200px;
-}
-
-.flash-card-answers
-{
-	padding-top: 1em;
-	margin: 0 2em 0 200px;
-}
-
 .hidden
 {display: none}
-
-#sample04 #footer
-{
-	clear: both;
-	background-color: #666;
-	padding: 1em;
-	text-align: right;
-	border-top: 1px solid #333;
-}

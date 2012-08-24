@@ -34,6 +34,7 @@ window.FlashCardList = Backbone.Model.extend({
 	    defaults: {
 	        id: null,
 	        description:'',
+	        wordCount: '',
 	        wordIds:'',
 	        l2Id:'',
 	        title:''

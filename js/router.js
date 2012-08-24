@@ -1,3 +1,4 @@
+var activeFlashCardView = new FlashCardView();
 var AppRouter = Backbone.Router.extend({
 
 	routes : {
@@ -85,10 +86,12 @@ var AppRouter = Backbone.Router.extend({
 									});
 								successCounter++;
 								});
-		$.when.apply(this,dfd).then(function(){context.changePage(new FlashCardView({flashCardList: currentFlashCardList, flashCards: currentFlashCards}));
-		$(".flash-card-answers").addClass("hidden");
-		$(".flash-card").addClass("hidden");
-		$("#flash-card-1").removeClass("hidden");});
+		$.when.apply(this,dfd).then(function(){
+		currentFlashCardList.set("currentFlashCard",1);
+		activeFlashCardView = new FlashCardView({flashCardList: currentFlashCardList, flashCards: currentFlashCards});
+		context.changePage(activeFlashCardView);
+		activeFlashCardView.showCard(1);
+		});
 		//Make provisions for failure
 	},
 	
