@@ -1,6 +1,6 @@
-window.PracticeTest = Backbone.RelationalModel.extend({
+window.PracticeTest = Backbone.Model.extend({
 
-    urlRoot: '../api/practicetests',
+    urlRoot: '../api/practicetests/',
 
     initialize: function () {
     	
@@ -10,7 +10,7 @@ window.PracticeTest = Backbone.RelationalModel.extend({
 
 window.PracticeTestCollection = Backbone.Collection.extend({
 	model: PracticeTest,
-	url: '../api/practicetests'	
+	url: '../api/practicetests/'	
 });
 
 var practiceTests = new PracticeTestCollection();

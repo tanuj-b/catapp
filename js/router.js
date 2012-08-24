@@ -8,6 +8,7 @@ var AppRouter = Backbone.Router.extend({
 		"quiz" : "quiz",
 		"flashcards" : "flashcards",
 		"quiz/:id" : "startQuiz",
+		"practice/:id" : "startPractice",
 		"getQuestion/:index" : "getQuestion"
 	},
 
@@ -35,13 +36,10 @@ var AppRouter = Backbone.Router.extend({
 		
 		practiceTests.fetch({
 			success : function() {
-				console.log('init quizzes fetched');
-				
-				
+				console.log('init practice fetched');
 			}
 		});
 		this.firstPage = true;
-
 	},
 
 	landing : function() {
@@ -62,7 +60,32 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	practice : function(id) {
-		this.changePage(new PracticeView({}));
+		practiceTests.reset();
+		questionSets.reset();
+		questions.reset();
+		console.log('after reset before second fetch');
+		practiceTests.remote=false;
+		practiceTests.local=true;
+		practiceTests.fetch({
+			success : function() {
+				console.log('local quizzes fetched');
+				questionSets.remote=false;
+				questionSets.local=true;
+				questionSets.fetch({
+					success : function() {
+						console.log('local question sets fetched');
+						questions.remote=false;
+						questions.local=true;
+						questions.fetch({
+							success : function() {
+								console.log('local questions fetched');
+							}
+						});
+					}
+				});
+			}
+		});
+		this.changePage(new PracticeTopicsView());
 	},
 
 	quiz : function() {
@@ -106,7 +129,6 @@ var AppRouter = Backbone.Router.extend({
 		});	
 		this.changePage(quizView);
 		quizView.renderQuestion();
-		//questionTimer.start();
 	},
 	
 	quizStop: function(){
@@ -120,6 +142,16 @@ var AppRouter = Backbone.Router.extend({
 		this.changePage(new QuizAnalyticsView({}));
 	},
 
+	startPractice : function(id){
+		currentPractice = practiceTests.models[id];
+		var practiceView = new PracticeView({
+			model : currentPractice,
+			index : 0,
+		});	
+		this.changePage(practiceView);
+		practiceView.renderQuestion();
+	},
+	
 	changePage : function(page) {
 		$(page.el).attr('data-role', 'page');
 		page.render();
