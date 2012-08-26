@@ -1,9 +1,9 @@
 /**
  * The word model
  */
-window.Word = Backbone.RelationalModel.extend({
+window.FlashCard = Backbone.Model.extend({
 
-    urlRoot: '../api/words',
+    urlRoot: '../api/flashcards/',
 
     initialize: function () {
     	
@@ -11,17 +11,45 @@ window.Word = Backbone.RelationalModel.extend({
     
     defaults: {
         id: null,
-        l1_id:'',
-        send_time:'',
-        sync_time:'',
-        total_score:''
-    },
+        word:'',
+        meaning:'',
+        description:'',
+        pronunciation:'',
+        options: '',
+        correctOption:'',
+        usage:'',
+        l3Id:''
+    }
 
 });
 
-window.WordList = Backbone.Collection.extend({
-	model: Word,
-	url: '../api/words'	
+window.FlashCardList = Backbone.Model.extend({
+	
+	url: '../api/flashcardlists/',
+		
+		initialize: function () {
+	    	
+	    },
+	    
+	    defaults: {
+	        id: null,
+	        description:'',
+	        wordCount: '',
+	        wordIds:'',
+	        l2Id:'',
+	        title:''
+	    }	
 });
 
-var words = new WordList();
+window.FlashCardCollection = Backbone.Collection.extend({
+	model:FlashCard,
+	url:'../api/flashcards/'
+});
+
+window.FlashCardListCollection = Backbone.Collection.extend({
+	model:FlashCardList,
+	url: '../api/flashcardlists/'
+});
+
+var flashCardLists = new FlashCardListCollection();
+var currentFlashCards = new FlashCardCollection();

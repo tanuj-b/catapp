@@ -11,8 +11,36 @@ var user = null;
 var app = null;
 var currentQuiz = null;
 
+var AppView = function AppView(){
+
+   this.showView(view) = function(){
+    if (this.currentView){
+      this.currentView.close();
+    }
+
+    this.currentView = view;
+    return this.currentView.render();
+
+    //$("#mainContent").html(this.currentView.el);
+    //think about what to do with this
+  }
+
+};
+
+Backbone.View.prototype.close = function(){
+  if (this.beforeClose){
+    this.beforeClose();
+  };
+  this.remove();
+  this.unbind();
+  if (this.onClose){
+    this.onClose();
+  }
+};
+
 $(document).ready(function() {
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','PracticeTopicsView','PracticeQuestionView','QuizTopicsView','QuizResultsView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
+
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView','FlashCardListView', 'FlashCardListItemView', 'FlashCardView', 'MenuView','PracticeTopicsView','PracticeQuestionView','QuizTopicsView','QuizResultsView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
@@ -26,7 +54,7 @@ $(document).ready(function() {
 
 var onDeviceReady = function(){
 	console.log('on device ready');
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','PracticeView','QuizView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'FlashCardListItemView', 'MenuView','PracticeView','QuizView','FlashCardView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
