@@ -4,9 +4,12 @@
 var SEPARATOR = '|:';
 
 var currentQuiz = null;
+var currentQuizQuestion = null;
+
 var currentPractice = null;
 var user = null;
 var app = null;
+var currentQuiz = null;
 
 $(document).ready(function() {
 	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'MenuView','PracticeTopicsView','PracticeQuestionView','QuizTopicsView','QuizResultsView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {

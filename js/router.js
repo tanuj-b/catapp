@@ -129,10 +129,10 @@ var AppRouter = Backbone.Router.extend({
 		});	
 		this.changePage(quizView);
 		quizView.renderQuestion();
+		currentQuiz.get('timer').start();
 	},
 	
 	quizStop: function(){
-    	questionTimer.stop();
     	app.changePage(new QuizResultsView({
 			model : currentQuiz
 		}));

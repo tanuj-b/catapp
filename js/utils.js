@@ -81,10 +81,12 @@ window.utils = {
     
     updateTimer: function(){
     	var timer = currentQuiz.get('timer');
-    	$('#time').html(timer);
-    	timer++;
-    	currentQuiz.set('timer',timer);
-    	if(timer==20){
+    	$('#time').html(timer.count);
+    	var qtimer = currentQuizQuestion.get('timer');
+    	qtimer++;
+    	currentQuizQuestion.set('timer',qtimer);
+    	if(timer.count==20){
+        	currentQuiz.get('timer').stop();
     		alert('time up');
     		app.quizStop();
     	}

@@ -1,5 +1,3 @@
-var questionTimer = null;
-
 window.QuizTopicsView = Backbone.View.extend({
 
 	initialize : function() {
@@ -17,8 +15,10 @@ window.QuizView = Backbone.View.extend({
 		this.index = this.options.index;
 		this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
 		this.length = this.questionSetIds.length;
-		this.quizTimer = '0';
-		this.model.set('timer',this.quizTimer);
+		if(this.model.get('timer')==null){
+			this.model.set('timer',new Timer(1000,utils.updateTimer,[]));
+		}
+		this.timer = this.model.get('timer');
 	},
 	
 	events : {
@@ -32,7 +32,6 @@ window.QuizView = Backbone.View.extend({
 		} else {
 			this.index--;
 			$('#question').empty();
-			questionTimer.stop();
 			this.renderQuestion();
 		}
 	},
@@ -43,7 +42,6 @@ window.QuizView = Backbone.View.extend({
 		} else {
 			this.index++;
 			$('#question').empty();
-			questionTimer.stop();
 			this.renderQuestion();
 			//$('#question').trigger('create');
 		}
@@ -53,7 +51,7 @@ window.QuizView = Backbone.View.extend({
 		$(this.el).append('<div data-role="header"><div data-role="navbar" id="but"><ul><li><a id="previous">Previous</a></li><li>Time : <span id="time"></span>|<span id="qtime"></span></li><li><a id="next">Next</a></li></ul></div><!-- /navbar --></div><!-- /header -->');
 		$(this.el).append('<div data-role="content" id="question"></div>');
 		$(this.el).append('<div data-role="footer" id="footer"></div>');
-
+		this.renderQuestion();
 		//$(this.el).append('<div id="question"></div>');
 		return this;
 	},
@@ -65,15 +63,12 @@ window.QuizView = Backbone.View.extend({
 		} else {
 			var questionIds = questionSet.get('questionIds');
 			var question = questions.get(questionIds);
-			if(question.get('timer')==null){
-				question.set('timer',new Timer(1000,utils.updateTimer,[]));
-			}
-			questionTimer = question.get('timer');
+			question.set('timer',0);
 			new QuizQuestionView({
 				model : question,
 				el:$('#question'),
 			});
-			questionTimer.start();
+			currentQuizQuestion = question;
 		}
 		return null;
 	}
@@ -137,7 +132,7 @@ window.QuizResultsView = Backbone.View.extend({
 				if(question.get('timer')==null){
 					qtime='not seen';
 				}else {
-					qtime = question.get('timer').count;
+					qtime = question.get('timer');
 				}
 				$(this.el).append(i+'. selected :'+question.get('optionSelected')+' | correct :'+question.get('correctOption')+' | time :'+qtime+'<br>');
 			}
