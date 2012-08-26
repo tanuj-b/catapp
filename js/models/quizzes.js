@@ -5,7 +5,7 @@ window.Quiz = Backbone.Model.extend({
     remote: false, // never cached, dualStorage is bypassed entirely
 
     initialize: function () {
-    	
+    	timer = new Timer(1000,utils.updateTimer,[]);
     },
     
     defaults:{

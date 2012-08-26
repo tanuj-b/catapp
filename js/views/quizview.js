@@ -15,10 +15,6 @@ window.QuizView = Backbone.View.extend({
 		this.index = this.options.index;
 		this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
 		this.length = this.questionSetIds.length;
-		if(this.model.get('timer')==null){
-			this.model.set('timer',new Timer(1000,utils.updateTimer,[]));
-		}
-		this.timer = this.model.get('timer');
 	},
 	
 	events : {
@@ -27,6 +23,7 @@ window.QuizView = Backbone.View.extend({
 	},
     
 	onPreviousClick : function() {
+		this.question.get('closeTimeStamps').push(new Date().getTime());
 		if (this.index == 0) {
 			alert('at the start dude');
 		} else {
@@ -37,6 +34,7 @@ window.QuizView = Backbone.View.extend({
 	},
 
 	onNextClick : function() {
+		this.question.get('closeTimeStamps').push(new Date().getTime());
 		if (this.index == (this.length-1)) {
 			alert('at the end dude');
 		} else {
@@ -51,8 +49,6 @@ window.QuizView = Backbone.View.extend({
 		$(this.el).append('<div data-role="header"><div data-role="navbar" id="but"><ul><li><a id="previous">Previous</a></li><li>Time : <span id="time"></span>|<span id="qtime"></span></li><li><a id="next">Next</a></li></ul></div><!-- /navbar --></div><!-- /header -->');
 		$(this.el).append('<div data-role="content" id="question"></div>');
 		$(this.el).append('<div data-role="footer" id="footer"></div>');
-		this.renderQuestion();
-		//$(this.el).append('<div id="question"></div>');
 		return this;
 	},
 
@@ -62,13 +58,15 @@ window.QuizView = Backbone.View.extend({
 					
 		} else {
 			var questionIds = questionSet.get('questionIds');
-			var question = questions.get(questionIds);
-			question.set('timer',0);
-			new QuizQuestionView({
-				model : question,
+			this.question = questions.get(questionIds);
+			this.question.set('timer',0);
+			var qqview = new QuizQuestionView({
+				model : this.question,
 				el:$('#question'),
 			});
-			currentQuizQuestion = question;
+			qqview.render();
+			this.question.get('openTimeStamps').push(new Date().getTime());
+			currentQuizQuestion = this.question;
 		}
 		return null;
 	}
@@ -77,11 +75,10 @@ window.QuizView = Backbone.View.extend({
 window.QuizQuestionView = Backbone.View.extend({
 	
 	initialize : function() {
-		this.render();
 	},
 	
 	events : {
-		'change input:radio[name=option]' : 'onOptionSelection'
+		'change input[name=option]' : 'onOptionSelection'
 	},
 
 	onOptionSelection : function(e) {
@@ -96,8 +93,9 @@ window.QuizQuestionView = Backbone.View.extend({
 	},
 
 	render : function() {
+		$('#question').empty();
 		$('#question').html(this.template(this.model.toJSON()));
-		$('#footer').empty();
+		/*$('#footer').empty();
 		$('#footer').append('<fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">');
 		var len = (this.model.get('options').split(SEPARATOR)).length;
 		var optionSelected = this.model.get('optionSelected');
@@ -109,6 +107,9 @@ window.QuizQuestionView = Backbone.View.extend({
 			}
 			$('#footer').append('<label for="'+i+'">'+i+'</label>'); 
 		}
+		*/
+		$('#options-list').listview();
+		$('#footer').trigger('create');
 		return this;
 	}
 });
@@ -134,7 +135,7 @@ window.QuizResultsView = Backbone.View.extend({
 				}else {
 					qtime = question.get('timer');
 				}
-				$(this.el).append(i+'. selected :'+question.get('optionSelected')+' | correct :'+question.get('correctOption')+' | time :'+qtime+'<br>');
+				$(this.el).append(i+'. selected :'+question.get('optionSelected')+' | correct :'+question.get('correctOption')+' | time :'+qtime+'|openTimeStamps :'+question.get('openTimeStamps')+'|closeTimeStamps :'+question.get('closeTimeStamps')+'<br>');
 			}
 		}
 		return this;
