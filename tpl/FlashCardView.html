@@ -29,7 +29,7 @@
 			</ol>	
 			<fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain" id="fc-fs-<%=j%>">
 			<% for(var i=1; i <=opts.length; i++){
-				%> <input type="radio" name = "fc-cb-<%=j%>" id="fc-cb-<%= j+'-'+i %>" value="<%=i%>" /> 
+				%> <input type="radio" class="fc-opt-radio-btn" name = "fc-cb-<%=j%>" id="fc-cb-<%= j+'-'+i %>" value="<%=i%>" /> 
 				<label for="fc-cb-<%= j+'-'+ i %>""><%=i%></label> 
 			<% } %> 
 		</fieldset>

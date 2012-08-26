@@ -43,9 +43,18 @@ window.FlashCardView = Backbone.View.extend({
 	},
 	
 	events: {
-        "click a": "buttonHandler"
+        "click a": "buttonHandler",
+        "change input[type='radio']" : "radioHandler"
     },
 	
+	radioHandler : function(event) {
+			if($(event.currentTarget).hasClass("on")){
+       			$(event.currentTarget).removeAttr('checked');
+    		}
+    		$(event.currentTarget).toggleClass("on");
+    	//filter(":checked").addClass("on");
+	},
+
 	render : function() {
 		//options[""] = flashCardList.get("");
 		var option = {};

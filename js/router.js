@@ -73,7 +73,8 @@ var AppRouter = Backbone.Router.extend({
 			currentFlashCards.add({id: id});
 			});
 		
-		//This is where flashCards are being fetched and stored into an object.
+		//This is where flashCards are being fetched and stored into a Collection.
+		//I have added a model with just id attribute set. I am running model.fetch() on each item in collection.
 		//The first fetch loads them and saves them
 		//creating a deferred variable and chaining them for calling final success callback
 		
@@ -82,8 +83,7 @@ var AppRouter = Backbone.Router.extend({
 		currentFlashCards.forEach(
 				function(item){	
 								dfd[successCounter] = item.fetch({
-									add: true,
-									success:function(){console.log("success"+item.get("id"));}
+									add: true
 									});
 								successCounter++;
 								});
@@ -92,7 +92,16 @@ var AppRouter = Backbone.Router.extend({
 		activeFlashCardView = new FlashCardView({flashCardList: currentFlashCardList, flashCards: currentFlashCards});
 		context.changePage(activeFlashCardView);
 		activeFlashCardView.showCard(1);
+
+		//This following function should ideally bind to views events.
+		/*$("input[type='radio']").click(function(){
+			if($(this).hasClass("on")){
+       			$(this).removeAttr('checked');
+    		}
+    		$(this).toggleClass("on");
+    	}).filter(":checked").addClass("on");*/
 		});
+
 		//Make provisions for failure
 	},
 	
