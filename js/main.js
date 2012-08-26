@@ -40,7 +40,7 @@ Backbone.View.prototype.close = function(){
 
 $(document).ready(function() {
 
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView','FlashCardListView', 'FlashCardListItemView', 'FlashCardView', 'MenuView','PracticeTopicsView','PracticeQuestionView','QuizTopicsView','QuizResultsView','WordListItemView','ProfileView','QuizAnalyticsView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView','FlashCardListView', 'FlashCardListItemView', 'FlashCardView', 'MenuView','PracticeTopicsView','PracticeQuestionView','QuizTopicsView','QuizResultsView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
@@ -54,7 +54,7 @@ $(document).ready(function() {
 
 var onDeviceReady = function(){
 	console.log('on device ready');
-	utils.loadTemplate([ 'LandingView', 'QuizQuestionView', 'FlashCardListItemView', 'MenuView','PracticeView','QuizView','FlashCardView','ProfileView','QuizAnalyticsView' ], function() {
+	utils.loadTemplate([ 'LandingView', 'QuizQuestionView','FlashCardListView', 'FlashCardListItemView', 'FlashCardView', 'MenuView','PracticeTopicsView','PracticeQuestionView','QuizTopicsView','QuizResultsView','ProfileView','QuizAnalyticsView'  ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
