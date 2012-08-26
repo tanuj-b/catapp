@@ -1,9 +1,9 @@
-	<h3><%= questionText %></h3>
-	<ul data-role="listview" data-inset="true" id="options-list">
+<h3><%= questionText %></h3>
+<ul data-role="listview" data-inset="true" id="option-list">
 		<% var opts = options.split("|:"); for (opt in opts){ %>
 		<li><p><%= opts[opt] %></p></li> <% } %>
-	</ul>
-<div data-role="footer" id="footer">
+</ul>
+<div id="option-selector">
 	<fieldset data-role="controlgroup" data-type="horizontal"
 		data-role="fieldcontain">
 		<% var len = opts.length;
