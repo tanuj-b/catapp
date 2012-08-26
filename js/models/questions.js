@@ -1,24 +1,35 @@
+/**
+ * The Question Model
+ * @author ssachan 
+ * 
+ **/
 window.Question = Backbone.Model.extend({
-	
-	urlRoot: '../api/questions/',
+
+    urlRoot: '../api/questions/',
 
     initialize: function () {
-    	//this.openTimeStamps=[];
-    	//this.closeTimeStamps=[];
+        if (!this.get('openTimeStamps')) {
+            this.set({
+                openTimeStamps: new Array()
+            });
+        }
+        if (!this.get('closeTimeStamps')) {
+            this.set({
+                closeTimeStamps: new Array()
+            });
+        }
     },
 
-	defaults:{
-		optionSelected:null,
-		status : null,
-    	timer:null,
-    	openTimeStamps:[],
-    	closeTimeStamps:[]
-   	}
+    defaults: {
+        'optionSelected': null,
+        'status': null,
+        'timer': null
+    }
 });
 
 window.QuestionCollection = Backbone.Collection.extend({
-	model: Question,
-	url: '../api/questions/'	
+    model: Question,
+    url: '../api/questions/'
 });
 
 var questions = new QuestionCollection();
