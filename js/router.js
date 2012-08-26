@@ -1,230 +1,250 @@
 var activeFlashCardView = new FlashCardView();
 var AppRouter = Backbone.Router.extend({
 
-	routes : {
-		"" : "landing",
-		"menu" : "menu",
-		"profile" : "profile",
-		"practice" : "practice",
-		"quiz" : "quiz",
-		"flashcards" : "flashcardlist",
-		"flashcards/:id" : "flashcards",
-		"quiz/:id" : "startQuiz",
-		"practice/:id" : "startPractice",
-		"getQuestion/:index" : "getQuestion"
-	},
+    routes: {
+        "": "landing",
+        "menu": "menu",
+        "profile": "profile",
+        "practice": "practice",
+        "quiz": "quiz",
+        "flashcards": "flashcardlist",
+        "flashcards/:id": "flashcards",
+        "quiz/:id": "startQuiz",
+        "practice/:id": "startPractice",
+        "getQuestion/:index": "getQuestion"
+    },
+    
 
-	initialize : function() {
-		/*
-		 * To be replaced by sync. this is just for the demo
-		 */
-		localStorage.clear(); //remove this line in final product.
-		
-		quizzes.fetch({
-			success : function() {
-				console.log('init quizzes fetched');
-				questionSets.fetch({
-					success : function() {
-						console.log('init question sets fetched');
-						questions.fetch({
-							success : function() {
-								console.log('init questions fetched');
+    /**
+     * Routing logic added by ssachan 
+     * 
+     **/
 
-							}
-						});
-					}
-				});
-			}
+    initialize: function () {
+        /*
+         * To be replaced by sync. this is just for the demo
+         */
+        localStorage.clear(); //remove this line in final product.
 
-		});
-		
-		practiceTests.fetch({
-			success : function() {
-				console.log('init practice fetched');
-			}
-		});
-	},
+        quizzes.fetch({
+            success: function () {
+                console.log('init quizzes fetched');
+                questionSets.fetch({
+                    success: function () {
+                        console.log('init question sets fetched');
+                        questions.fetch({
+                            success: function () {
+                                console.log('init questions fetched');
 
-	landing : function() {
-		this.firstPage = true;
-		this.changePage(new LandingView());
-		return;
-	},
+                            }
+                        });
+                    }
+                });
+            }
 
-	menu : function() {
-		this.changePage(new MenuView());
-	},
+        });
 
-	profile : function(id) {
-		this.changePage(new ProfileView({}));
-	},
+        practiceTests.fetch({
+            success: function () {
+                console.log('init practice fetched');
+            }
+        });
+    },
 
-	flashcardlist : function() {
-		var context =this;
-		flashCardLists.fetch({
-			success : function() {
-				console.log('flash cards fetched');
-				context.changePage(new FlashCardListView({model: flashCardLists}));
-			}});
-	},
-	
-	flashcards : function(id) {
-		var context = this;
-		var currentFlashCardList = flashCardLists.get(id);
-		flashCardIDs = currentFlashCardList.get("wordIds").split("|:");
-		
-		currentFlashCards = new FlashCardCollection();
-		
-		_.each(flashCardIDs, function(id){
-			currentFlashCards.add({id: id});
-			});
-		
-		//This is where flashCards are being fetched and stored into a Collection.
-		//I have added a model with just id attribute set. I am running model.fetch() on each item in collection.
-		//The first fetch loads them and saves them
-		//creating a deferred variable and chaining them for calling final success callback
-		
-		var successCounter= 0,
-			dfd = [];
-		currentFlashCards.forEach(
-				function(item){	
-								dfd[successCounter] = item.fetch({
-									add: true
-									});
-								successCounter++;
-								});
-		$.when.apply(this,dfd).then(function(){
-		currentFlashCardList.set("currentFlashCard",1);
-		activeFlashCardView = new FlashCardView({flashCardList: currentFlashCardList, flashCards: currentFlashCards});
-		context.changePage(activeFlashCardView);
-		activeFlashCardView.showCard(1);
+    landing: function () {
+        this.firstPage = true;
+        this.changePage(new LandingView());
+        return;
+    },
 
-		//This following function should ideally bind to views events.
-		/*$("input[type='radio']").click(function(){
+    menu: function () {
+        this.changePage(new MenuView());
+    },
+
+    profile: function (id) {
+        this.changePage(new ProfileView({}));
+    },
+
+   
+    practice: function (id) {
+        practiceTests.reset();
+        questionSets.reset();
+        questions.reset();
+        console.log('after reset before second fetch');
+        practiceTests.remote = false;
+        practiceTests.local = true;
+        practiceTests.fetch({
+            success: function () {
+                console.log('local quizzes fetched');
+                questionSets.remote = false;
+                questionSets.local = true;
+                questionSets.fetch({
+                    success: function () {
+                        console.log('local question sets fetched');
+                        questions.remote = false;
+                        questions.local = true;
+                        questions.fetch({
+                            success: function () {
+                                console.log('local questions fetched');
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        this.changePage(new PracticeTopicsView());
+    },
+
+    quiz: function () {
+        /*
+         * set to local, fetch quizzes, read attempted?, display all with
+         * attempted <> true, those that need to be sync dimmed.
+         */
+        quizzes.reset();
+        questionSets.reset();
+        questions.reset();
+        console.log('after reset before second fetch');
+        quizzes.remote = false;
+        quizzes.local = true;
+        quizzes.fetch({
+            success: function () {
+                console.log('local quizzes fetched');
+                questionSets.remote = false;
+                questionSets.local = true;
+                questionSets.fetch({
+                    success: function () {
+                        console.log('local question sets fetched');
+                        questions.remote = false;
+                        questions.local = true;
+                        questions.fetch({
+                            success: function () {
+                                console.log('local questions fetched');
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        this.changePage(new QuizTopicsView());
+    },
+
+    startQuiz: function (id) {
+        currentQuiz = quizzes.models[id];
+        var quizView = new QuizView({
+            model: currentQuiz,
+            index: 0,
+        });
+        this.changePage(quizView);
+        quizView.renderQuestion();
+        currentQuiz.get('timer').start();
+    },
+
+    stopQuiz: function () {
+        app.changePage(new QuizResultsView({
+            model: currentQuiz
+        }));
+    },
+    
+    
+    /**
+     * Routing logic added by Tanuj 
+     * 
+     **/
+    flashcardlist: function () {
+        var context = this;
+        flashCardLists.fetch({
+            success: function () {
+                console.log('flash cards fetched');
+                context.changePage(new FlashCardListView({
+                    model: flashCardLists
+                }));
+            }
+        });
+    },
+
+    flashcards: function (id) {
+        var context = this;
+        var currentFlashCardList = flashCardLists.get(id);
+        flashCardIDs = currentFlashCardList.get("wordIds").split("|:");
+
+        currentFlashCards = new FlashCardCollection();
+
+        _.each(flashCardIDs, function (id) {
+            currentFlashCards.add({
+                id: id
+            });
+        });
+
+        //This is where flashCards are being fetched and stored into a Collection.
+        //I have added a model with just id attribute set. I am running model.fetch() on each item in collection.
+        //The first fetch loads them and saves them
+        //creating a deferred variable and chaining them for calling final success callback
+
+        var successCounter = 0,
+            dfd = [];
+        currentFlashCards.forEach(
+
+        function (item) {
+            dfd[successCounter] = item.fetch({
+                add: true
+            });
+            successCounter++;
+        });
+        $.when.apply(this, dfd).then(function () {
+            currentFlashCardList.set("currentFlashCard", 1);
+            activeFlashCardView = new FlashCardView({
+                flashCardList: currentFlashCardList,
+                flashCards: currentFlashCards
+            });
+            context.changePage(activeFlashCardView);
+            activeFlashCardView.showCard(1);
+
+            //This following function should ideally bind to views events.
+            /*$("input[type='radio']").click(function(){
 			if($(this).hasClass("on")){
        			$(this).removeAttr('checked');
     		}
     		$(this).toggleClass("on");
     	}).filter(":checked").addClass("on");*/
-		});
+        });
 
-		//Make provisions for failure
-	},
-	
-	practice : function(id) {
-		practiceTests.reset();
-		questionSets.reset();
-		questions.reset();
-		console.log('after reset before second fetch');
-		practiceTests.remote=false;
-		practiceTests.local=true;
-		practiceTests.fetch({
-			success : function() {
-				console.log('local quizzes fetched');
-				questionSets.remote=false;
-				questionSets.local=true;
-				questionSets.fetch({
-					success : function() {
-						console.log('local question sets fetched');
-						questions.remote=false;
-						questions.local=true;
-						questions.fetch({
-							success : function() {
-								console.log('local questions fetched');
-							}
-						});
-					}
-				});
-			}
-		});
-		this.changePage(new PracticeTopicsView());
-	},
-
-	quiz : function() {
-		/*
-		 * set to local, fetch quizzes, read attempted?, display all with
-		 * attempted <> true, those that need to be sync dimmed.
-		 */
-		quizzes.reset();
-		questionSets.reset();
-		questions.reset();
-		console.log('after reset before second fetch');
-		quizzes.remote=false;
-		quizzes.local=true;
-		quizzes.fetch({
-			success : function() {
-				console.log('local quizzes fetched');
-				questionSets.remote=false;
-				questionSets.local=true;
-				questionSets.fetch({
-					success : function() {
-						console.log('local question sets fetched');
-						questions.remote=false;
-						questions.local=true;
-						questions.fetch({
-							success : function() {
-								console.log('local questions fetched');
-							}
-						});
-					}
-				});
-			}
-		});
-		this.changePage(new QuizTopicsView());
-	},
-
-	startQuiz : function(id) {
-		currentQuiz = quizzes.models[id];
-		var quizView = new QuizView({
-			model : currentQuiz,
-			index : 0,
-		});	
-		this.changePage(quizView);
-		quizView.renderQuestion();
-		currentQuiz.get('timer').start();
-	},
-	
-	quizStop: function(){
-    	app.changePage(new QuizResultsView({
-			model : currentQuiz
-		}));
+        //Make provisions for failure
     },
-    
-	quizAnalyticsView : function (){
-		this.changePage(new QuizAnalyticsView({}));
-	},
 
-	startPractice : function(id){
-		currentPractice = practiceTests.models[id];
-		var practiceView = new PracticeView({
-			model : currentPractice,
-			index : 0,
-		});	
-		this.changePage(practiceView);
-		practiceView.renderQuestion();
-	},
-	
-	showView: function(selector, view) {
-    if (this.currentView)
-        this.currentView.close();
-    $(selector).html(view.render().el);
-    this.currentView = view;
-    return view;
-	},	
+    quizAnalyticsView: function () {
+        this.changePage(new QuizAnalyticsView({}));
+    },
 
-	changePage : function(page) {
-		$(page.el).attr('data-role', 'page');
-		page.render();
-		$('body').append($(page.el));
-		$(page.el).page();
-		var transition = $.mobile.defaultPageTransition;
-		// We don't want to slide the first page
-		if (this.firstPage) {
-			transition = 'none';
-			this.firstPage = false;
-		}
-		$.mobile.changePage($(page.el), {
-			transition : 'none'
-		});
-	}
+    startPractice: function (id) {
+        currentPractice = practiceTests.models[id];
+        var practiceView = new PracticeView({
+            model: currentPractice,
+            index: 0,
+        });
+        this.changePage(practiceView);
+        practiceView.renderQuestion();
+    },
+
+    showView: function (selector, view) {
+        if (this.currentView) this.currentView.close();
+        $(selector).html(view.render().el);
+        this.currentView = view;
+        return view;
+    },
+
+    changePage: function (page) {
+        $(page.el).attr('data-role', 'page');
+        page.render();
+        $('body').append($(page.el));
+        $(page.el).page();
+        var transition = $.mobile.defaultPageTransition;
+        // We don't want to slide the first page
+        if (this.firstPage) {
+            transition = 'none';
+            this.firstPage = false;
+        }
+        $.mobile.changePage($(page.el), {
+            transition: 'none'
+        });
+    }
 });

@@ -1,4 +1,9 @@
-window.utils = {
+/**
+ * The helper class
+ * @author ssachan 
+ * 
+ **/
+window.helper = {
 
     // Asynchronously load templates located in separate .html files
     loadTemplate: function(views, callback) {
@@ -88,7 +93,7 @@ window.utils = {
     	if(timer.count==20){
         	currentQuiz.get('timer').stop();
     		alert('time up');
-    		app.quizStop();
+    		app.stopQuiz();
     	}
     },
     

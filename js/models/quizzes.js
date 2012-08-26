@@ -12,7 +12,7 @@ window.Quiz = Backbone.Model.extend({
     initialize: function () {},
 
     defaults: {
-        'timer': new Timer(1000, utils.updateTimer, [])
+        'timer': new Timer(1000, helper.updateTimer, [])
     }
 
 });
