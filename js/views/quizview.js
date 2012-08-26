@@ -48,7 +48,6 @@ window.QuizView = Backbone.View.extend({
 	render : function() {
 		$(this.el).append('<div data-role="header"><div data-role="navbar" id="but"><ul><li><a id="previous">Previous</a></li><li>Time : <span id="time"></span>|<span id="qtime"></span></li><li><a id="next">Next</a></li></ul></div><!-- /navbar --></div><!-- /header -->');
 		$(this.el).append('<div data-role="content" id="question"></div>');
-		$(this.el).append('<div data-role="footer" id="footer"></div>');
 		return this;
 	},
 

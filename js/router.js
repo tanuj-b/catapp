@@ -224,7 +224,7 @@ var AppRouter = Backbone.Router.extend({
 			this.firstPage = false;
 		}
 		$.mobile.changePage($(page.el), {
-			transition : 'slide'
+			transition : 'none'
 		});
 	}
 });
