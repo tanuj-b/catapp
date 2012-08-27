@@ -1,0 +1,5 @@
+	<h3><%= questionText %></h3>
+	<ul data-role="listview" data-inset="true" id="options">
+		<% var opts = options.split("|:"); for (opt in opts){ %>
+		<li><p><%= opts[opt] %></p></li> <% } %>
+	</ul>

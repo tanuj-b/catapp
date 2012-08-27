@@ -6,23 +6,27 @@
 window.helper = {
 
     // Asynchronously load templates located in separate .html files
-    loadTemplate: function(views, callback) {
+    loadTemplate: function (views, callback) {
 
         var deferreds = [];
 
-        $.each(views, function(index, view) {
+        $.each(views, function (index, view) {
             if (window[view]) {
-                deferreds.push($.get('tpl/' + view + '.html', function(data) {
-                    window[view].prototype.template = _.template(data);
-                }));
-                /*$.ajax({
-					type : "GET",
-					dataType : "html",
-					url : 'file:///android_asset/www/tpl/' + view + '.html',
-					async : false,
-				}).done(function(data) {
-					window[view].prototype.template = _.template(data);
-				});*/
+                if (device == 2) {
+                    $.ajax({
+                        type: "GET",
+                        dataType: "html",
+                        url: 'file:///android_asset/www/tpl/' + view + '.html',
+                        async: false,
+                    }).done(function (data) {
+                        window[view].prototype.template = _.template(data);
+                    });
+
+                } else {
+                    deferreds.push($.get('tpl/' + view + '.html', function (data) {
+                        window[view].prototype.template = _.template(data);
+                    }));
+                }
             } else {
                 alert(view + " not found");
             }
@@ -42,12 +46,10 @@ window.helper = {
             processData: false,
             cache: false,
             contentType: false
-        })
-        .done(function () {
+        }).done(function () {
             console.log(file.name + " uploaded successfully");
             callbackSuccess();
-        })
-        .fail(function () {
+        }).fail(function () {
             self.showAlert('Error!', 'An error occurred while uploading ' + file.name, 'alert-error');
         });
     },
@@ -73,33 +75,27 @@ window.helper = {
         $('.help-inline', controlGroup).html('');
     },
 
-    showAlert: function(title, text, klass) {
+    showAlert: function (title, text, klass) {
         $('.alert').removeClass("alert-error alert-warning alert-success alert-info");
         $('.alert').addClass(klass);
         $('.alert').html('<strong>' + title + '</strong> ' + text);
         $('.alert').show();
     },
 
-    hideAlert: function() {
+    hideAlert: function () {
         $('.alert').hide();
     },
-    
-    updateTimer: function(){
-    	var timer = currentQuiz.get('timer');
-    	$('#time').html(timer.count);
-    	var qtimer = currentQuizQuestion.get('timer');
-    	qtimer++;
-    	currentQuizQuestion.set('timer',qtimer);
-    	if(timer.count==20){
-        	currentQuiz.get('timer').stop();
-    		alert('time up');
-    		app.stopQuiz();
-    	}
+
+    updateTimer: function () {
+        var timer = currentQuiz.get('timer');
+        $('#time').html(timer.count);
+        var qtimer = currentQuizQuestion.get('timer');
+        qtimer++;
+        currentQuizQuestion.set('timer', qtimer);
+        if (timer.count == 20) {
+            currentQuiz.get('timer').stop();
+            alert('time up');
+            app.stopQuiz();
+        }
     },
-    
-    /*
-    testTimer: function(){
-    	alert('etr');
-    },
-    */
 };

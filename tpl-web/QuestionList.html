@@ -1,0 +1,13 @@
+<tr>
+	<td></td>
+	<td><b><%= questionText %></b></td>
+</tr>
+<% var opts = options.split("||");
+for(var i = 0; i< opts.length; i++){
+
+%>
+<tr>
+	<td><%= (i+1) %></td>
+	<td><%= opts[i] %></td>
+<tr>
+<% }; %>
