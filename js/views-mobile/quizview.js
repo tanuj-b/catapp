@@ -24,7 +24,8 @@ window.QuizView = Backbone.View.extend({
 
     events: {
         'click #previous': 'onPreviousClick',
-        'click #next': 'onNextClick'
+        'click #next': 'onNextClick',
+        'click .q-nav' : 'onQNoClick'
     },
 
     onPreviousClick: function () {
@@ -33,7 +34,6 @@ window.QuizView = Backbone.View.extend({
             alert('at the start dude');
         } else {
             this.index--;
-            $('#question').empty();
             this.renderQuestion();
         }
     },
@@ -44,13 +44,23 @@ window.QuizView = Backbone.View.extend({
             alert('at the end dude');
         } else {
             this.index++;
-            $('#question').empty();
             this.renderQuestion();
         }
     },
-
+    
+    onQNoClick : function (e){
+    	this.index = e.target.getAttribute('id').split('-')[1];
+        this.question.get('closeTimeStamps').push(new Date().getTime());
+    	this.renderQuestion();
+    },
+    
     render: function () {
-        $(this.el).append('<div data-role="header"><div data-role="navbar" id="but"><ul><li><a id="previous">Previous</a></li><li>Time : <span id="time"></span></span></li><li><a id="next">Next</a></li></ul></div><!-- /navbar --></div><!-- /header -->');
+        $(this.el).append('<div data-role="header"><div data-role="navbar" id="but"><ul><li><a id="previous">Previous</a></li><li>Time : <span id="time"></span></span></li><li><a id="next">Next</a></li></ul></div><!-- /navbar --><!-- /header -->');
+        $(this.el).append('<div>');
+        for(var i = 0; i< this.length; i++){
+        	$(this.el).append('<a id="q-'+i+'" class="q-nav"> '+i+' </a>');
+        }	
+        $(this.el).append('</div></div>');
         $(this.el).append('<div data-role="content" id="question"></div>');
         return this;
     },
