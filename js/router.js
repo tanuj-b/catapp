@@ -248,6 +248,7 @@ var AppRouter = Backbone.Router.extend({
     }
 });
 
+if(phonegap==false){
 $(document).ready(function() {
 	helper.loadTemplate([ 'LandingView', 'QuizQuestionView','FlashCardListView', 'FlashCardListItemView', 'FlashCardView', 'MenuView','PracticeTopicsView','PracticeQuestionView','QuizTopicsView','QuizResultsView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
@@ -260,6 +261,11 @@ $(document).ready(function() {
 		Backbone.history.start();
 	});
 });
+}
+
+function init() {
+	document.addEventListener("deviceready", onDeviceReady, true);
+}
 
 var onDeviceReady = function(){
 	console.log('on device ready');
