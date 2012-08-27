@@ -12,7 +12,7 @@ window.helper = {
 
         $.each(views, function (index, view) {
             if (window[view]) {
-                if (device == 2) {
+                if (phonegap == true) {
                     $.ajax({
                         type: "GET",
                         dataType: "html",

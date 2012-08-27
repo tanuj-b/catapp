@@ -4,14 +4,17 @@
 <title>TestRex</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
-    var edition = 0;
-    if(edition == 0){
+    var edition = '0';
+    var phonegap = false;
+    if(edition == '0'){
         document.write('<link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" ></' + 'script>');
         document.write('<link rel="stylesheet" href="css/style-mobile.css" >');
     }
+    //document.write('<link rel="stylesheet" href="css/style-'+edition+'.css" >');
+	if(phonegap == true){
+    document.write('<script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></' + 'script>');
+	}
 </script>
-
-<!-- The Scripts -->
 
 <script src="js/lib/jquery-1.8.0.js"></script>
 <script>
@@ -34,16 +37,20 @@
 <script src="js/models/practice.js"></script>
 
 <script>
-    if(edition == 0){
-    document.write('<script src="js/views-mobile/landingview.js"></' + 'script>');
-    document.write('<script src="js/views-mobile/menuview.js"></' + 'script>');
-    document.write('<script src="js/views-mobile/practiceview.js"></' + 'script>');
-    document.write('<script src="js/views-mobile/quizview.js"></' + 'script>');
-    document.write('<script src="js/views-mobile/profileview.js"></' + 'script>');
-    document.write('<script src="js/views-mobile/quizanalyticsview.js"></' + 'script>');
-    document.write('<script src="js/views-mobile/wordlistview.js"></' + 'script>');
-    //document.write('<script src="js/views-mobile/landingview.js"></' + 'script>');
+    if(edition == '0'){
+   	 document.write('<script src="js/views-mobile/landingview.js"></' + 'script>');
+   	 document.write('<script src="js/views-mobile/menuview.js"></' + 'script>');
+   	 document.write('<script src="js/views-mobile/practiceview.js"></' + 'script>');
+   	 document.write('<script src="js/views-mobile/quizview.js"></' + 'script>');
+   	 document.write('<script src="js/views-mobile/profileview.js"></' + 'script>');
+   	 document.write('<script src="js/views-mobile/quizanalyticsview.js"></' + 'script>');
+   	 document.write('<script src="js/views-mobile/wordlistview.js"></' + 'script>');
     }
+   if(phonegap==true){ 
+	   window.onload = function() {
+			document.addEventListener("deviceready", onDeviceReady, true);
+	   }
+   }
 </script>
 
 <script src="js/auth/facebook.js"></script>

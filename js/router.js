@@ -263,7 +263,7 @@ $(document).ready(function() {
 
 var onDeviceReady = function(){
 	console.log('on device ready');
-	helper.loadTemplate([ 'LandingView', 'QuizQuestionView', 'FlashCardListItemView', 'MenuView','PracticeView','QuizView','FlashCardView','ProfileView','QuizAnalyticsView' ], function() {
+	helper.loadTemplate([ 'LandingView', 'QuizQuestionView','FlashCardListView', 'FlashCardListItemView', 'FlashCardView', 'MenuView','PracticeTopicsView','PracticeQuestionView','QuizTopicsView','QuizResultsView','ProfileView','QuizAnalyticsView' ], function() {
 		app = new AppRouter();
 		(function(d){
 		      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
