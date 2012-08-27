@@ -2,7 +2,6 @@ var questionTimer = null;
 
 window.QuizTopicsView = Backbone.View.extend({
 
-	el : $('#content'),
 	initialize : function() {
 		this.render();
 	},
@@ -15,7 +14,6 @@ window.QuizTopicsView = Backbone.View.extend({
 
 window.QuizView = Backbone.View.extend({
 	
-	el : $('#content'),
 	initialize : function() {
 		this.index = 0;
 		this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);

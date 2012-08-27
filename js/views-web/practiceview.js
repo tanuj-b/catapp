@@ -2,7 +2,6 @@ var questionTimer = null;
 
 window.PracticeTopicsView = Backbone.View.extend({
 
-	el : $('#content'),
 	initialize : function() {
 		this.render();
 	},
@@ -15,7 +14,6 @@ window.PracticeTopicsView = Backbone.View.extend({
 
 window.PracticeView = Backbone.View.extend({
 	
-	el : $('#content'),
 	initialize : function() {
 		this.index = 0;
 		this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);

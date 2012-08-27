@@ -1,6 +1,5 @@
 window.HeaderView = Backbone.View.extend({
 
-	el : $('header'),
 	initialize : function() {
 		this.render();
 	},

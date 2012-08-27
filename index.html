@@ -6,10 +6,18 @@
 <script type="text/javascript">
 		var serverUrl = 'http://localhost/nero/api/';
     var edition = '0';
+    var tmplatesFolder = null; // this is going to be different for IOS, Apple and other devices
     var phonegap = false;
     if(edition == '0'){
-        document.write('<link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" ></' + 'script>');
+    		tmplatesFolder ='tpl-mobile';
+        document.write('<link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" >');
         document.write('<link rel="stylesheet" href="css/style-mobile.css" >');
+    }else{
+    		tmplatesFolder ='tpl-web';
+    	 document.write('<link rel="stylesheet" href="css/bootstrap.min.css">');
+    	 document.write('<link rel="stylesheet" href="css/bootstrap-responsive.min.css">');
+    	 document.write('<link rel="stylesheet" href="css/docs.css">');
+       document.write('<link rel="stylesheet" href="css/style-web.css" >');
     }
     //document.write('<link rel="stylesheet" href="css/style-'+edition+'.css" >');
 	if(phonegap == true){
@@ -22,6 +30,8 @@
     if(edition == 0){
         document.write('<script src="js/jqm-config.js"></' + 'script>');
         document.write('<script src="js/lib/jquery.mobile-1.1.1.js"></' + 'script>');
+    }else {
+    		document.write('<script src="js/lib/bootstrap.min.js"></' + 'script>');
     }
 </script>
 
@@ -53,6 +63,18 @@
    	 document.write('<script src="js/views-mobile/wordlistview.js"></' + 'script>');
    	 
    	 document.write('<script src="js/router-mobile.js"></' + 'script>');
+    }else {
+      document.write('<script src="js/views-web/headerview.js"></' + 'script>');
+    	document.write('<script src="js/views-web/landingview.js"></' + 'script>');
+      document.write('<script src="js/views-web/menuview.js"></' + 'script>');
+      document.write('<script src="js/views-web/practiceview.js"></' + 'script>');
+      document.write('<script src="js/views-web/quizview.js"></' + 'script>');
+      document.write('<script src="js/views-web/profileview.js"></' + 'script>');
+      document.write('<script src="js/views-web/quizanalyticsview.js"></' + 'script>');
+      document.write('<script src="js/views-web/performanceview.js"></' + 'script>');
+    	document.write('<script src="js/views-web/wordlistview.js"></' + 'script>');
+
+      document.write('<script src="js/router-web.js"></' + 'script>');
     }
 </script>
 <script src="js/main.js"></script>

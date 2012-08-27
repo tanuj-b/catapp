@@ -16,14 +16,14 @@ window.helper = {
                     $.ajax({
                         type: "GET",
                         dataType: "html",
-                        url: 'file:///android_asset/www/tpl/' + view + '.html',
+                        url: 'file:///android_asset/www/'+tmplatesFolder+'/' + view + '.html',
                         async: false,
                     }).done(function (data) {
                         window[view].prototype.template = _.template(data);
                     });
 
                 } else {
-                    deferreds.push($.get('tpl/' + view + '.html', function (data) {
+                    deferreds.push($.get(tmplatesFolder+'/' + view + '.html', function (data) {
                         window[view].prototype.template = _.template(data);
                     }));
                 }
