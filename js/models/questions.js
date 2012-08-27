@@ -5,7 +5,7 @@
  **/
 window.Question = Backbone.Model.extend({
 
-    urlRoot: '../api/questions/',
+    urlRoot: serverUrl+'questions/',
 
     initialize: function () {
         if (!this.get('openTimeStamps')) {
@@ -29,7 +29,7 @@ window.Question = Backbone.Model.extend({
 
 window.QuestionCollection = Backbone.Collection.extend({
     model: Question,
-    url: '../api/questions/'
+    url: serverUrl+'questions/'
 });
 
 var questions = new QuestionCollection();

@@ -5,7 +5,7 @@
  **/
 window.QuestionSet = Backbone.Model.extend({
 
-    urlRoot: '../api/questionsets/',
+    urlRoot: serverUrl+'questionsets/',
 
     initialize: function () {
 
@@ -15,7 +15,7 @@ window.QuestionSet = Backbone.Model.extend({
 
 window.QuestionSetCollection = Backbone.Collection.extend({
     model: QuestionSet,
-    url: '../api/questionsets/'
+    url: serverUrl+'questionsets/'
 });
 
 var questionSets = new QuestionSetCollection();
