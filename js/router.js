@@ -1,4 +1,3 @@
-var activeFlashCardView = new FlashCardView();
 var AppRouter = Backbone.Router.extend({
 
     routes: {

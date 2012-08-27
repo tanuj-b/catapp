@@ -1,0 +1,12 @@
+
+
+.correct-answer
+{
+	background: green;
+}
+.user-answer
+{
+	background: red;
+}
+.hidden
+{display: none}

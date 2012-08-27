@@ -11,9 +11,11 @@ var user = null;
 var app = null;
 var currentQuiz = null;
 
+var activeFlashCardView = new FlashCardView();
+
 var AppView = function AppView(){
 
-   this.showView(view) = function(){
+  /* this.showView(view) = function(){
     if (this.currentView){
       this.currentView.close();
     }
@@ -23,7 +25,7 @@ var AppView = function AppView(){
 
     //$("#mainContent").html(this.currentView.el);
     //think about what to do with this
-  }
+  }*/
 
 };
 
@@ -37,6 +39,7 @@ Backbone.View.prototype.close = function(){
     this.onClose();
   }
 };
+
 
 $(document).ready(function() {
 
