@@ -10,7 +10,7 @@ var currentPractice = null;
 var user = null;
 var app = null;
 var currentQuiz = null;
-
+var quizView = null;
 var activeFlashCardView = new FlashCardView();
 
 var AppView = function AppView() {

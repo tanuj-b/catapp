@@ -10,7 +10,10 @@ var AppRouter = Backbone.Router.extend({
         "flashcards/:id": "flashcards",
         "quiz/:id": "startQuiz",
         "practice/:id": "startPractice",
-        "getQuestion/:index": "getQuestion"
+        "getQuestion/:index": "getQuestion",
+        "quizDetailedView":"quizDetailedView",
+        "quizAnalyticsView":"quizAnalyticsView",
+
     },
     
 
@@ -129,7 +132,7 @@ var AppRouter = Backbone.Router.extend({
 
     startQuiz: function (id) {
         currentQuiz = quizzes.models[id];
-        var quizView = new QuizView({
+        quizView = new QuizView({
             model: currentQuiz,
             index: 0,
         });
@@ -139,11 +142,38 @@ var AppRouter = Backbone.Router.extend({
     },
 
     stopQuiz: function () {
+    	currentQuiz.set('hasAttempted',true);
         app.changePage(new QuizResultsView({
             model: currentQuiz
         }));
     },
     
+    quizDetailedView: function () {
+    	//$('body').empty();
+    	//currentQuiz.set('hasAttempted',true);
+    	 quizView.close();
+    	 quizView = new QuizView({
+             model: currentQuiz,
+             index: 0,
+         });
+         this.changePage(quizView);
+         quizView.renderQuestion();
+
+    },
+    
+    quizAnalyticsView: function () {
+        this.changePage(new QuizAnalyticsView({}));
+    },
+
+    startPractice: function (id) {
+        currentPractice = practiceTests.models[id];
+        var practiceView = new PracticeView({
+            model: currentPractice,
+            index: 0,
+        });
+        this.changePage(practiceView);
+        practiceView.renderQuestion();
+    },
     
     /**
      * Routing logic added by Tanuj 
@@ -208,20 +238,6 @@ var AppRouter = Backbone.Router.extend({
         });
 
         //Make provisions for failure
-    },
-
-    quizAnalyticsView: function () {
-        this.changePage(new QuizAnalyticsView({}));
-    },
-
-    startPractice: function (id) {
-        currentPractice = practiceTests.models[id];
-        var practiceView = new PracticeView({
-            model: currentPractice,
-            index: 0,
-        });
-        this.changePage(practiceView);
-        practiceView.renderQuestion();
     },
 
     showView: function (selector, view) {

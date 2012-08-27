@@ -80,6 +80,7 @@ window.QuizView = Backbone.View.extend({
                 });
             }
             this.qqView.model = this.question;
+            this.qqView.hasAttempted = this.model.get('hasAttempted');
             this.qqView.render();
             this.question.get('openTimeStamps').push(
             new Date().getTime());
@@ -113,6 +114,10 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#question').html(this.template(this.model.toJSON()));
         $('#option-list').listview();
         $('#option-selector').trigger('create');
+        if(this.hasAttempted){
+        	 $('#info').html('<h3>info</h3>'+this.model.get('explanation'));
+        	 $('#info').append('<br>correct answer-'+this.model.get('correctOption'));
+        }
         return this;
     }
 });
@@ -139,8 +144,12 @@ window.QuizResultsView = Backbone.View.extend({
                 }
                 $(this.el).append(
                 i + '. selected :' + question.get('optionSelected') + ' | correct :' + question.get('correctOption') + ' | time :' + qtime + '|openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') + '<br>');
+               
             }
         }
+        $(this.el).append('<a href="#quizDetailedView">Detailed Assessment</a><br>');
+        $(this.el).append('<a href="#quizAnalyticsView">View Analytics </a><br><br>');       
+        $(this.el).append('<div id="quiz-insights"><h3>Detailed Insights</h3> </div>');
         return this;
     }
 });

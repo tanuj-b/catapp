@@ -1,3 +1,5 @@
+<div id="info">
+</div>
 <h3><%= questionText %></h3>
 <ul data-role="listview" data-inset="true" id="option-list">
 		<% var opts = options.split("|:"); for (opt in opts){ %>
@@ -15,7 +17,9 @@
 			<%='checked="checked"'%>
 			<% } %> 
 			/> 
-			<label for="<%=i %>""><%=(i+1) %></label> 
+			<label for="<%=i %>" id="l-<%=i %>">
+			<%=(i+1) %> 
+			</label> 
 		<% } %> 
 	</fieldset>
 </div>
