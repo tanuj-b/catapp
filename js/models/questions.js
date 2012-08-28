@@ -23,7 +23,8 @@ window.Question = Backbone.Model.extend({
     defaults: {
         'optionSelected': null,
         'status': null,
-        'timer': null
+        'timer': null,
+        'attemptedInPractice':false
     }
 });
 
@@ -32,4 +33,5 @@ window.QuestionCollection = Backbone.Collection.extend({
     url: serverUrl+'questions/'
 });
 
-var questions = new QuestionCollection();
+var quizQuestions = new QuestionCollection();
+var practiceQuestions = new QuestionCollection();

@@ -18,4 +18,5 @@ window.QuestionSetCollection = Backbone.Collection.extend({
     url: serverUrl+'questionsets/'
 });
 
-var questionSets = new QuestionSetCollection();
+var quizQuestionSets = new QuestionSetCollection();
+var practiceQuestionSets = new QuestionSetCollection();

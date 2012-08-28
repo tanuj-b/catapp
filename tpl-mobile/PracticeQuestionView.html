@@ -1,5 +1,25 @@
-	<h3><%= questionText %></h3>
-	<ul data-role="listview" data-inset="true" id="options">
+<div id="info">
+</div>
+<h3><%= questionText %></h3>
+<ul data-role="listview" data-inset="true" id="option-list">
 		<% var opts = options.split("|:"); for (opt in opts){ %>
 		<li><p><%= opts[opt] %></p></li> <% } %>
-	</ul>
+</ul>
+<div id="option-selector">
+	<fieldset data-role="controlgroup" data-type="horizontal"
+		data-role="fieldcontain">
+		<% var len = opts.length;
+			 for(var i=0; i <len; i++){
+			%> <input type="radio" name="option"
+			id="<%=i %>" value="<%=i %>" 
+			<% if(optionSelected!=null && optionSelected==i)
+			{%> 
+			<%='checked="checked"'%>
+			<% } %> 
+			/> 
+			<label for="<%=i %>" id="l-<%=i %>">
+			<%=(i+1) %> 
+			</label> 
+		<% } %> 
+	</fieldset>
+</div>

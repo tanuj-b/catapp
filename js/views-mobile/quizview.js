@@ -17,7 +17,7 @@ window.QuizView = Backbone.View.extend({
 
     initialize: function () {
         this.index = this.options.index;
-        this.qqView = null;
+        this.questionView = null;
         this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
         this.length = this.questionSetIds.length;
     },
@@ -66,22 +66,22 @@ window.QuizView = Backbone.View.extend({
     },
 
     renderQuestion: function () {
-        var questionSet = questionSets.get(this.questionSetIds[this.index]);
+        var questionSet = quizQuestionSets.get(this.questionSetIds[this.index]);
         if (questionSet.get('question_count') > 1) {
             // TODO : handle para questions
 
         } else {
             var questionIds = questionSet.get('questionIds');
-            this.question = questions.get(questionIds);
+            this.question = quizQuestions.get(questionIds);
             this.question.set('timer', 0);
-            if (this.qqView == null) {
-                this.qqView = new QuizQuestionView({
+            if (this.questionView == null) {
+                this.questionView = new QuizQuestionView({
                     el: $('#question'),
                 });
             }
-            this.qqView.model = this.question;
-            this.qqView.hasAttempted = this.model.get('hasAttempted');
-            this.qqView.render();
+            this.questionView.model = this.question;
+            this.questionView.hasAttempted = this.model.get('hasAttempted');
+            this.questionView.render();
             this.question.get('openTimeStamps').push(
             new Date().getTime());
             currentQuizQuestion = this.question;
@@ -130,12 +130,12 @@ window.QuizResultsView = Backbone.View.extend({
     render: function () {
         var len = this.questionSetIds.length;
         for (var i = 0; i < len; i++) {
-            var questionSet = questionSets.get(this.questionSetIds[i]);
+            var questionSet = quizQuestionSets.get(this.questionSetIds[i]);
             if (questionSet.get('question_count') > 1) {
 
             } else {
                 var questionIds = questionSet.get('questionIds');
-                var question = questions.get(questionIds);
+                var question = quizQuestions.get(questionIds);
                 var qtime = null;
                 if (question.get('timer') == null) {
                     qtime = 'not seen';
@@ -144,7 +144,6 @@ window.QuizResultsView = Backbone.View.extend({
                 }
                 $(this.el).append(
                 i + '. selected :' + question.get('optionSelected') + ' | correct :' + question.get('correctOption') + ' | time :' + qtime + '|openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') + '<br>');
-               
             }
         }
         $(this.el).append('<a href="#quizDetailedView">Detailed Assessment</a><br>');
