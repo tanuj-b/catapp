@@ -18,6 +18,16 @@ window.Question = Backbone.Model.extend({
                 closeTimeStamps: new Array()
             });
         }
+        if (!this.get('optionSelectedTimeStamps')) {
+            this.set({
+            	optionSelectedTimeStamps: new Array()
+            });
+        }
+        if (!this.get('optionUnSelectedTimeStamps')) {
+            this.set({
+            	optionUnSelectedTimeStamps: new Array()
+            });
+        }
     },
 
     defaults: {

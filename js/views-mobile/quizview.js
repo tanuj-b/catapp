@@ -106,8 +106,16 @@ window.QuizQuestionView = Backbone.View.extend({
         if (optionSelected == oldOptionSelected) {
             this.model.set('optionSelected', null);
             $('input:radio[name=option]:checked').attr('checked', false);
+            if(!this.model.get('optionUnSelectedTimeStamps')[optionSelected]){
+            	this.model.get('optionUnSelectedTimeStamps')[optionSelected] = new Array();
+            }
+            (this.model.get('optionUnSelectedTimeStamps')[optionSelected]).push(new Date().getTime());
         } else {
             this.model.set('optionSelected', optionSelected);
+            if(!this.model.get('optionSelectedTimeStamps')[optionSelected]){
+            	this.model.get('optionSelectedTimeStamps')[optionSelected] = new Array();
+            }
+            (this.model.get('optionSelectedTimeStamps')[optionSelected]).push(new Date().getTime());
         }
     },
 
@@ -146,7 +154,7 @@ window.QuizResultsView = Backbone.View.extend({
                     qtime = question.get('timer');
                 }
                 $(this.el).append(
-                i + '. selected :' + question.get('optionSelected') + ' | correct :' + question.get('correctOption') + ' | time :' + qtime + '|openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') + '<br>');
+                i + '. selected :' + question.get('optionSelected') + ' | correct :' + question.get('correctOption') + ' | time :' + qtime + '|openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') +'|optionSelectedTimeStamps :' + question.get('optionSelectedTimeStamps') +'|optionUnSelectedTimeStamps :' + question.get('optionUnSelectedTimeStamps') + '<br>');
             }
         }
         $(this.el).append('<a href="#quizDetailedView">Detailed Assessment</a><br>');
