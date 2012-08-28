@@ -147,9 +147,7 @@ var AppRouter = Backbone.Router.extend({
             index: 0,
         });
         this.changePage(quizView);
-    	if (timer == null) {
-        	timer = new Timer(1000, helper.updateQuizTimer, []);
-    	}
+        timer = new Timer(1000, helper.updateQuizTimer, []);
     	timer.reset();
         quizView.renderQuestion();
         timer.start();
@@ -187,10 +185,8 @@ var AppRouter = Backbone.Router.extend({
             index: 0,
         });
         this.changePage(practiceView);
-        if (timer == null) {
-        	timer = new Timer(1000, helper.updatePracticeTimer, []);
-    	}
-    	timer.reset();
+        timer = new Timer(1000, helper.updatePracticeTimer, []);
+     	timer.reset();
         practiceView.renderQuestion();
     },
     

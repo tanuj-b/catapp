@@ -104,7 +104,8 @@ window.helper = {
       $('#time').html(qtimer);
       currentPracticeQuestion.set('timer', qtimer);
       if (qtimer == 20) {
-          	this.model.set('attemptedInPractice',true);
+    	  	currentPracticeQuestion.set('attemptedInPractice',true);
+    	  	currentPracticeQuestion.set('time',qtimer);
             alert('time up');
             timer.stop();
        }
