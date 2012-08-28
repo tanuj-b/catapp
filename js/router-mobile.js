@@ -13,7 +13,6 @@ var AppRouter = Backbone.Router.extend({
         "getQuestion/:index": "getQuestion",
         "quizDetailedView":"quizDetailedView",
         "quizAnalyticsView":"quizAnalyticsView",
-
     },
     
 

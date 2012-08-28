@@ -108,6 +108,7 @@ window.helper = {
     	  	currentPracticeQuestion.set('time',qtimer);
             alert('time up');
             timer.stop();
+            practiceView.questionView.renderInfo();
        }
     },
 };
