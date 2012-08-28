@@ -86,16 +86,27 @@ window.helper = {
         $('.alert').hide();
     },
 
-    updateTimer: function () {
-        var timer = currentQuiz.get('timer');
-        $('#time').html(timer.count);
+    updateQuizTimer: function () {
+       $('#time').html(timer.count);
         var qtimer = currentQuizQuestion.get('timer');
         qtimer++;
         currentQuizQuestion.set('timer', qtimer);
         if (timer.count == 20) {
-            currentQuiz.get('timer').stop();
+            timer.stop();
             alert('time up');
             app.stopQuiz();
         }
+    },
+    
+    updatePracticeTimer: function () {
+      var qtimer = currentPracticeQuestion.get('timer');
+      qtimer++;
+      $('#time').html(qtimer);
+      currentPracticeQuestion.set('timer', qtimer);
+      if (qtimer == 20) {
+          	this.model.set('attemptedInPractice',true);
+            alert('time up');
+            timer.stop();
+       }
     },
 };

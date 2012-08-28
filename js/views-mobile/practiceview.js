@@ -74,17 +74,25 @@ window.PracticeView = Backbone.View.extend({
         } else {
             var questionIds = questionSet.get('questionIds');
             this.question = practiceQuestions.get(questionIds);
-            this.question.set('timer', 0);
+            if(this.question.get('timer')==null){
+            	this.question.set('timer', 0);
+            }
             if (this.questionView == null) {
                 this.questionView = new PracticeQuestionView({
                     el: $('#question'),
+                    // timer : 
                 });
             }
             this.questionView.model = this.question;
+            currentPracticeQuestion = this.question;
             this.questionView.render();
+            if(this.question.get('attemptedInPractice')==true){
+            	timer.stop();
+            }else{
+            	timer.start();
+            }
             this.question.get('openTimeStamps').push(
             new Date().getTime());
-            currentPracticeQuestion = this.question;
         }
         return null;
     }
@@ -107,6 +115,8 @@ window.PracticeQuestionView = Backbone.View.extend({
         } else {
             this.model.set('optionSelected', optionSelected);
         } 
+        this.model.set('attemptedInPractice',true);
+        timer.stop();
         this.renderInfo();
     },
 
@@ -115,6 +125,9 @@ window.PracticeQuestionView = Backbone.View.extend({
         $('#question').html(this.template(this.model.toJSON()));
         $('#option-list').listview();
         $('#option-selector').trigger('create'); 
+        if(this.model.get('attemptedInPractice')==true){
+        	this.renderInfo();
+        }
         return this;
     },
     

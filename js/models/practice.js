@@ -4,8 +4,7 @@ window.PracticeTest = Backbone.Model.extend({
 
     initialize: function () {
     	
-    },
-    
+    }
 });
 
 window.PracticeTestCollection = Backbone.Collection.extend({

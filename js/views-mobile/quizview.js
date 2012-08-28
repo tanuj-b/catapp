@@ -73,7 +73,9 @@ window.QuizView = Backbone.View.extend({
         } else {
             var questionIds = questionSet.get('questionIds');
             this.question = quizQuestions.get(questionIds);
-            this.question.set('timer', 0);
+            if(this.question.get('timer')==null){
+            	this.question.set('timer', 0);
+            }
             if (this.questionView == null) {
                 this.questionView = new QuizQuestionView({
                     el: $('#question'),
@@ -117,6 +119,7 @@ window.QuizQuestionView = Backbone.View.extend({
         if(this.hasAttempted){
         	 $('#info').html('<h3>info</h3>'+this.model.get('explanation'));
         	 $('#info').append('<br>correct answer-'+this.model.get('correctOption'));
+        	 $('#time').html(this.model.get('time'));
         }
         return this;
     }

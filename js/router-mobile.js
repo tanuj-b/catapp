@@ -147,8 +147,13 @@ var AppRouter = Backbone.Router.extend({
             index: 0,
         });
         this.changePage(quizView);
+    	if (timer == null) {
+        	timer = new Timer(1000, helper.updateQuizTimer, []);
+    	}
+    	timer.reset();
         quizView.renderQuestion();
-        currentQuiz.get('timer').start();
+        timer.start();
+        //currentQuiz.get('timer').start();
     },
 
     stopQuiz: function () {
@@ -177,11 +182,15 @@ var AppRouter = Backbone.Router.extend({
 
     startPractice: function (id) {
         currentPractice = practiceTests.models[id];
-        var practiceView = new PracticeView({
+        practiceView = new PracticeView({
             model: currentPractice,
             index: 0,
         });
         this.changePage(practiceView);
+        if (timer == null) {
+        	timer = new Timer(1000, helper.updatePracticeTimer, []);
+    	}
+    	timer.reset();
         practiceView.renderQuestion();
     },
     

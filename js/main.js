@@ -5,13 +5,17 @@ var SEPARATOR = '|:';
 
 var currentQuiz = null;
 var currentQuizQuestion = null;
+var quizView = null;
 
 var currentPractice = null;
+var currentPracticeQuestion = null;
+var practiceView = null;
+
 var user = null;
 var app = null;
-var currentQuiz = null;
-var quizView = null;
 var activeFlashCardView = new FlashCardView();
+
+var timer = null; // we will have just one global timer object shared across quizzes and practice
 
 var AppView = function AppView() {
 
