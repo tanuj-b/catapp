@@ -135,37 +135,6 @@ window.PracticeQuestionView = Backbone.View.extend({
     	$('#info').html('<h3>info</h3>correct answer-'+this.model.get('correctOption'));
       	$('#info').append('<br>'+this.model.get('explanation'));
       	$("input[type='radio']").checkboxradio('disable');   
-    }
-});
-
-window.QuizResultsView = Backbone.View.extend({
-    initialize: function () {
-        this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
-    },
-
-    render: function () {
-        var len = this.questionSetIds.length;
-        for (var i = 0; i < len; i++) {
-            var questionSet = questionSets.get(this.questionSetIds[i]);
-            if (questionSet.get('question_count') > 1) {
-
-            } else {
-                var questionIds = questionSet.get('questionIds');
-                var question = questions.get(questionIds);
-                var qtime = null;
-                if (question.get('timer') == null) {
-                    qtime = 'not seen';
-                } else {
-                    qtime = question.get('timer');
-                }
-                $(this.el).append(
-                i + '. selected :' + question.get('optionSelected') + ' | correct :' + question.get('correctOption') + ' | time :' + qtime + '|openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') + '<br>');
-               
-            }
-        }
-        $(this.el).append('<a href="#quizDetailedView">Detailed Assessment</a><br>');
-        $(this.el).append('<a href="#quizAnalyticsView">View Analytics </a><br><br>');       
-        $(this.el).append('<div id="quiz-insights"><h3>Detailed Insights</h3> </div>');
-        return this;
+      	$('#time').html(this.model.get('timer'));
     }
 });
