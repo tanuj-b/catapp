@@ -125,11 +125,15 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#option-list').listview();
         $('#option-selector').trigger('create');
         if(this.hasAttempted){
-        	 $('#info').html('<h3>info</h3>'+this.model.get('explanation'));
-        	 $('#info').append('<br>correct answer-'+this.model.get('correctOption'));
-        	 $('#time').html(this.model.get('time'));
+        	this.renderInfo(); 
         }
         return this;
+    },
+    
+    renderInfo : function(){
+    	$('#info').html('<h3>info</h3>'+this.model.get('explanation'));
+   	 	$('#info').append('<br>correct answer-'+this.model.get('correctOption'));
+   	 	$('#time').html(this.model.get('timer'));
     }
 });
 
@@ -162,4 +166,16 @@ window.QuizResultsView = Backbone.View.extend({
         $(this.el).append('<div id="quiz-insights"><h3>Detailed Insights</h3> </div>');
         return this;
     }
+});
+
+window.QuizAnalyticsView = Backbone.View.extend({
+
+	initialize : function() {
+		// this.render();
+	},
+
+	render : function() {
+		$(this.el).html(this.template());
+
+	}
 });
