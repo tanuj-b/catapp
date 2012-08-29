@@ -69,7 +69,8 @@
       var dirtyRecords;
       dirtyRecords = this.recordsOn(this.name + '_dirty');
       if (!_.include(dirtyRecords, model.id.toString())) {
-        console.log('dirtying', model);
+        //console.log('dirtying', model);
+    	  console.log('dirtying');
         dirtyRecords.push(model.id);
         localStorage.setItem(this.name + '_dirty', dirtyRecords.join(','));
       }
@@ -98,7 +99,8 @@
     };
 
     Store.prototype.create = function(model) {
-      console.log('creating', model, 'in', this.name);
+      //console.log('creating', model, 'in', this.name);
+    	console.log('creating', model.id, 'in', this.name);
       if (!_.isObject(model)) return model;
       if (!model.id) {
         model.id = this.generateId();
@@ -111,7 +113,8 @@
     };
 
     Store.prototype.update = function(model) {
-      console.log('updating', model, 'in', this.name);
+      //console.log('updating', model, 'in', this.name);
+    	console.log('updating', model.id, 'in', this.name);
       localStorage.setItem(this.name + this.sep + model.id, JSON.stringify(model));
       if (!_.include(this.records, model.id.toString())) {
         this.records.push(model.id.toString());
@@ -136,7 +139,8 @@
     };
 
     Store.prototype.find = function(model) {
-      console.log('finding', model, 'in', this.name);
+      //console.log('finding', model, 'in', this.name);
+      console.log('finding', model.id, 'in', this.name);
       return JSON.parse(localStorage.getItem(this.name + this.sep + model.id));
     };
 
@@ -153,7 +157,8 @@
     };
 
     Store.prototype.destroy = function(model) {
-      console.log('trying to destroy', model, 'in', this.name);
+      //console.log('trying to destroy', model, 'in', this.name);
+      console.log('trying to destroy', model.id, 'in', this.name);
       localStorage.removeItem(this.name + this.sep + model.id);
       this.records = _.reject(this.records, function(record_id) {
         return record_id === model.id.toString();
@@ -243,7 +248,8 @@
 
   dualsync = function(method, model, options) {
     var error, local, originalModel, success;
-    console.log('dualsync', method, model, options);
+    //console.log('dualsync', method, model, options);
+    console.log("dualsync",method,model.id,options);
     options.storeName = result(model.collection, 'url') || result(model, 'url');
     if (result(model.attributes, 'remote') || result(model.collection, 'remote')) {
       return onlineSync(method, model, options);

@@ -1,27 +1,27 @@
-function syncWithServer(userId)
+window.sync = 
 {
-	this.online = false;
-	this.userId = userId;
-	this.lastFullSync = null;
+	online : false,
+	userId : '',
+	lastFullSync : '',
+
+	pushResponses : function(){},
 	
-	this.pushResponses = function(){};
+	fetchQuizIdsFromServer : function(){},
+	fetchQuizIdsFromLocal : function(){},
 	
-	this.fetchQuizIdsFromServer = function(){};
-	this.fetchQuizIdsFromLocal = function(){};
+	fetchQuestionSetIdsFromModel : function(){},
+	fetchQuestionSetIdsFromLocal : function(){},
 	
-	this.fetchQuestionSetIdsFromModel = function(){};
-	this.fetchQuestionSetIdsFromLocal = function(){};
+	fetchQuestionIdsFromModel : function(){},
+	fetchQuestionIdsFromLocal : function(){},
 	
-	this.fetchQuestionIdsFromModel = function(){};
-	this.fetchQuestionIdsFromLocal = function(){};
+	fetchResourceIdsFromModel : function(){},
+	fetchResourceIdsFromLocal : function(){},
 	
-	this.fetchResourceIdsFromModel = function(){};
-	this.fetchResourceIdsFromLocal = function(){};
+	fetchFlashCardIdsFromServer : function(){},
+	fetchFlashCardIdsFromLocal : function(){},
 	
-	this.fetchFlashCardIdsFromServer = function(){};
-	this.fetchFlashCardIdsFromLocal = function(){};
-	
-	this.OtherSyncFromServer = function(){};
+	OtherSyncFromServer : function(){}
 	
 }
 
