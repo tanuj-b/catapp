@@ -25,7 +25,7 @@ var AppRouter = Backbone.Router.extend({
         /*
          * To be replaced by sync. this is just for the demo
          */
-        localStorage.clear(); //remove this line in final product.
+        //localStorage.clear(); //remove this line in final product.
 
         quizzes.fetch({
             success: function () {
@@ -59,7 +59,19 @@ var AppRouter = Backbone.Router.extend({
                 });
             }
         });
-
+        
+        sectionL1.fetch({
+        	 success: function () {
+                 console.log('init quizzes fetched');
+        	 }
+        });
+        
+        sectionL2.fetch({
+        	 success: function () {
+                 console.log('init quizzes fetched');
+        	 }
+        });
+        
     },
 
     landing: function () {
@@ -74,36 +86,6 @@ var AppRouter = Backbone.Router.extend({
 
     profile: function (id) {
         this.changePage(new ProfileView({}));
-    },
-
-   
-    practice: function (id) {
-    	practiceTests.reset();
-    	practiceQuestionSets.reset();
-        practiceQuestions.reset();
-        console.log('after reset before second fetch');
-        practiceTests.remote = false;
-        practiceTests.local = true;
-        practiceTests.fetch({
-        	success: function () {
-                 console.log('local quizzes fetched');
-                 practiceQuestionSets.remote = false;
-                 practiceQuestionSets.local = true;
-                 practiceQuestionSets.fetch({
-                     success: function () {
-                         console.log('local question sets fetched');
-                         practiceQuestions.remote = false;
-                         practiceQuestions.local = true;
-                         practiceQuestions.fetch({
-                             success: function () {
-                                 console.log('local questions fetched');
-                             }
-                         });
-                     }
-                 });
-             }
-         });
-         this.changePage(new PracticeTopicsView());
     },
 
     quiz: function () {
@@ -177,6 +159,35 @@ var AppRouter = Backbone.Router.extend({
         this.changePage(new QuizAnalyticsView({}));
     },
 
+    practice: function (id) {
+    	practiceTests.reset();
+    	practiceQuestionSets.reset();
+        practiceQuestions.reset();
+        console.log('after reset before second fetch');
+        practiceTests.remote = false;
+        practiceTests.local = true;
+        practiceTests.fetch({
+        	success: function () {
+                 console.log('local quizzes fetched');
+                 practiceQuestionSets.remote = false;
+                 practiceQuestionSets.local = true;
+                 practiceQuestionSets.fetch({
+                     success: function () {
+                         console.log('local question sets fetched');
+                         practiceQuestions.remote = false;
+                         practiceQuestions.local = true;
+                         practiceQuestions.fetch({
+                             success: function () {
+                                 console.log('local questions fetched');
+                             }
+                         });
+                     }
+                 });
+             }
+         });
+         this.changePage(new PracticeTopicsView());
+    },
+    
     startPractice: function (id) {
         currentPractice = practiceTests.models[id];
         practiceView = new PracticeView({
