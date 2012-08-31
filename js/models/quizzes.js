@@ -8,7 +8,8 @@ window.Quiz = Backbone.Model.extend({
     urlRoot: serverUrl+'quizzes/',
     local: true, // always fetched and saved only locally, never saves on remote
     remote: false, // never cached, dualStorage is bypassed entirely
-
+    key: "questionSetIds",
+    
     initialize: function () {},
 
     defaults: {

@@ -3,7 +3,7 @@
  */
 window.FlashCard = Backbone.Model.extend({
 
-    urlRoot: '../api/flashcards/',
+    urlRoot: serverUrl + 'flashcards/',
 
     initialize: function () {
     	
@@ -25,7 +25,7 @@ window.FlashCard = Backbone.Model.extend({
 
 window.FlashCardList = Backbone.Model.extend({
 	
-	url: '../api/flashcardlists/',
+	url: serverUrl + 'flashcardlists/',
 		
 		initialize: function () {
 	    	
@@ -37,18 +37,19 @@ window.FlashCardList = Backbone.Model.extend({
 	        wordCount: '',
 	        wordIds:'',
 	        l2Id:'',
-	        title:''
+	        title:'',
+	        key:'wordIds'
 	    }	
 });
 
 window.FlashCardCollection = Backbone.Collection.extend({
 	model:FlashCard,
-	url:'../api/flashcards/'
+	url:serverUrl + 'flashcards/'
 });
 
 window.FlashCardListCollection = Backbone.Collection.extend({
 	model:FlashCardList,
-	url: '../api/flashcardlists/'
+	url: serverUrl + 'flashcardlists/'
 });
 
 var flashCardLists = new FlashCardListCollection();

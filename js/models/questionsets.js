@@ -6,6 +6,7 @@
 window.QuestionSet = Backbone.Model.extend({
 
     urlRoot: serverUrl+'questionsets/',
+    key: "questionIds",
 
     initialize: function () {
 

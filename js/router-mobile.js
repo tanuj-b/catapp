@@ -11,6 +11,7 @@ var AppRouter = Backbone.Router.extend({
         "quiz/:id": "startQuiz",
         "practice/:id": "startPractice",
         "getQuestion/:index": "getQuestion",
+        "sync":"sync",
         "quizDetailedView":"quizDetailedView",
         "quizAnalyticsView":"quizAnalyticsView",
     },
@@ -20,6 +21,11 @@ var AppRouter = Backbone.Router.extend({
      * Routing logic added by ssachan 
      * 
      **/
+    sync: function(){
+        sync.setUserId(1); //get actual account id and set it
+        alert(sync.fetchIdsFromCollection(quizzes));
+        alert(sync.fetchIdsFromLocal(quizzes));
+     },
 
     initialize: function () {
         /*
@@ -216,6 +222,7 @@ var AppRouter = Backbone.Router.extend({
             currentFlashCards.add({
                 id: id
             });
+
         });
 
         //This is where flashCards are being fetched and stored into a Collection.
