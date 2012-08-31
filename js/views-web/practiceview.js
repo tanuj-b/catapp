@@ -1,5 +1,3 @@
-var questionTimer = null;
-
 window.PracticeTopicsView = Backbone.View.extend({
 
 	initialize : function() {
