@@ -29,7 +29,18 @@ window.Question = Backbone.Model.extend({
             });
         }
     },
-
+	
+    /**
+     * returns true, false and null depending on whether the option selected was right, wrong or not selected at all. 
+     **/
+	isOptionSelectedCorrect : function (){
+		var isCorrect = null; 
+		if(this.get('optionSelected')!=null){
+ 	      isCorrect = (this.get('optionSelected')==this.get('correctOption'))?true:false;
+		}
+		return isCorrect; 
+	},
+    
     defaults: {
         'optionSelected': null,
         'status': null,

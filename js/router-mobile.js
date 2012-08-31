@@ -128,16 +128,16 @@ var AppRouter = Backbone.Router.extend({
             index: 0,
         });
         this.changePage(quizView);
-        timer = new Timer(1000, helper.updateQuizTimer, []);
-    	timer.reset();
+    	timer.setUpdateFunction(helper.updateQuizTimer, []);
+        timer.reset();
         quizView.renderQuestion();
         timer.start();
         //currentQuiz.get('timer').start();
     },
 
     stopQuiz: function () {
-    	currentQuiz.set('hasAttempted',true);
-        app.changePage(new QuizResultsView({
+    	currentQuiz.calculateScores();
+    	app.changePage(new QuizResultsView({
             model: currentQuiz
         }));
     },
@@ -195,8 +195,8 @@ var AppRouter = Backbone.Router.extend({
             index: 0,
         });
         this.changePage(practiceView);
-        timer = new Timer(1000, helper.updatePracticeTimer, []);
-     	timer.reset();
+    	timer.setUpdateFunction(helper.updatePracticeTimer, []);
+        timer.reset();
         practiceView.renderQuestion();
     },
     

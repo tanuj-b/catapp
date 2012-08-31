@@ -15,7 +15,7 @@ var user = null;
 var app = null;
 var activeFlashCardView = new FlashCardView();
 
-var timer = null; // we will have just one global timer object shared across quizzes and practice
+var timer = new Timer(1000, null, []); // we will have just one global timer object shared across quizzes and practice
 
 var AppView = function AppView() {
 

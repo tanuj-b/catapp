@@ -141,9 +141,11 @@ window.QuizResultsView = Backbone.View.extend({
     initialize: function () {
         this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
     },
-
+  
     render: function () {
         var len = this.questionSetIds.length;
+        $(this.el).append('Total Correct :'+this.model.get('totalCorrect')+'<br>');
+        $(this.el).append('Total Incorrect :'+this.model.get('totalIncorrect')+'<br>' );
         for (var i = 0; i < len; i++) {
             var questionSet = quizQuestionSets.get(this.questionSetIds[i]);
             if (questionSet.get('question_count') > 1) {
@@ -175,7 +177,9 @@ window.QuizAnalyticsView = Backbone.View.extend({
 	},
 
 	render : function() {
-		$(this.el).html(this.template());
-
+		$(this.el).append('Total Correct :'+this.model.accuracyInsights()+'<br>');
+		$(this.el).append('Total Incorrect :'+this.model.strategicInsights()+'<br>' );
+		//$(this.el).html(this.template());
+		return this;
 	}
 });
