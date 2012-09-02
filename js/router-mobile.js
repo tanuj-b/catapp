@@ -156,7 +156,7 @@ var AppRouter = Backbone.Router.extend({
     },
     
     quizAnalyticsView: function () {
-        this.changePage(new QuizAnalyticsView({}));
+        this.changePage(new QuizAnalyticsView({model: currentQuiz}));
     },
 
     practice: function (id) {

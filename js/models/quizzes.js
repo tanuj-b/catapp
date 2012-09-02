@@ -19,9 +19,12 @@ window.Quiz = Backbone.Model.extend({
         'easyQuestionsIncorrect' : '',
         'easyQuestionsMissed' : '',
         'difficultQuestionsAnswered' : '',
-        '' :'',
         'toggleBetweenOptions' : '',
         'wastedTimeOnlengthyQuestions' : '',
+        'strategicInsightsCalculated' : '',
+        'accuracyInsightsCalculated' : '',
+        'difficultyInsightsCalculated' : ''
+
     },
     
 	// insights.
@@ -48,7 +51,8 @@ window.Quiz = Backbone.Model.extend({
 	    ins19	: 'Difficult questions you got right',
 	    
 	    ins20	: 'Wasted time on calculation based questions',
-	    ins21	: 'You toggled too many times between the options',
+	    ins21	: 'You toggled too many times between the options and got it wrong',
+	    ins22	: 'You toggled too many times between the options but eventually got it wrong',
   	},
 	
 	/**
@@ -58,19 +62,19 @@ window.Quiz = Backbone.Model.extend({
 		var totalScrore  = this.get('totalCorrect');
 		var timeTaken = this.get('timeTaken');
 		var insight = '';
-		var a=b=0;
+		var a=b=0;c=9;
 		var x = 3,y = 6, z = 9; 
-		if(totalTimeTaken < a ){
+		if(timeTaken > c ){
 			if(totalScrore < x ){
-				insight = this.INSIGHTS.ins1;
+				insight = this.INSIGHTS.ins9;
 			} else if(totalScrore > x && totalScrore < y){
-				insight = this.INSIGHTS.ins2;
+				insight = this.INSIGHTS.ins10;
 			} else if(totalScrore > y && totalScrore < z){
-				insight = this.INSIGHTS.ins3;
+				insight = this.INSIGHTS.ins11;
 			} else if(totalScrore > y && totalScrore < z){
-				insight = this.INSIGHTS.ins4;				
+				insight = this.INSIGHTS.ins12;				
 			}
-		} else if(totalTimeTaken >a && totalTimeTaken <b){
+		} else if(timeTaken <c && timeTaken >b){
 			if(totalScrore < x ){
 				insight = this.INSIGHTS.ins5;
 			} else if(totalScrore > x && totalScrore < y){
@@ -80,15 +84,15 @@ window.Quiz = Backbone.Model.extend({
 			} else if(totalScrore > y && totalScrore < z){
 				insight = this.INSIGHTS.ins8;				
 			}
-		} else if(totalTimeTaken>10){
+		} else if(timeTaken<b && timeTaken>a){
 			if(totalScrore < x ){
-				insight = this.INSIGHTS.ins9;
+				insight = this.INSIGHTS.ins1;
 			} else if(totalScrore > x && totalScrore < y){
-				insight = this.INSIGHTS.ins10;
+				insight = this.INSIGHTS.ins2;
 			} else if(totalScrore > y && totalScrore < z){
-				insight = this.INSIGHTS.ins11;
+				insight = this.INSIGHTS.ins3;
 			} else if(totalScrore > y && totalScrore < z){
-				insight = this.INSIGHTS.ins12;				
+				insight = this.INSIGHTS.ins4;				
 			}
 		}
 		return insight;
@@ -99,29 +103,28 @@ window.Quiz = Backbone.Model.extend({
 	 **/
 
 	difficultyLevelInsights : function (){
-		var insight = '';
-        this.questionSetIds = this.questionSetIds.split(SEPARATOR);
-        for (questionSetId in questionSetIds)
-        {
-        	questionSet = quizQuestionSets.get(questionSetId);
-        	var questionIds = (questionSet.get('questionIds')).split(SEPARATOR);
-        	 for (questionId in questionIds)
-             {
-        	       this.question = quizQuestions.get(questionId);
-        	       var difficulty = question.get('difficulty');
-        	       if(question.get('optionSelected')!=null){
-        	    	   
-        	       }
-        	       var isCorrect = (question.get('optionSelected')==question.get('correctOption'))?true:false;
-        	       if(difficulty==x && !(isCorrect)){
-        	    	   // easy questions you got wrong
-        	    	   this.easyQuestionsIncorrect=this.easyQuestionsIncorrect+'|';
-        	       }else if(difficulty==y && !(isCorrect)){
-        	    	   //this.difficultQuestionsAnswered
-        	       }
-             }
-        }
-        
+		var questionIds = this.getQuestionIds();
+		var len = questionIds.length;
+		for(var i=0; i<len; i++ )
+		{
+			var question = quizQuestions.get(questionIds[i]);
+			var difficulty = question.get('difficulty');
+  	       	var isCorrect = question.isOptionSelectedCorrect();
+  	       	if(isCorrect==null){
+  	       		// question not attempted
+  	       		if(difficulty==easy){
+  	       			// easy question missed
+  	  	    	   this.set('easyQuestionsIncorrect',this.get('easyQuestionsIncorrect')+i+'|');
+  	       		}
+  	       	} else if(difficulty==easy && !(isCorrect)){
+  	    	   // easy questions you got wrong
+  	    	   this.set('easyQuestionsMissed',this.get('easyQuestionsMissed')+i+'|');
+  	       	}else if(difficulty==difficult && isCorrect){
+  	    	   //this.difficultQuestionsAnswered
+   	    	   this.set('difficultQuestionsAnswered',this.get('difficultQuestionsAnswered')+i+'|');
+  	       	}
+  	       
+		}        
 	},
 	
 	/**
@@ -129,20 +132,30 @@ window.Quiz = Backbone.Model.extend({
 	 **/
 
 	strategicInsights : function (){
-		var insight = '';
-        this.questionSetIds = this.questionSetIds.split(SEPARATOR);
-        //var qsLen = questionSetIds.length;
-        for (questionSetId in questionSetIds)
-        {
-        	questionSet = quizQuestionSets.get(questionSetId);
-        	var questionIds = (questionSet.get('questionIds')).split(SEPARATOR);
-        	 for (questionId in questionIds)
-             {
-        	       this.question = quizQuestions.get(questionId);
-        	       var difficulty = question.get('difficulty');
-        	       var isCorrect = (question.get('optionSelected')==question.get('correctOption'))?true:false;
-        	       
-             }
+		var toggleThreshHold = 4;
+		var questionIds = this.getQuestionIds();
+		var len = questionIds.length;
+		for(var i=0; i<len; i++ )
+		{
+			var question = quizQuestions.get(questionIds[i]);
+			var tag = question.get('tagIds');
+			var timeTaken = question.get('timer');
+			if(timeTaken> question.get(averageTimeCorrect) && tag == 'difficult'){
+	   	    	   this.set('difficultQuestionsAnswered',this.get('difficultQuestionsAnswered')+i+'|');
+			}
+			var numberOfToggles = 0; 
+			var optionSelectedTimeStamps = question.get('optionSelectedTimeStamps');
+			var optionUnSelectedTimeStamps = question.get('optionUnSelectedTimeStamps');
+
+			for(options in optionSelectedTimeStamps){
+				numberOfToggles = numberOfToggles + optionSelectedTimeStamps[options].length;
+			}
+			for(options in optionUnSelectedTimeStamps){
+				numberOfToggles = numberOfToggles + optionUnSelectedTimeStamps[options].length;
+			}
+			if(numberOfToggles > toggleThreshHold){
+	   	    	   this.set('toggleBetweenOptions',this.get('toggleBetweenOptions')+i+'|');
+			}
         }
         
 	},

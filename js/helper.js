@@ -91,7 +91,7 @@ window.helper = {
         var qtimer = currentQuizQuestion.get('timer');
         qtimer++;
         currentQuizQuestion.set('timer', qtimer);
-        if (timer.count == 20) {
+        if (timer.count == 10) {
             // timed out
         	currentQuizQuestion.set('totalTime',currentQuizQuestion.get('allotedTime')); 
         	timer.stop();
@@ -105,7 +105,7 @@ window.helper = {
       qtimer++;
       $('#time').html(qtimer);
       currentPracticeQuestion.set('timer', qtimer);
-      if (qtimer == 20) {
+      if (qtimer == 10) {
     	  	currentPracticeQuestion.set('attemptedInPractice',true);
     	  	currentPracticeQuestion.set('time',qtimer);
             alert('time up');
