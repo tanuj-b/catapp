@@ -24,7 +24,7 @@ var AppRouter = Backbone.Router.extend({
     sync: function(){
         sync.setUserId(1); //get actual account id and set it
         alert(sync.fetchIdsFromCollection(quizzes));
-        alert(sync.fetchIdsFromLocal(quizzes));
+        alert(sync.fetchIdsFromLocalStorage(quizzes));
      },
 
     initialize: function () {
@@ -285,9 +285,9 @@ var AppRouter = Backbone.Router.extend({
     }
 });
 
-if (phonegap == false) {
+if (Config.phonegap == false) {
     $(document).ready(function () {
-        helper.loadTemplate(['LandingView', 'QuizQuestionView', 'FlashCardListView', 'FlashCardListItemView', 'FlashCardView', 'MenuView', 'PracticeTopicsView', 'PracticeQuestionView', 'QuizTopicsView', 'QuizResultsView', 'ProfileView', 'QuizAnalyticsView'], function () {
+        helper.loadTemplate(Config.viewsArray, function () {
             app = new AppRouter();
             (function (d) {
                 var js, id = 'facebook-jssdk';
@@ -310,8 +310,7 @@ function init() {
 }
 
 var onDeviceReady = function () {
-    console.log('on device ready');
-    helper.loadTemplate(['LandingView', 'QuizQuestionView', 'FlashCardListView', 'FlashCardListItemView', 'FlashCardView', 'MenuView', 'PracticeTopicsView', 'PracticeQuestionView', 'QuizTopicsView', 'QuizResultsView', 'ProfileView', 'QuizAnalyticsView'], function () {
+    helper.loadTemplate(Config.viewsArray, function () {
         app = new AppRouter();
         (function (d) {
             var js, id = 'facebook-jssdk';
@@ -324,6 +323,10 @@ var onDeviceReady = function () {
             js.src = "//connect.facebook.net/en_US/all.js";
             d.getElementsByTagName('head')[0].appendChild(js);
         }(document));
+        
+        if(Config.phonegap){
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemAccess.gotFS, fileSystemAccess.fail);
+        }
         Backbone.history.start();
     });
 };

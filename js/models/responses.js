@@ -1,6 +1,6 @@
 window.Response = Backbone.RelationalModel.extend({
 
-    urlRoot: '../api/responses',
+    urlRoot: Config.serverUrl + 'responses',
 
     initialize: function () {
     	
@@ -16,7 +16,7 @@ window.Response = Backbone.RelationalModel.extend({
 
 window.ResponseCollection = Backbone.Collection.extend({
 	model: Response,
-	url: '../api/responses'	
+	url: Config.serverUrl + 'responses'	
 });
 
 var responses = new ResponseCollection();

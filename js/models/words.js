@@ -3,7 +3,7 @@
  */
 window.FlashCard = Backbone.Model.extend({
 
-    urlRoot: serverUrl + 'flashcards/',
+    urlRoot: Config.serverUrl + 'flashcards/',
 
     initialize: function () {
     	
@@ -25,7 +25,7 @@ window.FlashCard = Backbone.Model.extend({
 
 window.FlashCardList = Backbone.Model.extend({
 	
-	url: serverUrl + 'flashcardlists/',
+	url: Config.serverUrl + 'flashcardlists/',
 		
 		initialize: function () {
 	    	
@@ -44,12 +44,12 @@ window.FlashCardList = Backbone.Model.extend({
 
 window.FlashCardCollection = Backbone.Collection.extend({
 	model:FlashCard,
-	url:serverUrl + 'flashcards/'
+	url: Config.serverUrl + 'flashcards/'
 });
 
 window.FlashCardListCollection = Backbone.Collection.extend({
 	model:FlashCardList,
-	url: serverUrl + 'flashcardlists/'
+	url: Config.serverUrl + 'flashcardlists/'
 });
 
 var flashCardLists = new FlashCardListCollection();
