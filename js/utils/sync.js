@@ -14,12 +14,23 @@ if(Config.phonegap)
         {
             this.dbDirectory = directoryEntry;
         },
+
         fail : function(error)
         {
-            console.log(error.code);
+            //console.log(error.code);
+        },
+
+        DbDirectory : function(operation, directoryEntry)
+        {
+            gotDbDirectory(directoryEntry);
+            switch(operation)
+            {
+                case("read") :
+                    //statement
+                    break;
+
+            }
         }
-
-
     }
 }
 window.sync = 
