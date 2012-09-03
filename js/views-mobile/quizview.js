@@ -160,12 +160,11 @@ window.QuizResultsView = Backbone.View.extend({
                     qtime = question.get('timer');
                 }
                 $(this.el).append(
-                i + '. selected :' + question.get('optionSelected') + ' | correct :' + question.get('correctOption') + ' | time :' + qtime + '|openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') +'|optionSelectedTimeStamps :' + question.get('optionSelectedTimeStamps') +'|optionUnSelectedTimeStamps :' + question.get('optionUnSelectedTimeStamps') + '<br>');
+                i + '. option selected :' + question.get('optionSelected') + ' | option correct :' + question.get('correctOption') + ' | time taken :' + qtime + '|openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') +'|no of optionSelectedTimeStamps :' + question.get('optionSelectedTimeStamps').length +'|no of optionUnSelectedTimeStamps :' + question.get('optionUnSelectedTimeStamps').length + '<br>');
             }
         }
         $(this.el).append('<a href="#quizDetailedView">Detailed Assessment</a><br>');
         $(this.el).append('<a href="#quizAnalyticsView">View Analytics </a><br><br>');       
-        $(this.el).append('<div id="quiz-insights"><h3>Detailed Insights</h3> </div>');
         return this;
     }
 });
@@ -175,11 +174,23 @@ window.QuizAnalyticsView = Backbone.View.extend({
 	initialize : function() {
 		// this.render();
 	},
-
+		
 	render : function() {
-		$(this.el).append('Total Correct :'+this.model.accuracyInsights()+'<br>');
-		$(this.el).append('Total Incorrect :'+this.model.strategicInsights()+'<br>' );
-		//$(this.el).html(this.template());
+		$(this.el).append('<h3>Accuracy Insights :</h3><br>');
+		$(this.el).append(this.model.accuracyInsights()+'<br>');
+		$(this.el).append('<div id="time-chart"></div>' );
+		
+		this.model.difficultyLevelInsights();
+		$(this.el).append('<h3>Difficulty Insights :</h3><br>');
+		
+		$(this.el).append('Easy questions you got wrong :'+this.model.get('easyQuestionsIncorrect')+' <br>' );
+		$(this.el).append('Easy questions you did not attempt :'+this.model.get('easyQuestionsMissed')+' <br>' );
+		$(this.el).append('Difficult Questions you got right :'+this.model.get('difficultQuestionsAnswered')+' <br>' );
+		
+		this.model.strategicInsights();
+		$(this.el).append('<h3>Strategic Insights :</h3><br>');
+		$(this.el).append('you wasted time on lengthy questions :'+this.model.get('wastedTimeOnlengthyQuestions')+'<br>' );
+		$(this.el).append('toggled more number of times between options :'+this.model.get('toggleBetweenOptions')+'<br>' );
 		return this;
 	}
 });

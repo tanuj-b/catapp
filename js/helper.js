@@ -91,9 +91,9 @@ window.helper = {
         var qtimer = currentQuizQuestion.get('timer');
         qtimer++;
         currentQuizQuestion.set('timer', qtimer);
-        if (timer.count == 10) {
+        if (timer.count == currentQuiz.get('allotedTime')) {
             // timed out
-        	currentQuizQuestion.set('totalTime',currentQuizQuestion.get('allotedTime')); 
+        	currentQuiz.set('timeTaken',currentQuiz.get('allotedTime')); 
         	timer.stop();
             alert('time up');
             app.stopQuiz();

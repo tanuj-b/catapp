@@ -9,21 +9,50 @@ window.Quiz = Backbone.Model.extend({
     local: true, // always fetched and saved only locally, never saves on remote
     remote: false, // never cached, dualStorage is bypassed entirely
 
-    initialize: function () {},
+    initialize: function () {
+    	 if (!this.get('easyQuestionsIncorrect')) {
+             this.set({
+            	 easyQuestionsIncorrect: new Array()
+             });
+         }
+    	 if (!this.get('easyQuestionsMissed')) {
+             this.set({
+            	 easyQuestionsMissed: new Array()
+             });
+         }
+    	 if (!this.get('difficultQuestionsAnswered')) {
+             this.set({
+            	 difficultQuestionsAnswered: new Array()
+             });
+         }
+    	 
+    	 if (!this.get('toggleBetweenOptions')) {
+             this.set({
+            	 toggleBetweenOptions: new Array()
+             });
+         }
+    	 
+    	 if (!this.get('wastedTimeOnlengthyQuestions')) {
+             this.set({
+            	 wastedTimeOnlengthyQuestions: new Array()
+             });
+         }
+    	 
+    	 if (!this.get('toggleBetweenOptions')) {
+             this.set({
+            	 toggleBetweenOptions: new Array()
+             });
+         }
+    },
 
     defaults: {
         'hasAttempted' : false,
         'totalCorrect' : 0,
         'totalIncorrect' : 0,
         'timeTaken' : 0,
-        'easyQuestionsIncorrect' : '',
-        'easyQuestionsMissed' : '',
-        'difficultQuestionsAnswered' : '',
-        'toggleBetweenOptions' : '',
-        'wastedTimeOnlengthyQuestions' : '',
-        'strategicInsightsCalculated' : '',
-        'accuracyInsightsCalculated' : '',
-        'difficultyInsightsCalculated' : ''
+        'strategicInsightsCalculated' : false,
+        'accuracyInsightsCalculated' : false,
+        'difficultyInsightsCalculated' : false
 
     },
     
@@ -59,40 +88,51 @@ window.Quiz = Backbone.Model.extend({
 	 * accuracy insights function 
 	 **/
 	accuracyInsights : function (){
+		var allotedTime = this.get('allotedTime');
+		var questionCount = this.getQuestionIds().length;
 		var totalScrore  = this.get('totalCorrect');
 		var timeTaken = this.get('timeTaken');
+		
 		var insight = '';
-		var a=b=0;c=9;
-		var x = 3,y = 6, z = 9; 
-		if(timeTaken > c ){
-			if(totalScrore < x ){
-				insight = this.INSIGHTS.ins9;
-			} else if(totalScrore > x && totalScrore < y){
-				insight = this.INSIGHTS.ins10;
-			} else if(totalScrore > y && totalScrore < z){
+		var a = (9*parseInt(allotedTime))/10;
+		var b = (5*parseInt(allotedTime))/10;
+		
+		var x = (9*parseInt(questionCount))/10;
+		var y = (6*parseInt(questionCount))/10;
+		var z = (3*parseInt(questionCount))/10;
+		
+		if(timeTaken >= a ){
+			//case if time taken is more than 90
+			if(totalScrore >= x ){
+				insight = this.INSIGHTS.ins12;
+			} else if(totalScrore < x && totalScrore >= y){
 				insight = this.INSIGHTS.ins11;
-			} else if(totalScrore > y && totalScrore < z){
-				insight = this.INSIGHTS.ins12;				
+			} else if(totalScrore < y && totalScrore >= z){
+				insight = this.INSIGHTS.ins10;
+			} else if(totalScrore < z){
+				insight = this.INSIGHTS.ins9;				
 			}
-		} else if(timeTaken <c && timeTaken >b){
-			if(totalScrore < x ){
-				insight = this.INSIGHTS.ins5;
-			} else if(totalScrore > x && totalScrore < y){
-				insight = this.INSIGHTS.ins6;
-			} else if(totalScrore > y && totalScrore < z){
+		} else if(timeTaken <a && timeTaken >=b){
+			//case if time taken is between 90 and 50
+			if(totalScrore >= x ){
+				insight = this.INSIGHTS.ins8;
+			} else if(totalScrore < x && totalScrore >= y){
 				insight = this.INSIGHTS.ins7;
-			} else if(totalScrore > y && totalScrore < z){
-				insight = this.INSIGHTS.ins8;				
+			} else if(totalScrore < y && totalScrore >= z){
+				insight = this.INSIGHTS.ins6;
+			} else if(totalScrore < z){
+				insight = this.INSIGHTS.ins5;				
 			}
-		} else if(timeTaken<b && timeTaken>a){
-			if(totalScrore < x ){
-				insight = this.INSIGHTS.ins1;
-			} else if(totalScrore > x && totalScrore < y){
-				insight = this.INSIGHTS.ins2;
-			} else if(totalScrore > y && totalScrore < z){
+		} else if(timeTaken<b){
+			// if time table is less that 50
+			if(totalScrore >= x ){
+				insight = this.INSIGHTS.ins4;
+			} else if(totalScrore < x && totalScrore >= y){
 				insight = this.INSIGHTS.ins3;
-			} else if(totalScrore > y && totalScrore < z){
-				insight = this.INSIGHTS.ins4;				
+			} else if(totalScrore < y && totalScrore >= z){
+				insight = this.INSIGHTS.ins2;
+			} else if(totalScrore < z){
+				insight = this.INSIGHTS.ins1;				
 			}
 		}
 		return insight;
@@ -105,6 +145,8 @@ window.Quiz = Backbone.Model.extend({
 	difficultyLevelInsights : function (){
 		var questionIds = this.getQuestionIds();
 		var len = questionIds.length;
+		var easy = 2; // define whats easy and difficult
+		var difficult = 4;
 		for(var i=0; i<len; i++ )
 		{
 			var question = quizQuestions.get(questionIds[i]);
@@ -112,18 +154,17 @@ window.Quiz = Backbone.Model.extend({
   	       	var isCorrect = question.isOptionSelectedCorrect();
   	       	if(isCorrect==null){
   	       		// question not attempted
-  	       		if(difficulty==easy){
+  	       		if(difficulty<=easy){
   	       			// easy question missed
-  	  	    	   this.set('easyQuestionsIncorrect',this.get('easyQuestionsIncorrect')+i+'|');
+  	       		this.get('easyQuestionsMissed').push(i);
   	       		}
-  	       	} else if(difficulty==easy && !(isCorrect)){
+  	       	} else if(difficulty<=easy && !(isCorrect)){
   	    	   // easy questions you got wrong
-  	    	   this.set('easyQuestionsMissed',this.get('easyQuestionsMissed')+i+'|');
-  	       	}else if(difficulty==difficult && isCorrect){
+  	    	   this.get('easyQuestionsIncorrect').push(i);
+  	       	}else if(difficulty>=difficult && isCorrect){
   	    	   //this.difficultQuestionsAnswered
-   	    	   this.set('difficultQuestionsAnswered',this.get('difficultQuestionsAnswered')+i+'|');
+   	    	   this.get('difficultQuestionsAnswered').push(i);
   	       	}
-  	       
 		}        
 	},
 	
@@ -138,10 +179,12 @@ window.Quiz = Backbone.Model.extend({
 		for(var i=0; i<len; i++ )
 		{
 			var question = quizQuestions.get(questionIds[i]);
-			var tag = question.get('tagIds');
+			var tagIds = question.get('tagIds');
 			var timeTaken = question.get('timer');
-			if(timeTaken> question.get(averageTimeCorrect) && tag == 'difficult'){
-	   	    	   this.set('difficultQuestionsAnswered',this.get('difficultQuestionsAnswered')+i+'|');
+			var avgTime = question.get('averageTimeCorrect');
+			if(avgTime!=null && timeTaken>avgTime  && (tagIds.indexof("1") !=-1)){
+				// lengthy question answered
+	   	    	   this.get('wastedTimeOnlengthyQuestions').push(i);
 			}
 			var numberOfToggles = 0; 
 			var optionSelectedTimeStamps = question.get('optionSelectedTimeStamps');
@@ -154,8 +197,8 @@ window.Quiz = Backbone.Model.extend({
 				numberOfToggles = numberOfToggles + optionUnSelectedTimeStamps[options].length;
 			}
 			if(numberOfToggles > toggleThreshHold){
-	   	    	   this.set('toggleBetweenOptions',this.get('toggleBetweenOptions')+i+'|');
-			}
+				this.get('toggleBetweenOptions').push(i);
+	   	    }
         }
         
 	},
@@ -193,7 +236,8 @@ window.Quiz = Backbone.Model.extend({
         	questionIds = questionIds.concat((questionSet.get('questionIds')).split(SEPARATOR));	
         }
         return questionIds ;
-	}
+	},
+	
 
 });
 
