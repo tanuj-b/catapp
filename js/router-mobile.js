@@ -11,6 +11,7 @@ var AppRouter = Backbone.Router.extend({
         "quiz/:id": "startQuiz",
         "practice/:id": "startPractice",
         "getQuestion/:index": "getQuestion",
+        "sync":"sync",
         "quizDetailedView":"quizDetailedView",
         "quizAnalyticsView":"quizAnalyticsView",
     },
@@ -78,6 +79,12 @@ var AppRouter = Backbone.Router.extend({
 	            }]
 	        });
 	},
+	
+    sync: function(){
+        sync.setUserId(1); //get actual account id and set it
+        alert(sync.fetchIdsFromCollection(quizzes));
+        alert(sync.fetchIdsFromLocalStorage(quizzes));
+     },
 
 
     /**
@@ -89,8 +96,8 @@ var AppRouter = Backbone.Router.extend({
         /*
          * To be replaced by sync. this is just for the demo
          */
-        localStorage.clear(); //remove this line in final product.
-
+        //localStorage.clear(); //remove this line in final product.
+/*
         quizzes.fetch({
             success: function () {
                 console.log('init quizzes fetched');
@@ -122,6 +129,7 @@ var AppRouter = Backbone.Router.extend({
                     }
                 });
             }
+<<<<<<< HEAD
         });
         
         sectionL1.fetch({
@@ -136,6 +144,8 @@ var AppRouter = Backbone.Router.extend({
         	 }
         });
         
+        });*/
+
     },
 
     landing: function () {
@@ -265,10 +275,6 @@ var AppRouter = Backbone.Router.extend({
         practiceView.renderQuestion();
     },
     
-    /**
-     * Routing logic added by Tanuj 
-     * 
-     **/
     flashcardlist: function () {
         var context = this;
         flashCardLists.fetch({
@@ -292,6 +298,7 @@ var AppRouter = Backbone.Router.extend({
             currentFlashCards.add({
                 id: id
             });
+
         });
 
         //This is where flashCards are being fetched and stored into a Collection.
@@ -354,9 +361,9 @@ var AppRouter = Backbone.Router.extend({
     }
 });
 
-if (phonegap == false) {
+if (Config.phonegap == false) {
     $(document).ready(function () {
-        helper.loadTemplate(['LandingView', 'QuizQuestionView', 'FlashCardListView', 'FlashCardListItemView', 'FlashCardView', 'MenuView', 'PracticeTopicsView', 'PracticeQuestionView', 'QuizTopicsView', 'QuizResultsView', 'ProfileView', 'QuizAnalyticsView'], function () {
+        helper.loadTemplate(Config.viewsArray, function () {
             app = new AppRouter();
             (function (d) {
                 var js, id = 'facebook-jssdk';
@@ -379,8 +386,7 @@ function init() {
 }
 
 var onDeviceReady = function () {
-    console.log('on device ready');
-    helper.loadTemplate(['LandingView', 'QuizQuestionView', 'FlashCardListView', 'FlashCardListItemView', 'FlashCardView', 'MenuView', 'PracticeTopicsView', 'PracticeQuestionView', 'QuizTopicsView', 'QuizResultsView', 'ProfileView', 'QuizAnalyticsView'], function () {
+    helper.loadTemplate(Config.viewsArray, function () {
         app = new AppRouter();
         (function (d) {
             var js, id = 'facebook-jssdk';
@@ -393,6 +399,10 @@ var onDeviceReady = function () {
             js.src = "//connect.facebook.net/en_US/all.js";
             d.getElementsByTagName('head')[0].appendChild(js);
         }(document));
+        
+        if(Config.phonegap){
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemAccess.gotFS, fileSystemAccess.fail);
+        }
         Backbone.history.start();
     });
 };

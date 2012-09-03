@@ -81,8 +81,8 @@ window.FlashCardView = Backbone.View.extend({
 		//read user answer
 
 		var userAnswer = $("#fc-fs-"+id).find("input:checked").attr("value");
-		var modelId = (this.options.flashCardList.get("wordIds").split("|:")[id-1])
-		var correctOption = this.options.flashCards.get(modelId).get('correctOption')
+		var modelId = (this.options.flashCardList.get("wordIds").split("|:")[id-1]);
+		var correctOption = this.options.flashCards.get(modelId).get('correctOption');
 
 		$("#flash-card-answer-"+id).find("li").removeClass("user-answer");
 		if(userAnswer != correctOption)

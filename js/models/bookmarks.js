@@ -1,6 +1,6 @@
 window.BookMark = Backbone.RelationalModel.extend({
 
-    urlRoot: '../api/bookmarks',
+    urlRoot: Config.serverUrl + 'bookmarks',
 
     initialize: function () {
     	
@@ -10,7 +10,7 @@ window.BookMark = Backbone.RelationalModel.extend({
 
 window.BookMarkCollection = Backbone.Collection.extend({
 	model: BookMark,
-	url: '../api/bookmarks'	
+	url: Config.serverUrl + 'bookmarks'
 });
 
 var bookmarks = new BookMarkCollection();

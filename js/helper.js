@@ -1,8 +1,3 @@
-/**
- * The helper class
- * @author ssachan 
- * 
- **/
 window.helper = {
 
     // Asynchronously load templates located in separate .html files
@@ -12,18 +7,18 @@ window.helper = {
 
         $.each(views, function (index, view) {
             if (window[view]) {
-                if (phonegap == true) {
-                    $.ajax({
+                if (Config.phonegap == true) {
+                    deferreds.push($.ajax({
                         type: "GET",
                         dataType: "html",
-                        url: 'file:///android_asset/www/'+tmplatesFolder+'/' + view + '.html',
+                        url: Config.assetPath+Config.tmplatesFolder+'/' + view + '.html',
                         async: false,
                     }).done(function (data) {
                         window[view].prototype.template = _.template(data);
-                    });
+                    }));
 
                 } else {
-                    deferreds.push($.get(tmplatesFolder+'/' + view + '.html', function (data) {
+                    deferreds.push($.get(Config.tmplatesFolder+'/' + view + '.html', function (data) {
                         window[view].prototype.template = _.template(data);
                     }));
                 }
@@ -34,7 +29,7 @@ window.helper = {
 
         $.when.apply(null, deferreds).done(callback);
     },
-
+/*
     uploadFile: function (file, callbackSuccess) {
         var self = this;
         var data = new FormData();
@@ -74,7 +69,7 @@ window.helper = {
         controlGroup.removeClass('error');
         $('.help-inline', controlGroup).html('');
     },
-
+*/
     showAlert: function (title, text, klass) {
         $('.alert').removeClass("alert-error alert-warning alert-success alert-info");
         $('.alert').addClass(klass);

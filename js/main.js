@@ -1,8 +1,6 @@
 /*
  * THE GLOBALS
  */
-var SEPARATOR = '|:';
-
 var currentQuiz = null;
 var currentQuizQuestion = null;
 var quizView = null;

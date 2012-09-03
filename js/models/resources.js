@@ -1,6 +1,6 @@
 window.Resource = Backbone.RelationalModel.extend({
 
-    urlRoot: '../api/resources',
+    urlRoot: Config.serverUrl + 'resources',
 
     initialize: function () {
     	
@@ -10,7 +10,7 @@ window.Resource = Backbone.RelationalModel.extend({
 
 window.ResourceCollection = Backbone.Collection.extend({
 	model: Resource,
-	url: '../api/resources'	
+	url: Config.serverUrl + 'resources'	
 });
 
 var resources = new ResourceCollection();
