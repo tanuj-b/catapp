@@ -3,12 +3,17 @@ if(Config.phonegap)
     window.fileSystemAccess =
     {
         fileSystem : null,
+        dbDirectory : null,
         
         gotFS : function(fileSystem)
         {
             this.fileSystem = fileSystem;
         },
-        
+
+        gotDbDirectory : function(directoryEntry)
+        {
+            this.dbDirectory = directoryEntry;
+        },
         fail : function(error)
         {
             console.log(error.code);

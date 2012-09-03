@@ -16,11 +16,6 @@ var AppRouter = Backbone.Router.extend({
         "quizAnalyticsView":"quizAnalyticsView",
     },
     
-
-    /**
-     * Routing logic added by ssachan 
-     * 
-     **/
     sync: function(){
         sync.setUserId(1); //get actual account id and set it
         alert(sync.fetchIdsFromCollection(quizzes));
@@ -195,10 +190,6 @@ var AppRouter = Backbone.Router.extend({
         practiceView.renderQuestion();
     },
     
-    /**
-     * Routing logic added by Tanuj 
-     * 
-     **/
     flashcardlist: function () {
         var context = this;
         flashCardLists.fetch({
