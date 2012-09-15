@@ -1,3 +1,9 @@
+/**
+ * The practice views
+ * @author ssachan 
+ * 
+ **/
+
 window.PracticeTopicsView = Backbone.View.extend({
 
 	initialize : function() {
@@ -13,12 +19,12 @@ window.PracticeTopicsView = Backbone.View.extend({
 window.PracticeView = Backbone.View.extend({
 	
 	initialize : function() {
-		this.index = 0;
-		this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
-		this.length = this.questionSetIds.length;
-		this.quizTimer = '0';
-		this.model.set('timer',this.quizTimer);
-		this.render();
+		 this.index = this.options.index;
+	     this.questionView = null;
+	     this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
+	     this.length = this.questionSetIds.length;
+	     this.question = null;
+	     this.render();   
 	},
 	
 	events : {
@@ -32,7 +38,6 @@ window.PracticeView = Backbone.View.extend({
 		} else {
 			this.index--;
 			$('#question').empty();
-			questionTimer.stop();
 			this.renderQuestion();
 		}
 	},
@@ -43,90 +48,79 @@ window.PracticeView = Backbone.View.extend({
 		} else {
 			this.index++;
 			$('#question').empty();
-			questionTimer.stop();
 			this.renderQuestion();
 		}
 	},
 
 	render : function() {
 		$(this.el).html(this.template());
-		this.renderQuestion();
 		return this;
 	},
 
 	renderQuestion : function() {
-		var questionSet = questionSets.get(this.questionSetIds[this.index]);
-		if (questionSet.get('question_count') > 1) {
-					
-		} else {
-			var questionIds = questionSet.get('questionIds');
-			var question = questions.get(questionIds);
-			if(question.get('timer')==null){
-				question.set('timer',new Timer(1000,utils.updateTimer,[]));
-			}
-			questionTimer = question.get('timer');
-			new QuizQuestionView({
-				model : question,
-				el:$('#question'),
-			});
-			questionTimer.start();
-		}
-		return null;
+		 var questionSet = practiceQuestionSets.get(this.questionSetIds[this.index]);
+	        if (questionSet.get('question_count') > 1) {
+	            // TODO : handle para questions
+
+	        } else {
+	            var questionIds = questionSet.get('questionIds');
+	            this.question = practiceQuestions.get(questionIds);
+	            if(this.question.get('timer')==null){
+	            	this.question.set('timer', 0);
+	            }
+	            if (this.questionView == null) {
+	                this.questionView = new PracticeQuestionView({
+	                	el : $('#question'),
+	                });
+	            }
+	            this.questionView.model = this.question;
+	            currentPracticeQuestion = this.question;
+	            this.questionView.render();
+	            if(this.question.get('attemptedInPractice')==true){
+	            	timer.stop();
+	            }else{
+	            	timer.start();
+	            }
+	            this.question.get('openTimeStamps').push(
+	            new Date().getTime());
+	        }
+	        return null; 
 	}
 });
 
 window.PracticeQuestionView = Backbone.View.extend({
-	el : $('#question'),
 	initialize : function() {
-		this.render();
 	},
 	
 	events : {
-		'change input:radio[name=option]' : 'onOptionSelection'
+        'click button[name="option"]': 'onOptionSelection'
 	},
 
 	onOptionSelection : function(e) {
 		var oldOptionSelected = this.model.get('optionSelected');
-		var optionSelected = $('input:radio[name=option]:checked').val();
-		if (optionSelected == oldOptionSelected) {
-			this.model.set('optionSelected', null);
-			$('input:radio[name=option]:checked').attr('checked', false);
-		} else {
-			this.model.set('optionSelected', optionSelected);
-		}
+		var optionSelected = $('button[name="option"].active').val();
+	    if (optionSelected == oldOptionSelected) {
+	            this.model.set('optionSelected', null);
+	    } else {
+	            this.model.set('optionSelected', optionSelected);
+	    } 
+	    this.model.set('attemptedInPractice',true);
+	    timer.stop();
+	    this.renderInfo();
 	},
 
 	render : function() {
 		$('#question').html(this.template(this.model.toJSON()));
+		if(this.model.get('attemptedInPractice')==true){
+	    	this.renderInfo();
+	    }
 		return this;
-	}
-});
-
-
-window.PracticeResultsView = Backbone.View.extend({
-	el : $('#question'),
-	initialize : function() {
-		this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
 	},
 	
-	render : function() {
-		var len = this.questionSetIds.length;
-		for (var i = 0; i < len; i++) {
-			var questionSet = questionSets.get(this.questionSetIds[i]);
-			if (questionSet.get('question_count') > 1) {
-					
-			} else {
-				var questionIds = questionSet.get('questionIds');
-				var question = questions.get(questionIds);
-				var qtime=null;
-				if(question.get('timer')==null){
-					qtime='not seen';
-				}else {
-					qtime = question.get('timer').count;
-				}
-				$(this.el).append(i+'. selected :'+question.get('optionSelected')+' | correct :'+question.get('correctOption')+' | time :'+qtime+'<br>');
-			}
-		}
-		return this;
+	renderInfo : function(){
+    	$('#info').html('<h3>info</h3>correct answer-'+this.model.get('correctOption'));
+      	$('#info').append('<br>'+this.model.get('explanation'));
+      	$("input[type='radio']").checkboxradio('disable');   
+      	$('#time').html(this.model.get('timer'));
 	}
 });

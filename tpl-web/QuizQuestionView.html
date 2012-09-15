@@ -9,9 +9,20 @@
 		<% } %>
 	</div>
 	<div class="span2">
-		<a class="btn btn-large btn-block" href="#">A </a>
-		<a class="btn btn-large btn-block" href="#">B </a> 
-		<a class="btn btn-large btn-block" href="#">C </a> 
-		<a class="btn btn-large btn-block" href="#">D </a>
+	<div class="btn-group" data-toggle="buttons-radio">
+		<% var len = opts.length;
+		   for(var i=0; i <len; i++){
+		%> 
+		<button type="button" data-toggle="button" name="option" value="<%=i%>"
+			<% if(optionSelected!=null && optionSelected==i)
+			{%> 
+			<%='class="btn btn-large btn-block active"'%>
+			<% }
+			else {%> 
+			<%='class="btn btn-large btn-block"'%>
+			<% }%> 
+			><%=(i+1) %></button>
+		<% } %> 
+		</div>
 	</div>
 </div>

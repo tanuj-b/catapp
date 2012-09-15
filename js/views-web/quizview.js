@@ -97,15 +97,14 @@ window.QuizQuestionView = Backbone.View.extend({
 	  initialize: function () {},
 
 	    events: {
-	        'change input[name=option]': 'onOptionSelection'
+	        'click .btn': 'onOptionSelection'
 	    },
 
 	    onOptionSelection: function (e) {
 	        var oldOptionSelected = this.model.get('optionSelected');
-	        var optionSelected = $('input:radio[name=option]:checked').val();
+	        var optionSelected = $('button[name="option"].active').val();
 	        if (optionSelected == oldOptionSelected) {
 	            this.model.set('optionSelected', null);
-	            $('input:radio[name=option]:checked').attr('checked', false);
 	            if(!this.model.get('optionUnSelectedTimeStamps')[optionSelected]){
 	            	this.model.get('optionUnSelectedTimeStamps')[optionSelected] = new Array();
 	            }

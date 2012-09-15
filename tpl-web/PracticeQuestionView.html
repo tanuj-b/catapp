@@ -1,5 +1,32 @@
-	<h3><%= questionText %></h3>
-	<ul data-role="listview" data-inset="true" id="options">
+<div class="row-fluid">
+<div id="info">
+</div>
+</div>
+<div class="row-fluid">
+	<h4>Question</h4>
+	<p><%= questionText %></p>
+</div>
+<div class="row-fluid">
+	<div class="span10">
 		<% var opts = options.split("|:"); for (opt in opts){ %>
-		<li><p><%= opts[opt] %></p></li> <% } %>
-	</ul>
+		<h4><%= opts[opt] %></h4>
+		<% } %>
+	</div>
+	<div class="span2">
+	<div class="btn-group" data-toggle="buttons-radio">
+		<% var len = opts.length;
+		   for(var i=0; i <len; i++){
+		%> 
+		<button type="button" data-toggle="button" name="option" value="<%=i%>"
+			<% if(optionSelected!=null && optionSelected==i)
+			{%> 
+			<%='class="btn btn-large btn-block active"'%>
+			<% }
+			else {%> 
+			<%='class="btn btn-large btn-block"'%>
+			<% }%> 
+			><%=(i+1) %></button>
+		<% } %> 
+		</div>
+	</div>
+</div>

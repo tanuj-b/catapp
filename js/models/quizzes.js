@@ -38,13 +38,12 @@ window.Quiz = Backbone.Model.extend({
              });
          }
     	 
-    	 if (!this.get('toggleBetweenOptions')) {
+    	 if (!this.get('questionIds')) {
              this.set({
-            	 toggleBetweenOptions: new Array()
+            	 questionIds: new Array()
              });
          }
     },
-    key: "questionSetIds",
 
     defaults: {
         'hasAttempted' : false,

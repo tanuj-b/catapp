@@ -3,6 +3,7 @@
  * @author ssachan 
  * 
  **/
+
 window.PracticeTopicsView = Backbone.View.extend({
 
     initialize: function () {},
@@ -30,23 +31,23 @@ window.PracticeView = Backbone.View.extend({
     },
 
     onPreviousClick: function () {
-        //this.question.get('closeTimeStamps').push(new Date().getTime());
-        if (this.index == 0) {
-            alert('at the start dude');
-        } else {
-            this.index--;
-            this.renderQuestion();
-        }
+    	if (this.index == 0) {
+			alert('at the start dude');
+		} else {
+			this.index--;
+			$('#question').empty();
+			this.renderQuestion();
+		}
     },
 
     onNextClick: function () {
-    	//this.question.get('closeTimeStamps').push(new Date().getTime());
-        if (this.index == (this.length - 1)) {
-            alert('at the end dude');
-        } else {
-            this.index++;
-            this.renderQuestion();
-        }
+    	if (this.index == (this.length-1)) {
+			alert('at the end dude');
+		} else {
+			this.index++;
+			$('#question').empty();
+			this.renderQuestion();
+		}
     },
     
     onQNoClick : function (e){
