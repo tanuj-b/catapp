@@ -93,12 +93,12 @@ window.PracticeQuestionView = Backbone.View.extend({
 	},
 	
 	events : {
-        'click button[name="option"]': 'onOptionSelection'
+        'click div.btn-group button': 'onOptionSelection'
 	},
 
 	onOptionSelection : function(e) {
 		var oldOptionSelected = this.model.get('optionSelected');
-		var optionSelected = $('button[name="option"].active').val();
+		var optionSelected = e.target.value;
 	    if (optionSelected == oldOptionSelected) {
 	            this.model.set('optionSelected', null);
 	    } else {

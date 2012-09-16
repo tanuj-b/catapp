@@ -126,13 +126,24 @@ var AppRouter = Backbone.Router.extend({
         timer.start();
     },
 
-    quizStop: function () {
-        currentQuiz.get('timer').stop();
-        app.changePage(new QuizResultsView({
-            model: currentQuiz
-        }));
+    stopQuiz: function () {
+    	currentQuiz.calculateScores();
+        new QuizResultsView({
+            model: currentQuiz,
+            el: $('#content')
+        });
+        //this.drawTimeChart();
     },
-
+    
+    quizDetailedView: function () {
+    	currentQuiz.set('hasAttempted',true);
+    	quizView.close();
+    	quizView = new QuizView({
+             model: currentQuiz,
+             index: 0,
+        });
+    },
+    
     quizAnalyticsView: function () {
         new QuizAnalyticsView({});
     },
