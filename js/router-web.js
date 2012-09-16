@@ -115,7 +115,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     startQuiz: function (id) {
-        currentQuiz = quizzes.models[id];
+        currentQuiz = quizzes.get(id);
         new QuizView({
             model: currentQuiz,
             index: 0,
@@ -169,7 +169,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     startPractice: function (id) {
-        currentPractice = practiceTests.models[id];
+        currentPractice = practiceTests.get(id);
         var practiceView = new PracticeView({
             model: currentPractice,
             index: 0,

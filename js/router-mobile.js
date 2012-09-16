@@ -16,70 +16,6 @@ var AppRouter = Backbone.Router.extend({
         "quizAnalyticsView":"quizAnalyticsView",
     },
     
-    // will shift this 
-	drawTimeChart : function (){
-		var questionIds = currentQuiz.getQuestionIds();
-		var len = questionIds.length;
-		var timeTaken = new Array();
-		for(var i=0; i<len; i++ )
-		{
-			var question = quizQuestions.get(questionIds[i]);
-			if(question.get('timer')==null){
-				timeTaken.push(parseFloat('0'));
-			}else {
-				timeTaken.push(parseFloat(question.get('timer')));
-			}
-		}
-		
-		chart = new Highcharts.Chart({
-	            chart: {
-	                renderTo: 'time-chart',
-	                type: 'column'
-	            },
-	            title: {
-	                text: 'Time Taken Per Question'
-	            },
-	            subtitle: {
-	                text: ''
-	            },
-	            xAxis: {
-	                categories: questionIds
-	            },
-	            yAxis: {
-	                min: 0,
-	                title: {
-	                    text: 'Time (sec)'
-	                }
-	            },
-	            legend: {
-	                layout: 'vertical',
-	                backgroundColor: '#FFFFFF',
-	                align: 'left',
-	                verticalAlign: 'top',
-	                x: 100,
-	                y: 70,
-	                floating: true,
-	                shadow: true
-	            },
-	            tooltip: {
-	                formatter: function() {
-	                    return ''+
-	                        'Q'+this.x +': '+ this.y +' sec';
-	                }
-	            },
-	            plotOptions: {
-	                column: {
-	                    pointPadding: 0.2,
-	                    borderWidth: 0
-	                }
-	            },
-	                series: [{
-	                data: timeTaken//[49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-	    
-	            }]
-	        });
-	},
-	
     sync: function(){
         sync.setUserId(1); //get actual account id and set it
         alert(sync.fetchIdsFromCollection(quizzes));
@@ -96,8 +32,7 @@ var AppRouter = Backbone.Router.extend({
         /*
          * To be replaced by sync. this is just for the demo
          */
-        //localStorage.clear(); //remove this line in final product.
-
+        localStorage.clear(); //remove this line in final product.
         quizzes.fetch({
             success: function () {
                 console.log('init quizzes fetched');
@@ -193,7 +128,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     startQuiz: function (id) {
-        currentQuiz = quizzes.models[id];
+        currentQuiz = quizzes.get(id);
         quizView = new QuizView({
             model: currentQuiz,
             index: 0,
@@ -203,19 +138,80 @@ var AppRouter = Backbone.Router.extend({
         timer.reset();
         quizView.renderQuestion();
         timer.start();
-        //currentQuiz.get('timer').start();
     },
-
+    drawTimeChart : function (){
+		var questionIds = currentQuiz.getQuestionIds();
+		var len = questionIds.length;
+		var timeTaken = new Array();
+		for(var i=0; i<len; i++ )
+		{
+			var question = quizQuestions.get(questionIds[i]);
+			if(question.get('timer')==null){
+				timeTaken.push(parseFloat('0'));
+			}else {
+				timeTaken.push(parseFloat(question.get('timer')));
+			}
+		}
+		
+		chart = new Highcharts.Chart({
+	            chart: {
+	                renderTo: 'time-chart',
+	                type: 'column'
+	            },
+	            title: {
+	                text: 'Time Taken Per Question'
+	            },
+	            subtitle: {
+	                text: ''
+	            },
+	            xAxis: {
+	                categories: questionIds
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: 'Time (sec)'
+	                }
+	            },
+	            legend: {
+	                layout: 'vertical',
+	                backgroundColor: '#FFFFFF',
+	                align: 'left',
+	                verticalAlign: 'top',
+	                x: 100,
+	                y: 70,
+	                floating: true,
+	                shadow: true
+	            },
+	            tooltip: {
+	                formatter: function() {
+	                    return ''+
+	                        'Q'+this.x +': '+ this.y +' sec';
+	                }
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.2,
+	                    borderWidth: 0
+	                }
+	            },
+	                series: [{
+	                data: timeTaken//[49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+	    
+	            }]
+	        });
+	},
     stopQuiz: function () {
     	currentQuiz.calculateScores();
     	app.changePage(new QuizResultsView({
             model: currentQuiz
         }));
+        this.drawTimeChart();
     },
     
     quizDetailedView: function () {
     	//$('body').empty();
-    	//currentQuiz.set('hasAttempted',true);
+    	currentQuiz.set('hasAttempted',true);
     	 quizView.close();
     	 quizView = new QuizView({
              model: currentQuiz,
@@ -260,7 +256,7 @@ var AppRouter = Backbone.Router.extend({
     },
     
     startPractice: function (id) {
-        currentPractice = practiceTests.models[id];
+        currentPractice = practiceTests.get(id);
         practiceView = new PracticeView({
             model: currentPractice,
             index: 0,
