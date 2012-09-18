@@ -44,9 +44,8 @@ window.Question = Backbone.Model.extend({
     defaults: {
         'optionSelected': null,
         'status': null,
-        'timer': null,
+        'timeTaken': null,
         'attemptedInPractice':false,
-        'key' : "resourcesIds",
     }
 });
 

@@ -219,7 +219,7 @@ window.Quiz = Backbone.Model.extend({
 					this.set('totalIncorrect', this.get('totalIncorrect')+1);
 				}
 			}
-			this.hasAttempted = true;
+			this.set('hasAttempted',true);
 		}
 	},
 	
@@ -227,18 +227,18 @@ window.Quiz = Backbone.Model.extend({
 	 * Get all question ids belonging to this quiz 
 	 **/
 	getQuestionIds : function (){
-		var questionIds=new Array();
-		var questionSetIds = this.get('questionSetIds').split(SEPARATOR);
-        var len = questionSetIds.length;
-		for(var i=0; i<len; i++ )
-		{
-        	var questionSet = quizQuestionSets.get(questionSetIds[i]);
-        	questionIds = questionIds.concat((questionSet.get('questionIds')).split(SEPARATOR));	
-        }
+		var questionIds=this.get('questionIds');
+		if(questionIds.length==0){		
+			var questionSetIds = this.get('questionSetIds').split(SEPARATOR);
+			var len = questionSetIds.length;
+			for(var i=0; i<len; i++ )
+			{
+				var questionSet = quizQuestionSets.get(questionSetIds[i]);
+				questionIds = questionIds.concat((questionSet.get('questionIds')).split(SEPARATOR));	
+			}
+		}
         return questionIds ;
 	},
-	
-
 });
 
 window.QuizCollection = Backbone.Collection.extend({

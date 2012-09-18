@@ -139,79 +139,16 @@ var AppRouter = Backbone.Router.extend({
         quizView.renderQuestion();
         timer.start();
     },
-    drawTimeChart : function (){
-		var questionIds = currentQuiz.getQuestionIds();
-		var len = questionIds.length;
-		var timeTaken = new Array();
-		for(var i=0; i<len; i++ )
-		{
-			var question = quizQuestions.get(questionIds[i]);
-			if(question.get('timer')==null){
-				timeTaken.push(parseFloat('0'));
-			}else {
-				timeTaken.push(parseFloat(question.get('timer')));
-			}
-		}
-		
-		chart = new Highcharts.Chart({
-	            chart: {
-	                renderTo: 'time-chart',
-	                type: 'column'
-	            },
-	            title: {
-	                text: 'Time Taken Per Question'
-	            },
-	            subtitle: {
-	                text: ''
-	            },
-	            xAxis: {
-	                categories: questionIds
-	            },
-	            yAxis: {
-	                min: 0,
-	                title: {
-	                    text: 'Time (sec)'
-	                }
-	            },
-	            legend: {
-	                layout: 'vertical',
-	                backgroundColor: '#FFFFFF',
-	                align: 'left',
-	                verticalAlign: 'top',
-	                x: 100,
-	                y: 70,
-	                floating: true,
-	                shadow: true
-	            },
-	            tooltip: {
-	                formatter: function() {
-	                    return ''+
-	                        'Q'+this.x +': '+ this.y +' sec';
-	                }
-	            },
-	            plotOptions: {
-	                column: {
-	                    pointPadding: 0.2,
-	                    borderWidth: 0
-	                }
-	            },
-	                series: [{
-	                data: timeTaken//[49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-	    
-	            }]
-	        });
-	},
+
     stopQuiz: function () {
     	currentQuiz.calculateScores();
     	app.changePage(new QuizResultsView({
             model: currentQuiz
         }));
-        this.drawTimeChart();
+        drawTimeChart();
     },
     
     quizDetailedView: function () {
-    	//$('body').empty();
-    	currentQuiz.set('hasAttempted',true);
     	 quizView.close();
     	 quizView = new QuizView({
              model: currentQuiz,

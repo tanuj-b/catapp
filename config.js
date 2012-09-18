@@ -20,7 +20,6 @@ var config_mobile_android = {
     				'QuizTopicsView',
     				'QuizResultsView',
     				'ProfileView',
-    				'QuizAnalyticsView'
     			]
 };
 
@@ -51,7 +50,7 @@ var config_mobile_web = {
     			]
 };
 
-//var Config = config_mobile_android;	
-var Config = config_mobile_web;	
+var Config = config_mobile_android;	
+//var Config = config_mobile_web;	
     
 

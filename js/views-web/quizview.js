@@ -198,6 +198,8 @@ window.QuizResultsView = Backbone.View.extend({
         $(this.el).empty();
         $(this.el).append('Total Correct :'+this.model.get('totalCorrect')+'<br>');
         $(this.el).append('Total Incorrect :'+this.model.get('totalIncorrect')+'<br>' );
+        //$(this.el).append('Total Unattempted :'+this.model.get('totalIncorrect')+'<br>' );
+
         for (var i = 0; i < len; i++) {
             var questionSet = quizQuestionSets.get(this.questionSetIds[i]);
             if (questionSet.get('question_count') > 1) {
@@ -212,7 +214,7 @@ window.QuizResultsView = Backbone.View.extend({
                     qtime = question.get('timer');
                 }
                 $(this.el).append(
-                'Q'+(i+1) + '. option selected :' + question.get('optionSelected') + ' | option correct :' + question.get('correctOption') + ' | time taken :' + qtime + '<br>openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') +'|no of optionSelectedTimeStamps :' + question.get('optionSelectedTimeStamps').length +'|no of optionUnSelectedTimeStamps :' + question.get('optionUnSelectedTimeStamps').length + '<br>');
+                'Q'+(i+1) + '. option selected :' + question.get('optionSelected') + ' | option correct :' + question.get('correctOption') + ' | time taken :' + qtime + '<br>openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') +'|no of optionSelectedTimeStamps :' + question.get('optionSelectedTimeStamps') +'|no of optionUnSelectedTimeStamps :' + question.get('optionUnSelectedTimeStamps') + '<br>');
             }
         }
         $(this.el).append('<a href="#quizDetailedView">Detailed Assessment</a><br>');

@@ -83,9 +83,9 @@ window.helper = {
 
     updateQuizTimer: function () {
        $('#time').html(timer.count);
-        var qtimer = currentQuizQuestion.get('timer');
+        var qtimer = currentQuizQuestion.get('timeTaken');
         qtimer++;
-        currentQuizQuestion.set('timer', qtimer);
+        currentQuizQuestion.set('timeTaken', qtimer);
         if (timer.count == currentQuiz.get('allotedTime')) {
             // timed out
         	currentQuiz.set('timeTaken',currentQuiz.get('allotedTime')); 
@@ -96,13 +96,13 @@ window.helper = {
     },
     
     updatePracticeTimer: function () {
-      var qtimer = currentPracticeQuestion.get('timer');
+      var qtimer = currentPracticeQuestion.get('timeTaken');
       qtimer++;
       $('#time').html(qtimer);
-      currentPracticeQuestion.set('timer', qtimer);
+      currentPracticeQuestion.set('timeTaken', qtimer);
       if (qtimer == 10) {
     	  	currentPracticeQuestion.set('attemptedInPractice',true);
-    	  	currentPracticeQuestion.set('time',qtimer);
+    	  	currentPracticeQuestion.set('timeTaken',qtimer);
             alert('time up');
             timer.stop();
             practiceView.questionView.renderInfo();

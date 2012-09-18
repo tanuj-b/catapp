@@ -73,8 +73,8 @@ window.QuizView = Backbone.View.extend({
         } else {
             var questionIds = questionSet.get('questionIds');
             this.question = quizQuestions.get(questionIds);
-            if(this.question.get('timer')==null){
-            	this.question.set('timer', 0);
+            if(this.question.get('timeTaken')==null){
+            	this.question.set('timeTaken', 0);
             }
             if (this.questionView == null) {
                 this.questionView = new QuizQuestionView({
@@ -133,7 +133,7 @@ window.QuizQuestionView = Backbone.View.extend({
     renderInfo : function(){
     	$('#info').html('<h3>info</h3>'+this.model.get('explanation'));
    	 	$('#info').append('<br>correct answer-'+this.model.get('correctOption'));
-   	 	$('#time').html(this.model.get('timer'));
+   	 	$('#time').html(this.model.get('timeTaken'));
     }
 });
 
@@ -150,69 +150,6 @@ window.QuizResultsView = Backbone.View.extend({
       $('#results1').hide();
       $('#insights').show();
     },
-    
-    drawTimeChart : function (){
-		var questionIds = currentQuiz.getQuestionIds();
-		var len = questionIds.length;
-		var timeTaken = new Array();
-		for(var i=0; i<len; i++ )
-		{
-			var question = quizQuestions.get(questionIds[i]);
-			if(question.get('timer')==null){
-				timeTaken.push(parseFloat('0'));
-			}else {
-				timeTaken.push(parseFloat(question.get('timer')));
-			}
-		}
-		
-		chart = new Highcharts.Chart({
-	            chart: {
-	                renderTo: 'time-chart',
-	                type: 'column'
-	            },
-	            title: {
-	                text: 'Time Taken Per Question'
-	            },
-	            subtitle: {
-	                text: ''
-	            },
-	            xAxis: {
-	                categories: questionIds
-	            },
-	            yAxis: {
-	                min: 0,
-	                title: {
-	                    text: 'Time (sec)'
-	                }
-	            },
-	            legend: {
-	                layout: 'vertical',
-	                backgroundColor: '#FFFFFF',
-	                align: 'left',
-	                verticalAlign: 'top',
-	                x: 100,
-	                y: 70,
-	                floating: true,
-	                shadow: true
-	            },
-	            tooltip: {
-	                formatter: function() {
-	                    return ''+
-	                        'Q'+this.x +': '+ this.y +' sec';
-	                }
-	            },
-	            plotOptions: {
-	                column: {
-	                    pointPadding: 0.2,
-	                    borderWidth: 0
-	                }
-	            },
-	                series: [{
-	                data: timeTaken//[49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-	    
-	            }]
-	        });
-	},
 	
     render: function () {
         var len = this.questionSetIds.length;
@@ -227,10 +164,10 @@ window.QuizResultsView = Backbone.View.extend({
                 var questionIds = questionSet.get('questionIds');
                 var question = quizQuestions.get(questionIds);
                 var qtime = null;
-                if (question.get('timer') == null) {
+                if (question.get('timeTaken') == null) {
                     qtime = 'not seen';
                 } else {
-                    qtime = question.get('timer');
+                    qtime = question.get('timeTaken');
                 }
                 $(this.el).append(
                 'Q'+(i+1) + '. option selected :' + question.get('optionSelected') + ' | option correct :' + question.get('correctOption') + ' | time taken :' + qtime + '<br>openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') +'|no of optionSelectedTimeStamps :' + question.get('optionSelectedTimeStamps').length +'|no of optionUnSelectedTimeStamps :' + question.get('optionUnSelectedTimeStamps').length + '<br>');
@@ -257,29 +194,4 @@ window.QuizResultsView = Backbone.View.extend({
 		$(this.el).append('toggled more number of times between options :'+this.model.get('toggleBetweenOptions')+'<br>' );
         return this;
     }
-});
-
-window.QuizAnalyticsView = Backbone.View.extend({
-
-	initialize : function() {
-	},
-		
-	render : function() {
-		$(this.el).append('<h3>Accuracy Insights :</h3><br>');
-		$(this.el).append(this.model.accuracyInsights()+'<br>');
-		$(this.el).append('<div id="time-chart"></div>' );
-		
-		this.model.difficultyLevelInsights();
-		$(this.el).append('<h3>Difficulty Insights :</h3><br>');
-		
-		$(this.el).append('Easy questions you got wrong :'+this.model.get('easyQuestionsIncorrect')+' <br>' );
-		$(this.el).append('Easy questions you did not attempt :'+this.model.get('easyQuestionsMissed')+' <br>' );
-		$(this.el).append('Difficult Questions you got right :'+this.model.get('difficultQuestionsAnswered')+' <br>' );
-		
-		this.model.strategicInsights();
-		$(this.el).append('<h3>Strategic Insights :</h3><br>');
-		$(this.el).append('you wasted time on lengthy questions :'+this.model.get('wastedTimeOnlengthyQuestions')+'<br>' );
-		$(this.el).append('toggled more number of times between options :'+this.model.get('toggleBetweenOptions')+'<br>' );
-		return this;
-	}
 });
