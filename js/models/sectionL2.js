@@ -5,7 +5,7 @@
  **/
 window.SectionL2 = Backbone.Model.extend({
 
-    urlRoot: Config.serverUrl+'l1/',
+    urlRoot: Config.serverUrl+'l2/',
     local: true, // always fetched and saved only locally, never saves on remote
     remote: false, // never cached, dualStorage is bypassed entirely
 

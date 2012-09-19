@@ -25,9 +25,11 @@ window.QuizView = Backbone.View.extend({
     events: {
         'click #previous': 'onPreviousClick',
         'click #next': 'onNextClick',
-        'click .q-nav' : 'onQNoClick'
+        'click .q-nav' : 'onQNoClick',
+        'click #submitQuiz' : 'submitQuiz',
     },
-
+    
+    
     onPreviousClick: function () {
         this.question.get('closeTimeStamps').push(new Date().getTime());
         if (this.index == 0) {
@@ -54,17 +56,26 @@ window.QuizView = Backbone.View.extend({
     	this.renderQuestion();
     },
     
+
+    submitQuiz : function (){
+    	this.model.set('timeTaken',timer.count); 
+    	timer.stop();
+        alert('Quiz Up');
+        app.stopQuiz();
+    },
+    
     render: function () {
         $(this.el).append('<div data-role="header"><div data-role="navbar" id="but"><ul><li><a id="previous">Previous</a></li><li>Time : <span id="time"></span></span></li><li><a id="next">Next</a></li></ul></div><!-- /navbar --><!-- /header -->');
         $(this.el).append('<div>');
         for(var i = 0; i< this.length; i++){
         	$(this.el).append('<a id="q-'+i+'" class="q-nav"> '+i+' </a>');
         }	
-        $(this.el).append('</div></div>');
+        $(this.el).append('</div>');
+        $(this.el).append('<a id="submitQuiz" class="q-nav">Submit Quiz</a>');
         $(this.el).append('<div data-role="content" id="question"></div>');
         return this;
     },
-
+    
     renderQuestion: function () {
         var questionSet = quizQuestionSets.get(this.questionSetIds[this.index]);
         if (questionSet.get('question_count') > 1) {
@@ -187,7 +198,8 @@ window.QuizResultsView = Backbone.View.extend({
 		$(this.el).append('Easy questions you got wrong :'+this.model.get('easyQuestionsIncorrect')+' <br>' );
 		$(this.el).append('Easy questions you did not attempt :'+this.model.get('easyQuestionsMissed')+' <br>' );
 		$(this.el).append('Difficult Questions you got right :'+this.model.get('difficultQuestionsAnswered')+' <br>' );
-		
+		$(this.el).append('<div id="difficulty-chart"></div>' );
+
 		this.model.strategicInsights();
 		$(this.el).append('<h3>Strategic Insights :</h3><br>');
 		$(this.el).append('you wasted time on lengthy questions :'+this.model.get('wastedTimeOnlengthyQuestions')+'<br>' );

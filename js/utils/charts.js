@@ -45,7 +45,9 @@ window.drawTimeChart = function () {
         series: [],
     };
 
-    var series = {data:[]};
+    var series = {
+        data: []
+    };
     var questionIds = currentQuiz.getQuestionIds();
     var len = questionIds.length;
     for (var i = 0; i < len; i++) {
@@ -53,28 +55,28 @@ window.drawTimeChart = function () {
         var timeTaken = question.get('timeTaken');
         if (timeTaken == null) {
             series.data.push({
-            	x: i+1,
+                x: i + 1,
                 y: parseInt(0),
                 color: '#FF0000'
             });
         } else {
             if (question.isOptionSelectedCorrect() == true) {
                 series.data.push({
-                	x: i+1,
-                	y: parseFloat(timeTaken),
+                    x: i + 1,
+                    y: parseFloat(timeTaken),
                     color: '#339900'
                 });
             } else if (question.isOptionSelectedCorrect() == false) {
                 series.data.push({
-                	x: i+1,
-                	y: parseFloat(timeTaken),
+                    x: i + 1,
+                    y: parseFloat(timeTaken),
                     color: '#CC0000'
                 });
 
             } else if (question.isOptionSelectedCorrect() == null) {
                 series.data.push({
-                	x: i+1,
-                	y: parseFloat(timeTaken),
+                    x: i + 1,
+                    y: parseFloat(timeTaken),
                     color: '#FF0000'
                 });
             }
@@ -130,8 +132,10 @@ window.drawStratChart = function () {
         },
         series: [],
     };
-    
-    var series ={data:[]};
+
+    var series = {
+        data: []
+    };
     var questionIds = currentQuiz.getQuestionIds();
     var len = questionIds.length;
     var startTime = quizQuestions.get(questionIds[0]).get('openTimeStamp')[0];
@@ -169,89 +173,162 @@ window.drawStratChart = function () {
     chart = new Highcharts.Chart(options);
 };
 
-window.drawDifficultyChart = function () {
+window.getObjectByL2 = function(series, l2){
+	 for (var i = 0; i < series.length; i++) {
+		    if (series[i].name == l2) {
+		      return series[i];
+		    }
+		  }
+	 return null;
+}, 
 
+window.drawDifficultyChart = function () {
 	var options = {
-	chart: {
-		renderTo: 'container',
-    	type: 'scatter',
-    	zoomType: 'xy'
-	},
-title: {
-    text: 'Height Versus Weight of 507 Individuals by Gender'
-},
-subtitle: {
-    text: 'Source: Heinz  2003'
-},
-xAxis: {
-    title: {
-        enabled: true,
-        text: 'Height (cm)'
-    },
-    startOnTick: true,
-    endOnTick: true,
-    showLastLabel: true
-},
-yAxis: {
-    title: {
-        text: 'Weight (kg)'
-    }
-},
-tooltip: {
-    formatter: function() {
-            return ''+
-            this.x +' cm, '+ this.y +' kg';
-    }
-},
-legend: {
-    layout: 'vertical',
-    align: 'left',
-    verticalAlign: 'top',
-    x: 100,
-    y: 70,
-    floating: true,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1
-},
-plotOptions: {
-    scatter: {
-        marker: {
-            radius: 10,
-            states: {
-                hover: {
-                    enabled: true,
-                    lineColor: 'rgb(100,100,100)'
+        chart: {
+            renderTo: 'difficulty-chart',
+            type: 'scatter',
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Difficulty'
+        },
+        xAxis: {
+            title: {
+                text: 'Difficulty Level'
+            },
+            min: 0,
+            max: 5,
+
+            minorGridLineWidth: 0,
+            gridLineWidth: 0,
+            alternateGridColor: null,
+          plotLines: [{
+            color: '#FF0000',
+            width: 2,
+            value: 2
+        },{
+            color: '#FF0000',
+            width: 2,
+            value: 4
+        }],
+            plotBands: [{ // Light air
+                from: 0,
+                to: 2,
+                label: {
+                    text: 'RC',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }, { // Light breeze
+                from: 2,
+                to: 4,
+                label: {
+                    text: 'VR',
+                    style: {
+                        color: '#606060'
+                    }
+                
+                }}]
+        },
+      yAxis: {
+            title: {
+                text: 'Difficulty Level'
+            },
+            min: 0,
+          max:4,  
+              minorGridLineWidth: 0,
+            gridLineWidth: 0,
+            alternateGridColor: null,
+            plotBands: [{ // Light air
+                from: 0,
+                to: 1,
+                color: 'rgba(68, 170, 213, 0.1)',
+                label: {
+                    text: 'Easy',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }, { // Light breeze
+                from: 1,
+                to: 2,
+                color: 'rgba(68, 170, 500, 0.1)',
+                label: {
+                    text: 'Normal',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }, { // Gentle breeze
+                from: 2,
+                to: 3,
+                color: 'rgba(68, 170, 1000, 0.1)',
+                label: {
+                    text: 'Normal',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }, { // Moderate breeze
+                from: 3,
+                to: 4,
+                color: 'rgba(0, 0, 0, 0)',
+                label: {
+                    text: 'Difficult',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }]
+        },
+        tooltip: {
+            formatter: function() {
+                return '' + this.x + ' cm, ' + this.y + ' kg';
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            verticalAlign: 'top',
+            x: 100,
+            y: 70,
+            floating: true,
+            backgroundColor: '#FFFFFF',
+            borderWidth: 1
+        },
+        plotOptions: {
+            scatter: {
+
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
                 }
             }
         },
-        states: {
-            hover: {
-                marker: {
-                    enabled: false
-                }
-            }
+        series: []
+    };    
+    
+    var series =[];
+    var questionIds = currentQuiz.getQuestionIds();
+    var len = questionIds.length;
+    for (var i = 0; i < len; i++) {
+        var question = quizQuestions.get(questionIds[i]);
+        var l3 = sectionL3.get(question.get('l3Id'));
+        var l2 = sectionL2.get(l3.get('l2_id'));
+        var difficulty = question.get('difficulty');
+        var obj = getObjectByL2(series,l2.get('shortName'));
+        if(obj==null){
+        	obj = {name:l2.get('shortName'), data:[]};
+            series.push(obj);
         }
+        obj.data.push({x:1,y:parseFloat(difficulty)});
+        //var series = [{name:''},{name:''}];
     }
-},
-series: [{
-    name: 'Female',
-    color: 'rgba(223, 83, 83, .5)',
-    data: [[161.2, 51.6], [167.5, 59.0], [159.5, 49.2], [157.0, 63.0], [155.8, 53.6],
-        [176.5, 71.8], [164.4, 55.5], [160.7, 48.6], [174.0, 66.4], [163.8, 67.3]]
-	}, 
-	{
-    name: 'Male',
-    color: 'rgba(119, 152, 191, .5)',
-    marker:{radius: 50,
-            states: {
-                hover: {
-                    enabled: true,
-                    lineColor: 'rgb(100,100,100)'
-                }
-            }
-         },
-    data: [[174.0, 65.6], [175.3, 71.8], [193.5, 80.7], [186.5, 72.6], [187.2, 78.8],
-        [180.3, 83.2], [180.3, 83.2]]
-	}]
-};
+    
+    options.series=series;
+    chart = new Highcharts.Chart(options);
 };

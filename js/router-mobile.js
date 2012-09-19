@@ -68,16 +68,21 @@ var AppRouter = Backbone.Router.extend({
         
         sectionL1.fetch({
         	 success: function () {
-                 console.log('init quizzes fetched');
+                 console.log('init l1 fetched');
         	 }
         });
         
         sectionL2.fetch({
         	 success: function () {
-                 console.log('init quizzes fetched');
+                 console.log('init l2 fetched');
         	 }
         });
         
+        sectionL3.fetch({
+       	 success: function () {
+                console.log('init l3 fetched');
+       	 }
+       });
     },
 
     landing: function () {
@@ -146,6 +151,7 @@ var AppRouter = Backbone.Router.extend({
             model: currentQuiz
         }));
         drawTimeChart();
+        drawDifficultyChart();
     },
     
     quizDetailedView: function () {
