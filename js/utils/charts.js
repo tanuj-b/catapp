@@ -270,6 +270,7 @@ window.drawDifficultyChart = function () {
     	}
     	offset=offset+2;
     }
+    options.xAxis.max = (2*seriesLen);
     options.series=series;
     chart = new Highcharts.Chart(options);
 };
@@ -325,7 +326,21 @@ window.drawStratChart = function () {
     
     options.yAxis.max = currentQuiz.get('timeTaken');
     var series = {
-        data: []
+        data: [],
+        /*dataLabels: {
+            enabled: true,
+            color: '#FFFFFF',
+            align: 'right',
+            x: -3,
+            y: 10,
+            formatter: function() {
+                return this.y;
+            },
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }*/
     };
     var questionIds = currentQuiz.getQuestionIds();
     var len = questionIds.length;
