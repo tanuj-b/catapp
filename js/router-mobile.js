@@ -32,7 +32,7 @@ var AppRouter = Backbone.Router.extend({
         /*
          * To be replaced by sync. this is just for the demo
          */
-        localStorage.clear(); //remove this line in final product.
+        //localStorage.clear(); //remove this line in final product.
         quizzes.fetch({
             success: function () {
                 console.log('init quizzes fetched');
@@ -152,6 +152,7 @@ var AppRouter = Backbone.Router.extend({
         }));
         drawTimeChart();
         drawDifficultyChart();
+        drawStratChart();
     },
     
     quizDetailedView: function () {

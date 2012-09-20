@@ -204,6 +204,7 @@ window.QuizResultsView = Backbone.View.extend({
 		$(this.el).append('<h3>Strategic Insights :</h3><br>');
 		$(this.el).append('you wasted time on lengthy questions :'+this.model.get('wastedTimeOnlengthyQuestions')+'<br>' );
 		$(this.el).append('toggled more number of times between options :'+this.model.get('toggleBetweenOptions')+'<br>' );
-        return this;
+		$(this.el).append('<div id="strat-chart"></div>' );
+		return this;
     }
 });

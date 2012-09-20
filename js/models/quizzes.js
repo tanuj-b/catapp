@@ -52,8 +52,7 @@ window.Quiz = Backbone.Model.extend({
         'timeTaken' : 0,
         'strategicInsightsCalculated' : false,
         'accuracyInsightsCalculated' : false,
-        'difficultyInsightsCalculated' : false
-
+        'difficultyInsightsCalculated' : false,
     },
     
 	// insights.
