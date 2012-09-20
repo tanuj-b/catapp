@@ -118,6 +118,11 @@ window.drawDifficultyChart = function () {
             gridLineWidth: 0,
             alternateGridColor: null,
             tickInterval: 1,
+            labels: {
+                formatter: function() {
+                    return '';
+                }
+            },
           plotLines: [{
             color: '#FF0000',
             width: 2,
