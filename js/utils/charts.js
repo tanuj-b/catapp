@@ -117,6 +117,7 @@ window.drawDifficultyChart = function () {
             minorGridLineWidth: 0,
             gridLineWidth: 0,
             alternateGridColor: null,
+            tickInterval: 1,
           plotLines: [{
             color: '#FF0000',
             width: 2,
@@ -292,7 +293,8 @@ window.drawStratChart = function () {
         xAxis: {
         	title: {
                 text: 'Questions'
-            }
+            },
+            tickInterval: 1
         },
         yAxis: {
         	title: {
@@ -324,7 +326,6 @@ window.drawStratChart = function () {
         series: []
     };
     
-    options.yAxis.max = currentQuiz.get('timeTaken');
     var series = {
         data: [],
         /*dataLabels: {
@@ -362,6 +363,8 @@ window.drawStratChart = function () {
         	series.data.push({x:(i+1), low: min, high: max});
         }
     }
+    options.yAxis.max = currentQuiz.get('timeTaken');
+    options.xAxis.max = len;
     options.series.push(series);
     chart = new Highcharts.Chart(options);
 };

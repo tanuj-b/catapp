@@ -165,8 +165,13 @@ window.QuizResultsView = Backbone.View.extend({
     render: function () {
         var len = this.questionSetIds.length;
         $(this.el).empty();
-        $(this.el).append('Total Correct :'+this.model.get('totalCorrect')+'<br>');
-        $(this.el).append('Total Incorrect :'+this.model.get('totalIncorrect')+'<br>' );
+        var correct = this.model.get('totalCorrect');
+        var incorrect = this.model.get('totalIncorrect');
+        var unattempted = parseInt(len) - (parseInt(correct) + parseInt(incorrect)); 
+        $(this.el).append('Total Correct :'+correct+'<br>');
+        $(this.el).append('Total Incorrect :'+incorrect+'<br>' );
+        $(this.el).append('Total Unattempted :'+unattempted+'<br>' );
+
         for (var i = 0; i < len; i++) {
             var questionSet = quizQuestionSets.get(this.questionSetIds[i]);
             if (questionSet.get('question_count') > 1) {
