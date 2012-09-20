@@ -282,7 +282,7 @@ window.drawDifficultyChart = function () {
 };
 
 
-window.drawStratChart = function () {
+window.drawStratChart1 = function () {
     var options = {
         chart: {
             renderTo: 'strat-chart',
@@ -332,22 +332,22 @@ window.drawStratChart = function () {
     };
     
     var series = {
-        data: [],
-        /*dataLabels: {
-            enabled: true,
-            color: '#FFFFFF',
-            align: 'right',
-            x: -3,
-            y: 10,
-            formatter: function() {
-                return this.y;
-            },
-            style: {
-                fontSize: '13px',
-                fontFamily: 'Verdana, sans-serif'
-            }
-        }*/
-    };
+            data: [],
+            /*dataLabels: {
+                enabled: true,
+                color: '#FFFFFF',
+                align: 'right',
+                x: -3,
+                y: 10,
+                formatter: function() {
+                    return this.y;
+                },
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }*/
+        };
     var questionIds = currentQuiz.getQuestionIds();
     var len = questionIds.length;
     var offset = quizQuestions.get(questionIds[0]).get('openTimeStamps')[0];
@@ -374,3 +374,116 @@ window.drawStratChart = function () {
     chart = new Highcharts.Chart(options);
 };
 
+window.drawStratChart = function () {
+    var options = {
+        chart: {
+            renderTo: 'strat-chart',
+            type: 'columnrange'
+            	
+        },
+        title: {
+            text: 'Time distribution'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+        	title: {
+                text: 'Questions'
+            },
+            tickInterval: 1
+        },
+        yAxis: {
+        	title: {
+                text: 'Time (sec)'
+            },
+            tickInterval: 1,
+            min:0
+        },
+        legend: {
+            layout: 'vertical',
+            backgroundColor: '#FFFFFF',
+            align: 'left',
+            verticalAlign: 'top',
+            x: 100,
+            y: 70,
+            floating: true,
+            shadow: true
+        },
+
+        tooltip: {
+            formatter: function () {
+                return '' + 'Q' + this.x + ': ' + this.y + ' sec';
+            }
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: []
+    };
+    
+    var series = [
+                  {
+                     data: [],
+                  },
+                  {
+                	  type: 'scatter',
+                      color: '#FFFFFF',
+                	  data: [],
+                  },
+                  {
+                	  type: 'scatter',
+                      color: '#AA4643',
+                	  data: [],
+                  }
+                ];
+
+    var questionIds = currentQuiz.getQuestionIds();
+    var len = questionIds.length;
+    var offset = quizQuestions.get(questionIds[0]).get('openTimeStamps')[0];
+    for (var i = 0; i < len; i++) {
+        var question = quizQuestions.get(questionIds[i]);
+        var openTimeStamps = question.get('openTimeStamps');
+        var closeTimeStamps = question.get('closeTimeStamps');
+        var num = openTimeStamps.length;
+        for(var j=0;j<num;j++){
+        	min = (openTimeStamps[j] - offset)/1000;
+        	min = parseFloat(min.toFixed(1));
+        	if(!closeTimeStamps[j]){
+        		max = parseFloat(currentQuiz.get('timeTaken'));
+        	}else{
+        	max = (closeTimeStamps[j] - offset)/1000;
+        	max = parseFloat(max.toFixed(1));
+        	}
+        	series[0].data.push({x:(i+1), low: min, high: max});
+        }
+        var optionSelectedTimeStamps = question.get('optionSelectedTimeStamps');
+        var optionUnSelectedTimeStamps = question.get('optionUnSelectedTimeStamps');
+        for(var index in optionSelectedTimeStamps){
+        	var timeStamps = optionSelectedTimeStamps[index];
+        	var tlen = timeStamps.length;
+        	for(var k = 0; k< tlen; k++){
+            	var y = (timeStamps[k] - offset)/1000;
+            	y = parseFloat(y.toFixed(1));
+            	series[1].data.push({x:(i+1),y:y});
+        	}
+        }
+        for(var index in optionUnSelectedTimeStamps){
+        	var timeStamps = optionUnSelectedTimeStamps[index];
+        	var tlen = timeStamps.length;
+        	for(var k = 0; k< tlen; k++){
+            	var y = (timeStamps[k] - offset)/1000;
+            	y = parseFloat(y.toFixed(1));
+            	series[2].data.push({x:(i+1),y:y});
+        	}
+        }
+        
+    }
+    options.yAxis.max = currentQuiz.get('timeTaken');
+    options.xAxis.max = len;
+    options.series = series;
+    chart = new Highcharts.Chart(options);
+};
