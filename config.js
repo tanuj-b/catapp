@@ -50,7 +50,29 @@ var config_mobile_web = {
     			]
 };
 
-var Config = config_mobile_android;	
+
+var config_mobile_testrex = {
+	syncStoragePath : "",
+	templatePath : "",
+	serverUrl : 'http://www.test-rex.com/tanuj/api/',
+	edition : '0',
+    tmplatesFolder : "tpl-mobile",
+    phonegap : false,
+    viewsArray : [	'LandingView', 
+    				'QuizQuestionView',
+    				'FlashCardListView',
+    				'FlashCardListItemView',
+    				'FlashCardView',
+    				'MenuView',
+    				'PracticeTopicsView',
+    				'PracticeQuestionView',
+    				'QuizTopicsView',
+    				'QuizResultsView',
+    				'ProfileView',
+    			]
+};
+
+var Config = config_mobile_testrex;
 //var Config = config_mobile_web;	
     
 
