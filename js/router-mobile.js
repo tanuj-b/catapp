@@ -145,7 +145,8 @@ var AppRouter = Backbone.Router.extend({
         timer.start();
     },
 
-    stopQuiz: function () {
+    stopQuiz: function (timeTaken) {
+    	currentQuiz.set('timeTaken',timeTaken);
     	currentQuiz.calculateScores();
     	app.changePage(new QuizResultsView({
             model: currentQuiz

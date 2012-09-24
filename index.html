@@ -3,10 +3,11 @@
 <head>
 <title>TestRex</title>
 <meta name="viewport" content="width=320; user-scalable=no" />
+<script src="js/lib/jquery-1.7.2.min.js"></script>
 <script src="config.js"></script>
 <script type="text/javascript">
     if(Config.edition == '0'){
-    		tmplatesFolder ='tpl-mobile';
+    	tmplatesFolder ='tpl-mobile';
         document.write('<link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" >');
         document.write('<link rel="stylesheet" href="css/style-mobile.css" >');
     }else{
@@ -22,7 +23,6 @@
 	}
 </script>
 
-<script src="js/lib/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
     if(Config.edition == 0){
         document.write('<script src="js/jqm-config.js"></' + 'script>');

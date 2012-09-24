@@ -72,7 +72,13 @@ var config_mobile_testrex = {
     			]
 };
 
-var Config = config_mobile_android;
+//var Config = config_mobile_android;
+var Config = null;
+if($(window).width()<700){
+	Config = config_mobile_android;
+}else {
+	Config = config_mobile_web;
+}
 //var Config = config_mobile_web;	
     
 
