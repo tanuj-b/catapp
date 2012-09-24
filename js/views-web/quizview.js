@@ -65,6 +65,12 @@ window.QuizView = Backbone.View.extend({
 		return this;
 	},
 
+    submitQuiz: function () {
+        timer.stop();
+        alert('submitting quiz');
+    	app.stopQuiz(timer.count);
+    },
+
     renderQuestion: function () {
         var questionSet = quizQuestionSets.get(this.questionSetIds[this.index]);
         if (questionSet.get('question_count') > 1) {
@@ -129,69 +135,6 @@ window.QuizResultsView = Backbone.View.extend({
         this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
     	this.render();
     },
-    
-    /*drawTimeChart : function (){
-		var questionIds = currentQuiz.getQuestionIds();
-		var len = questionIds.length;
-		var timeTaken = new Array();
-		for(var i=0; i<len; i++ )
-		{
-			var question = quizQuestions.get(questionIds[i]);
-			if(question.get('timeTaken')==null){
-				timeTaken.push(parseFloat('0'));
-			}else {
-				timeTaken.push(parseFloat(question.get('timeTaken')));
-			}
-		}
-		
-		chart = new Highcharts.Chart({
-	            chart: {
-	                renderTo: 'time-chart',
-	                type: 'column'
-	            },
-	            title: {
-	                text: 'Time Taken Per Question'
-	            },
-	            subtitle: {
-	                text: ''
-	            },
-	            xAxis: {
-	                categories: questionIds
-	            },
-	            yAxis: {
-	                min: 0,
-	                title: {
-	                    text: 'Time (sec)'
-	                }
-	            },
-	            legend: {
-	                layout: 'vertical',
-	                backgroundColor: '#FFFFFF',
-	                align: 'left',
-	                verticalAlign: 'top',
-	                x: 100,
-	                y: 70,
-	                floating: true,
-	                shadow: true
-	            },
-	            tooltip: {
-	                formatter: function() {
-	                    return ''+
-	                        'Q'+this.x +': '+ this.y +' sec';
-	                }
-	            },
-	            plotOptions: {
-	                column: {
-	                    pointPadding: 0.2,
-	                    borderWidth: 0
-	                }
-	            },
-	                series: [{
-	                data: timeTaken//[49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-	    
-	            }]
-	        });
-	},*/
 	
     render: function () {
         var len = this.questionSetIds.length;

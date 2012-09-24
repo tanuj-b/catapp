@@ -58,10 +58,9 @@ window.QuizView = Backbone.View.extend({
 
 
     submitQuiz: function () {
-        this.model.set('timeTaken', timer.count);
         timer.stop();
-        alert('Quiz Up');
-        app.stopQuiz();
+        alert('submitting quiz');
+    	app.stopQuiz(timer.count);
     },
 
     render: function () {
@@ -71,7 +70,7 @@ window.QuizView = Backbone.View.extend({
             $(this.el).append('<a id="q-' + i + '" class="q-nav"> ' + i + ' </a>');
         }
         $(this.el).append('</div>');
-        $(this.el).append('<a id="submitQuiz" class="q-nav">Submit Quiz</a>');
+        $(this.el).append('<a id="submitQuiz">Submit Quiz</a>');
         $(this.el).append('<div data-role="content" id="question"></div>');
         return this;
     },

@@ -88,10 +88,10 @@ window.helper = {
         currentQuizQuestion.set('timeTaken', qtimer);
         if (timer.count == currentQuiz.get('allotedTime')) {
             // timed out
-        	currentQuiz.set('timeTaken',currentQuiz.get('allotedTime')); 
+        	//currentQuiz.set('timeTaken',currentQuiz.get('allotedTime')); 
         	timer.stop();
             alert('time up');
-            app.stopQuiz();
+            app.stopQuiz(currentQuiz.get('allotedTime'));
         }
     },
     
