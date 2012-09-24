@@ -73,8 +73,8 @@ window.QuizView = Backbone.View.extend({
         } else {
             var questionIds = questionSet.get('questionIds');
             this.question = quizQuestions.get(questionIds);
-            if(this.question.get('timer')==null){
-            	this.question.set('timer', 0);
+            if(this.question.get('timeTaken')==null){
+            	this.question.set('timeTaken', 0);
             }
             if (this.questionView == null) {
                 this.questionView = new QuizQuestionView({
@@ -130,17 +130,17 @@ window.QuizResultsView = Backbone.View.extend({
     	this.render();
     },
     
-    drawTimeChart : function (){
+    /*drawTimeChart : function (){
 		var questionIds = currentQuiz.getQuestionIds();
 		var len = questionIds.length;
 		var timeTaken = new Array();
 		for(var i=0; i<len; i++ )
 		{
 			var question = quizQuestions.get(questionIds[i]);
-			if(question.get('timer')==null){
+			if(question.get('timeTaken')==null){
 				timeTaken.push(parseFloat('0'));
 			}else {
-				timeTaken.push(parseFloat(question.get('timer')));
+				timeTaken.push(parseFloat(question.get('timeTaken')));
 			}
 		}
 		
@@ -191,14 +191,17 @@ window.QuizResultsView = Backbone.View.extend({
 	    
 	            }]
 	        });
-	},
+	},*/
 	
     render: function () {
         var len = this.questionSetIds.length;
         $(this.el).empty();
-        $(this.el).append('Total Correct :'+this.model.get('totalCorrect')+'<br>');
-        $(this.el).append('Total Incorrect :'+this.model.get('totalIncorrect')+'<br>' );
-        //$(this.el).append('Total Unattempted :'+this.model.get('totalIncorrect')+'<br>' );
+        var correct = this.model.get('totalCorrect');
+        var incorrect = this.model.get('totalIncorrect');
+        var unattempted = parseInt(len) - (parseInt(correct) + parseInt(incorrect));
+        $(this.el).append('Total Correct :' + correct + '<br>');
+        $(this.el).append('Total Incorrect :' + incorrect + '<br>');
+        $(this.el).append('Total Unattempted :' + unattempted + '<br>');
 
         for (var i = 0; i < len; i++) {
             var questionSet = quizQuestionSets.get(this.questionSetIds[i]);
@@ -208,35 +211,38 @@ window.QuizResultsView = Backbone.View.extend({
                 var questionIds = questionSet.get('questionIds');
                 var question = quizQuestions.get(questionIds);
                 var qtime = null;
-                if (question.get('timer') == null) {
+                if (question.get('timeTaken') == null) {
                     qtime = 'not seen';
                 } else {
-                    qtime = question.get('timer');
+                    qtime = question.get('timeTaken');
                 }
-                $(this.el).append(
-                'Q'+(i+1) + '. option selected :' + question.get('optionSelected') + ' | option correct :' + question.get('correctOption') + ' | time taken :' + qtime + '<br>openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') +'|no of optionSelectedTimeStamps :' + question.get('optionSelectedTimeStamps') +'|no of optionUnSelectedTimeStamps :' + question.get('optionUnSelectedTimeStamps') + '<br>');
+                $(this.el).append('Q' + (i + 1) + '. option selected :' + question.get('optionSelected') + ' | option correct :' + question.get('correctOption') + ' | time taken :' + qtime + '<br>openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') + '|no of optionSelectedTimeStamps :' + question.get('optionSelectedTimeStamps').length + '|no of optionUnSelectedTimeStamps :' + question.get('optionUnSelectedTimeStamps').length + '<br>');
             }
         }
         $(this.el).append('<a href="#quizDetailedView">Detailed Assessment</a><br>');
-        $(this.el).append('<a id="viewInsights">View Insights </a>');  
-        
+        $(this.el).append('<a id="viewInsights">View Insights </a>');
+
         $(this.el).append('<h3>Accuracy Insights :</h3><br>');
-		$(this.el).append('You got '+this.model.get('totalCorrect')+' q correct and '+this.model.get('totalIncorrect')+' q incorrect<br>');
-		$(this.el).append(this.model.accuracyInsights()+'<br>');
-		$(this.el).append('<div id="time-chart"></div>' );
-		
-		this.model.difficultyLevelInsights();
-		$(this.el).append('<h3>Difficulty Insights :</h3><br>');
-		
-		$(this.el).append('Easy questions you got wrong :'+this.model.get('easyQuestionsIncorrect')+' <br>' );
-		$(this.el).append('Easy questions you did not attempt :'+this.model.get('easyQuestionsMissed')+' <br>' );
-		$(this.el).append('Difficult Questions you got right :'+this.model.get('difficultQuestionsAnswered')+' <br>' );
-		
-		this.model.strategicInsights();
-		$(this.el).append('<h3>Strategic Insights :</h3><br>');
-		$(this.el).append('you wasted time on lengthy questions :'+this.model.get('wastedTimeOnlengthyQuestions')+'<br>' );
-		$(this.el).append('toggled more number of times between options :'+this.model.get('toggleBetweenOptions')+'<br>' );
-		this.drawTimeChart();
+        $(this.el).append('You got ' + this.model.get('totalCorrect') + ' q correct and ' + this.model.get('totalIncorrect') + ' q incorrect<br>');
+        $(this.el).append(this.model.accuracyInsights() + '<br>');
+        $(this.el).append('<div id="time-chart"></div>');
+
+        this.model.difficultyLevelInsights();
+        $(this.el).append('<h3>Difficulty Insights :</h3><br>');
+
+        $(this.el).append('Easy questions you got wrong :' + this.model.get('easyQuestionsIncorrect') + ' <br>');
+        $(this.el).append('Easy questions you did not attempt :' + this.model.get('easyQuestionsMissed') + ' <br>');
+        $(this.el).append('Difficult Questions you got right :' + this.model.get('difficultQuestionsAnswered') + ' <br>');
+        $(this.el).append('<div id="difficulty-chart"></div>');
+
+        this.model.strategicInsights();
+        $(this.el).append('<h3>Strategic Insights :</h3><br>');
+        $(this.el).append('you wasted time on lengthy questions :' + this.model.get('wastedTimeOnlengthyQuestions') + '<br>');
+        $(this.el).append('toggled more number of times between options :' + this.model.get('toggleBetweenOptions') + '<br>');
+        $(this.el).append('<div id="strat-chart"></div>');
+        drawTimeChart();
+        drawDifficultyChart();
+        drawStratChart();
 		return this;
     }
 });

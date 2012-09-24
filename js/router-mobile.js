@@ -52,13 +52,13 @@ var AppRouter = Backbone.Router.extend({
 
         practiceTests.fetch({
             success: function () {
-                console.log('init quizzes fetched');
+                console.log('init practice fetched');
                 practiceQuestionSets.fetch({
                     success: function () {
-                        console.log('init quiz question sets fetched');
+                        console.log('init practice question sets fetched');
                         practiceQuestions.fetch({
                             success: function () {
-                                console.log('init quiz questions fetched');    
+                                console.log('init practice questions fetched');    
                             }
                         });
                     }

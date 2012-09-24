@@ -10,7 +10,9 @@ var AppRouter = Backbone.Router.extend({
         "quiz/:id": "startQuiz",
         "practice/:id": "startPractice",
         "getQuestion/:index": "getQuestion",
-        "performance": "performance"
+        "performance": "performance",
+        "quizDetailedView":"quizDetailedView"
+
     },
 
     initialize: function () {
@@ -41,19 +43,37 @@ var AppRouter = Backbone.Router.extend({
 
         practiceTests.fetch({
             success: function () {
-                console.log('init quizzes fetched');
+                console.log('init practice fetched');
                 practiceQuestionSets.fetch({
                     success: function () {
-                        console.log('init quiz question sets fetched');
+                        console.log('init practice question sets fetched');
                         practiceQuestions.fetch({
                             success: function () {
-                                console.log('init quiz questions fetched');
+                                console.log('init practice questions fetched');    
                             }
                         });
                     }
                 });
             }
         });
+        
+       sectionL1.fetch({
+       	 success: function () {
+                console.log('init l1 fetched');
+       	 }
+       });
+       
+       sectionL2.fetch({
+       	 success: function () {
+                console.log('init l2 fetched');
+       	 }
+       });
+       
+       sectionL3.fetch({
+      	 success: function () {
+               console.log('init l3 fetched');
+      	 }
+      });   
     },
 
     landing: function () {
@@ -136,9 +156,8 @@ var AppRouter = Backbone.Router.extend({
     },
     
     quizDetailedView: function () {
-    	currentQuiz.set('hasAttempted',true);
-    	quizView.close();
-    	quizView = new QuizView({
+   	 quizView.close();
+     quizView = new QuizView({
              model: currentQuiz,
              index: 0,
         });

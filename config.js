@@ -72,7 +72,7 @@ var config_mobile_testrex = {
     			]
 };
 
-var Config = config_mobile_testrex;
+var Config = config_mobile_web;
 //var Config = config_mobile_web;	
     
 

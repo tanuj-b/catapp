@@ -65,8 +65,8 @@ window.PracticeView = Backbone.View.extend({
 	        } else {
 	            var questionIds = questionSet.get('questionIds');
 	            this.question = practiceQuestions.get(questionIds);
-	            if(this.question.get('timer')==null){
-	            	this.question.set('timer', 0);
+	            if(this.question.get('timeTaken')==null){
+	            	this.question.set('timeTaken', 0);
 	            }
 	            if (this.questionView == null) {
 	                this.questionView = new PracticeQuestionView({
@@ -121,6 +121,6 @@ window.PracticeQuestionView = Backbone.View.extend({
     	$('#info').html('<h3>info</h3>correct answer-'+this.model.get('correctOption'));
       	$('#info').append('<br>'+this.model.get('explanation'));
       	$("input[type='radio']").checkboxradio('disable');   
-      	$('#time').html(this.model.get('timer'));
+      	$('#time').html(this.model.get('timeTaken'));
 	}
 });
