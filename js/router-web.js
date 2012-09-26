@@ -87,7 +87,9 @@ var AppRouter = Backbone.Router.extend({
     },
 
     profile: function (id) {
-       new ProfileView({el:$('#content')});
+    	$('#active-view').html('My Profile');
+    	new ProfileView({el:$('#content')});
+       
     },
 
     flashcards: function () {
@@ -95,7 +97,8 @@ var AppRouter = Backbone.Router.extend({
     },
 
     quiz: function () {
-        /*
+    	$('#active-view').html('Quiz');
+    	/*
          * set to local, fetch quizzes, read attempted?, display all with
          * attempted <> true, those that need to be sync dimmed.
          */
@@ -164,6 +167,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     practice: function (id) {
+    	$('#active-view').html('Practice');
     	practiceTests.reset();
     	practiceQuestionSets.reset();
         practiceQuestions.reset();
