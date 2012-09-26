@@ -94,7 +94,6 @@ var config_web_server = {
 	    				'QuizTopicsView',
 	    				'QuizResultsView',
 	    				'ProfileView',
-	    				'PerformanceView',
 	    				'QuizAnalyticsView'
 	    			]
 	};

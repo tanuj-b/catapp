@@ -10,7 +10,6 @@ var AppRouter = Backbone.Router.extend({
         "quiz/:id": "startQuiz",
         "practice/:id": "startPractice",
         "getQuestion/:index": "getQuestion",
-        "performance": "performance",
         "quizDetailedView":"quizDetailedView"
 
     },
@@ -88,11 +87,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     profile: function (id) {
-        this.changePage(new ProfileView({}));
-    },
-
-    performance: function (id) {
-        new PerformanceView({el:$('#content')});
+       new ProfileView({el:$('#content')});
     },
 
     flashcards: function () {
