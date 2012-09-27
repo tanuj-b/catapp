@@ -3,10 +3,16 @@
 body {
 	position: relative;
 	padding-top: 40px;
-	background: white url('../img/bg.jpg') top center repeat;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size:15px;
+	background: white url('../img/bg.jpg') top center repeat;
 }
+
+/*#content >.container{
+	padding:0px 20px;
+	background: white url('../img/bg.jpg') top center repeat;
+	min-height:600px;
+}*/
 
 .left {
 	float: left;
@@ -26,10 +32,25 @@ h3 code {
 	font-weight: normal;
 }
 
+h1,h2,h3,h4,h5{
+	font-weight:normal;
+}
+
+h1{
+	font-size: 35px;
+}
+h2{
+	font-size: 30px;
+}
+h3{
+	font-size: 25px;
+}
 h4 {
 	font-size: 20px;
 }
-
+h5 {
+	font-size: 15px;
+}
 .custom {
 	border-radius: 20px;
 	background-color: hsl(0, 0%, 27%) !important;
@@ -187,13 +208,6 @@ hr.soften {
   /*margin: 30px 0 0;*/
   padding: 0;
   background-color: #fff;
- /* -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
-  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-     -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-          box-shadow: 0 1px 4px rgba(0,0,0,.065);
-          */
 }
 .sidenav > li > a {
   display: block;
@@ -202,18 +216,7 @@ hr.soften {
   padding: 8px 14px;
   border: 1px solid #e5e5e5;
 }
-.sidenav > li:first-child > a {
-/*  -webkit-border-radius: 6px 6px 0 0;
-     -moz-border-radius: 6px 6px 0 0;
-          border-radius: 6px 6px 0 0;
-          */
-}
-.sidenav > li:last-child > a {
- /* -webkit-border-radius: 0 0 6px 6px;
-     -moz-border-radius: 0 0 6px 6px;
-          border-radius: 0 0 6px 6px;
-*/
-}
+
 .sidenav > .active > a {
   position: relative;
   z-index: 2;
@@ -290,6 +293,11 @@ hr.soften {
 		margin-top: 30px;
 		margin-right: 0;
 	}
+	
+	/*.container {
+		width: 100%;
+	}*/
+	
 }
 
 /* Tablet to desktop

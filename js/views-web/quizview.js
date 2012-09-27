@@ -17,13 +17,14 @@ window.QuizTopicsView = Backbone.View.extend({
 
 window.QuizView = Backbone.View.extend({
 
-	  initialize: function () {
+	initialize: function () {
 	        this.index = this.options.index;
 	        this.questionView = null;
+		    this.question = null;
+	        this.questionIds = this.model.getQuestionIds();
 	        this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
-	        this.length = this.questionSetIds.length;
+	        this.totalQuestions = this.questionIds.length;
 	        this.render();
-
 	    },
 
 	    events: {
@@ -44,7 +45,7 @@ window.QuizView = Backbone.View.extend({
 
 	    onNextClick: function () {
 	        this.question.get('closeTimeStamps').push(new Date().getTime());
-	        if (this.index == (this.length - 1)) {
+	        if (this.index == (this.totalQuestions - 1)) {
 	            alert('at the end dude');
 	        } else {
 	            this.index++;
@@ -60,7 +61,7 @@ window.QuizView = Backbone.View.extend({
 	    
 	        
 	render : function() {
-		$(this.el).html(this.template());
+		$(this.el).html(this.template({'totalQuestions':this.totalQuestions}));
 		this.renderQuestion();
 		return this;
 	},
@@ -72,28 +73,21 @@ window.QuizView = Backbone.View.extend({
     },
 
     renderQuestion: function () {
-        var questionSet = quizQuestionSets.get(this.questionSetIds[this.index]);
-        if (questionSet.get('question_count') > 1) {
-            // TODO : handle para questions
-
-        } else {
-            var questionIds = questionSet.get('questionIds');
-            this.question = quizQuestions.get(questionIds);
-            if(this.question.get('timeTaken')==null){
-            	this.question.set('timeTaken', 0);
-            }
-            if (this.questionView == null) {
-                this.questionView = new QuizQuestionView({
-                    el: $('#question'),
-                });
-            }
-            this.questionView.model = this.question;
-            this.questionView.hasAttempted = this.model.get('hasAttempted');
-            this.questionView.render();
-            this.question.get('openTimeStamps').push(
-            new Date().getTime());
-            currentQuizQuestion = this.question;
+        this.question = quizQuestions.get(this.questionIds[this.index]);
+        if(this.question.get('timeTaken')==null){
+        	this.question.set('timeTaken', 0);
         }
+        if (this.questionView == null) {
+            this.questionView = new QuizQuestionView({
+                el: $('#question'),
+            });
+        }
+        this.questionView.model = this.question;
+        this.questionView.hasAttempted = this.model.get('hasAttempted');
+        this.questionView.render();
+        this.question.get('openTimeStamps').push(
+        new Date().getTime());
+        currentQuizQuestion = this.question;
         return null;
     }
 });
@@ -137,31 +131,29 @@ window.QuizResultsView = Backbone.View.extend({
     },
 	
     render: function () {
-        var len = this.questionSetIds.length;
-        $(this.el).empty();
+    	$(this.el).empty();
+    	
+        var questionIds = this.model.getQuestionIds();
+        var length = questionIds.length;
+
         var correct = this.model.get('totalCorrect');
         var incorrect = this.model.get('totalIncorrect');
-        var unattempted = parseInt(len) - (parseInt(correct) + parseInt(incorrect));
+        var unattempted = parseInt(length) - (parseInt(correct) + parseInt(incorrect));
         $(this.el).append('Total Correct :' + correct + '<br>');
         $(this.el).append('Total Incorrect :' + incorrect + '<br>');
         $(this.el).append('Total Unattempted :' + unattempted + '<br>');
-
-        for (var i = 0; i < len; i++) {
-            var questionSet = quizQuestionSets.get(this.questionSetIds[i]);
-            if (questionSet.get('question_count') > 1) {
-
-            } else {
-                var questionIds = questionSet.get('questionIds');
-                var question = quizQuestions.get(questionIds);
-                var qtime = null;
-                if (question.get('timeTaken') == null) {
+        
+        for (var i = 0; i < length; i++) {
+           var question = quizQuestions.get(questionIds[i]);
+           var qtime = null;
+           if (question.get('timeTaken') == null) {
                     qtime = 'not seen';
-                } else {
+           } else {
                     qtime = question.get('timeTaken');
-                }
-                $(this.el).append('Q' + (i + 1) + '. option selected :' + question.get('optionSelected') + ' | option correct :' + question.get('correctOption') + ' | time taken :' + qtime + '<br>openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') + '|no of optionSelectedTimeStamps :' + question.get('optionSelectedTimeStamps').length + '|no of optionUnSelectedTimeStamps :' + question.get('optionUnSelectedTimeStamps').length + '<br>');
-            }
+           }
+           $(this.el).append('Q' + (i + 1) + '. option selected :' + question.get('optionSelected') + ' | option correct :' + question.get('correctOption') + ' | time taken :' + qtime + '<br>openTimeStamps :' + question.get('openTimeStamps') + '|closeTimeStamps :' + question.get('closeTimeStamps') + '|no of optionSelectedTimeStamps :' + question.get('optionSelectedTimeStamps').length + '|no of optionUnSelectedTimeStamps :' + question.get('optionUnSelectedTimeStamps').length + '<br>');
         }
+        
         $(this.el).append('<a href="#quizDetailedView">Detailed Assessment</a><br>');
         $(this.el).append('<a id="viewInsights">View Insights </a>');
 

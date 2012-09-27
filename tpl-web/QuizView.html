@@ -1,10 +1,19 @@
 <div class="container quizview">
+	<!-- <div class="row-fluid">
+		<h3 class="span2">Practice</h3>
+	</div>
+	 -->
 	<div class="row-fluid">
 		<div class="span2">
 			<ul class="nav nav-list sidenav affix-top">
-				<li><a href="#"><i class="icon-chevron-right"></i> 1</a></li>
+			<% for(var i=0; i<totalQuestions; i++){
+			%>
+				<li><a href="#"><i class="icon-chevron-right"></i> <%=(i+1) %></a></li>
+			<% } %> 
+				<!-- <li><a href="#"><i class="icon-chevron-right"></i> 1</a></li>
 				<li><a href="#"><i class="icon-chevron-right"></i> 2</a></li>
 				<li><a href="#"><i class="icon-chevron-right"></i> 3</a></li>
+				 -->
 			</ul>
 		</div>
 		<div class="span10">

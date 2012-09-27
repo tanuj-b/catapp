@@ -22,9 +22,11 @@ window.PracticeView = Backbone.View.extend({
 		 this.index = this.options.index;
 	     this.questionView = null;
 	     this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
-	     this.length = this.questionSetIds.length;
+	     this.questionIds = this.model.getQuestionIds();
+	     this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
+	     this.totalQuestions = this.questionIds.length;
 	     this.question = null;
-	     this.render();   
+	     this.render();
 	},
 	
 	events : {
@@ -53,37 +55,30 @@ window.PracticeView = Backbone.View.extend({
 	},
 
 	render : function() {
-		$(this.el).html(this.template());
+		$(this.el).html(this.template({'totalQuestions':this.totalQuestions}));
 		return this;
 	},
 
 	renderQuestion : function() {
-		 var questionSet = practiceQuestionSets.get(this.questionSetIds[this.index]);
-	        if (questionSet.get('question_count') > 1) {
-	            // TODO : handle para questions
-
-	        } else {
-	            var questionIds = questionSet.get('questionIds');
-	            this.question = practiceQuestions.get(questionIds);
-	            if(this.question.get('timeTaken')==null){
-	            	this.question.set('timeTaken', 0);
-	            }
-	            if (this.questionView == null) {
-	                this.questionView = new PracticeQuestionView({
-	                	el : $('#question'),
-	                });
-	            }
-	            this.questionView.model = this.question;
-	            currentPracticeQuestion = this.question;
-	            this.questionView.render();
-	            if(this.question.get('attemptedInPractice')==true){
-	            	timer.stop();
-	            }else{
-	            	timer.start();
-	            }
-	            this.question.get('openTimeStamps').push(
-	            new Date().getTime());
-	        }
+		this.question = practiceQuestions.get(this.questionIds[this.index]);
+        if(this.question.get('timeTaken')==null){
+        	this.question.set('timeTaken', 0);
+        }
+        if (this.questionView == null) {
+            this.questionView = new PracticeQuestionView({
+            	el : $('#question'),
+            });
+        }
+        this.questionView.model = this.question;
+        currentPracticeQuestion = this.question;
+        this.questionView.render();
+        if(this.question.get('attemptedInPractice')==true){
+        	timer.stop();
+        }else{
+        	timer.start();
+        }
+        this.question.get('openTimeStamps').push(
+        new Date().getTime());
 	        return null; 
 	}
 });
