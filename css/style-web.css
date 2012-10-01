@@ -9,11 +9,10 @@ body {
 	background-color:#DDD;
 }
 
-/*#content >.container{
+#content >.quiz-topics{
 	padding:0px 20px;
-	background: white url('../img/bg.jpg') top center repeat;
-	min-height:600px;
-}*/
+	background : #fff;
+}
 
 .left {
 	float: left;
