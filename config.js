@@ -2,7 +2,7 @@
 
 var SEPARATOR = '|:';
 
-var config_mobile_android = {
+var config_mobile_local = {
 	syncStoragePath : "",
 	templatePath : "",
 	serverUrl : 'http://localhost/nero/api/',
@@ -23,7 +23,7 @@ var config_mobile_android = {
     			]
 };
 
-var config_mobile_web = {
+var config_web_local = {
 	syncStoragePath : "",
 	templatePath : "",
 	serverUrl : 'http://localhost/nero/api/',
@@ -45,8 +45,6 @@ var config_mobile_web = {
     				'QuizTopicsView',
     				'QuizResultsView',
     				'ProfileView',
-    				'PerformanceView',
-    				'QuizAnalyticsView'
     			]
 };
 
@@ -94,15 +92,8 @@ var config_web_server = {
 	    				'QuizTopicsView',
 	    				'QuizResultsView',
 	    				'ProfileView',
-	    				'QuizAnalyticsView'
 	    			]
 	};
 
-var Config = null;
-if($(window).width()<700){
-	Config = config_mobile_server;
-}else {
-	Config = config_web_server;
-}
-    
+var Config = config_web_server;    
 

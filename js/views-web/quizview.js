@@ -127,13 +127,25 @@ window.QuizQuestionView = Backbone.View.extend({
 window.QuizResultsView = Backbone.View.extend({
     initialize: function () {
         this.questionSetIds = this.model.get('questionSetIds').split(SEPARATOR);
+        this.activeInsights = 'time';
     	this.render();
     },
 	
-    render: function () {
-    	$(this.el).empty();
-    	
-        var questionIds = this.model.getQuestionIds();
+
+    events: {
+        'click .insightItem': 'onInsightClick'
+    },
+    
+    onInsightClick : function (e){
+    	$('#'+this.activeInsights).parent().removeClass('active');
+    	$('#'+this.activeInsights+'-div').hide();
+    	this.activeInsights = e.target.getAttribute('id');
+    	$('#'+this.activeInsights+'-div').show();
+    	$('#'+this.activeInsights).parent().addClass('active');
+    },
+    
+    render_deprecate: function () {
+    	var questionIds = this.model.getQuestionIds();
         var length = questionIds.length;
 
         var correct = this.model.get('totalCorrect');
@@ -179,20 +191,30 @@ window.QuizResultsView = Backbone.View.extend({
         drawDifficultyChart();
         drawStratChart();
 		return this;
+    },
+    
+    render: function () {
+    	var questionIds = this.model.getQuestionIds();
+        var length = questionIds.length;
+        var correct = this.model.get('totalCorrect');
+        var incorrect = this.model.get('totalIncorrect');
+        var unattempted = parseInt(length) - (parseInt(correct) + parseInt(incorrect));
+        this.model.difficultyLevelInsights();
+        this.model.strategicInsights();
+        var accuracyInsights = this.model.accuracyInsights();
+        var difficultyInsights = 'Easy questions you got wrong :' + this.model.get('easyQuestionsIncorrect') + ' <br>';
+        difficultyInsights = difficultyInsights+'Easy questions you did not attempt :' + this.model.get('easyQuestionsMissed') + ' <br>';
+		difficultyInsights = difficultyInsights+'Difficult Questions you got right :' + this.model.get('difficultQuestionsAnswered') + ' <br>';
+        var strategicInsights = 'Time wasted on lengthy questions :' + this.model.get('wastedTimeOnlengthyQuestions') + '<br>';
+        strategicInsights = strategicInsights+'Toggled too many times between options :' + this.model.get('toggleBetweenOptions') + '<br>';
+ 		$(this.el).html(this.template({'totalQuestions':length,'correct':correct,'incorrect':incorrect,'unattempted':unattempted,'totalTime':this.model.get('allotedTime'),'timeTaken':this.model.get('timeTaken'),'avgTime':'xx','accuracyInsights':accuracyInsights,'strategicInsights':strategicInsights,'difficultyInsights':difficultyInsights}));	
+ 		drawTimeChart();
+        drawDifficultyChart();
+        drawStratChart();
+    	$('#difficulty-div').hide();
+ 		$('#historical-div').hide();
+ 		$('#strategy-div').hide();
+		return this;
     }
-});
-
-window.QuizAnalyticsView = Backbone.View.extend({
-
-	initialize : function() {
-		// this.render();
-	},
-	
-	render : function() {
-		$(this.el).html(this.template());
-
-	},
-		
-	
 });
 
