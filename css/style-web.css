@@ -5,8 +5,8 @@ body {
 	padding-top: 40px;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size:15px;
-	/*background: white url('../img/bg2.jpg') top center repeat;*/
-	background-color:#DDD;
+	background: white url('../img/bg.png') top center repeat;
+	/*background-color:#DDD;*/
 }
 
 #content >.quiz-topics{
@@ -171,6 +171,15 @@ hr.soften {
 
 .detail-unit .content li{
 	margin-bottom:10px;
+}
+
+.detail-unit .linen{
+	margin-top:10px;
+	background: white url('../img/linen.png') top center repeat;"
+}
+
+.detail-unit .linen h4{
+	color:white;
 }
 
 /* Dashboard
