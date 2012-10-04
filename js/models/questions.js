@@ -51,7 +51,8 @@ window.Question = Backbone.Model.extend({
 
 window.QuestionCollection = Backbone.Collection.extend({
     model: Question,
-    url: Config.serverUrl+'questions/'
+    url: Config.serverUrl+'questions/',
+    store: new WebSQLStore(db, "questions")
 });
 
 var quizQuestions = new QuestionCollection();

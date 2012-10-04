@@ -16,7 +16,8 @@ window.QuestionSet = Backbone.Model.extend({
 
 window.QuestionSetCollection = Backbone.Collection.extend({
     model: QuestionSet,
-    url: Config.serverUrl+'questionsets/'
+    url: Config.serverUrl+'questionsets/',
+    store: new WebSQLStore(db, "questionSets")
 });
 
 var quizQuestionSets = new QuestionSetCollection();

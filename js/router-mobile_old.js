@@ -155,77 +155,11 @@ var AppRouter = Backbone.Router.extend({
      **/
 
     initialize: function () {
-    	
-    	Backbone.ajaxSync = Backbone.sync;
-    	helper.changeSync(2);
-
-        this.getL1();
-        this.getL2();
-        this.getL3();
-
-        quizzes.reset();
-        quizQuestionSets.reset();
-        quizQuestions.reset();
-        console.log('attempt to fetch from local');
-        var self = this;
-        quizzes.fetch({
-            success: function () {
-                console.log('local quizzes fetched');
-                if(quizzes.length==0){
-                	self.getQuizzes();
-                }
-            }
-        });
-      
-        quizQuestionSets.fetch({
-            success: function () {
-                console.log('local question sets fetched');
-                if(quizQuestionSets.length==0){
-                	self.getQuizQuestionSets();
-                }        
-            }
-        });
-        
-        quizQuestions.fetch({
-            success: function () {
-                console.log('local questions fetched');
-                if(quizQuestions.length==0){
-                	self.getQuizQuestions();
-                }
-            }
-        });
-         
-        practiceTests.fetch({
-            success: function () {
-                console.log('local quizzes fetched');
-                if(practiceTests.length==0){
-                	self.getPracticeTests();
-                }
-            }
-        });
-      
-        practiceQuestionSets.fetch({
-            success: function () {
-                console.log('local question sets fetched');
-                if(practiceQuestionSets.length==0){
-                	self.getPracticeQuestionSets();
-                }        
-            }
-        });
-        
-        practiceQuestions.fetch({
-            success: function () {
-                console.log('local questions fetched');
-                if(practiceQuestions.length==0){
-                	self.getPracticeQuestions();
-                }
-            }
-        });
         /*
          * To be replaced by sync. this is just for the demo
          */
         //localStorage.clear(); //remove this line in final product.
-        /*quizzes.fetch({
+        quizzes.fetch({
             success: function () {
                 console.log('init quizzes fetched');
                 quizQuestionSets.fetch({
@@ -274,7 +208,7 @@ var AppRouter = Backbone.Router.extend({
        	 success: function () {
                 console.log('init l3 fetched');
        	 }
-       });*/
+       });
     },
 
     landing: function () {
@@ -296,7 +230,7 @@ var AppRouter = Backbone.Router.extend({
          * set to local, fetch quizzes, read attempted?, display all with
          * attempted <> true, those that need to be sync dimmed.
          */
-        /*quizzes.reset();
+        quizzes.reset();
         quizQuestionSets.reset();
         quizQuestions.reset();
         console.log('after reset before second fetch');
@@ -321,14 +255,11 @@ var AppRouter = Backbone.Router.extend({
                 });
             }
         });
-        */
         this.changePage(new QuizTopicsView());
     },
 
-    startQuiz: function (l1Id) {
-    	var remainingQuizzes = quizzes.where({l1Id: l1Id, hasAttempted:false});
-    	//quizzes.get();
-        currentQuiz = remainingQuizzes[0];//quizzes.get(id);
+    startQuiz: function (id) {
+        currentQuiz = quizzes.get(id);
         quizView = new QuizView({
             model: currentQuiz,
             index: 0,
@@ -343,7 +274,6 @@ var AppRouter = Backbone.Router.extend({
     stopQuiz: function (timeTaken) {
     	currentQuiz.set('timeTaken',timeTaken);
     	currentQuiz.calculateScores();
-    	currentQuiz.save();
     	app.changePage(new QuizResultsView({
             model: currentQuiz
         }));

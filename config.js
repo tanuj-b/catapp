@@ -1,4 +1,18 @@
 //Config Variables
+var db = openDatabase("nero", "", "nero client tables", 10*1024*1024);
+
+db.transaction(function (tx) {
+   tx.executeSql("DROP TABLE quizzes");
+});
+db.transaction(function (tx) {
+	tx.executeSql("DROP TABLE questionsets");
+});
+db.transaction(function (tx) {
+	tx.executeSql("DROP TABLE questions");
+});
+db.transaction(function (tx) {
+	tx.executeSql("DROP TABLE practice");
+});
 
 var SEPARATOR = '|:';
 
@@ -95,5 +109,5 @@ var config_web_server = {
 	    			]
 	};
 
-var Config = config_web_server;    
+var Config = config_mobile_local;    
 

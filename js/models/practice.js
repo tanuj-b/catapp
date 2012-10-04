@@ -30,7 +30,8 @@ window.PracticeTest = Backbone.Model.extend({
 
 window.PracticeTestCollection = Backbone.Collection.extend({
 	model: PracticeTest,
-	url: Config.serverUrl+'practicetests/'	
+	url: Config.serverUrl+'practicetests/',
+    store: new WebSQLStore(db, "practice")
 });
 
 var practiceTests = new PracticeTestCollection();

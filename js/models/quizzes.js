@@ -6,9 +6,10 @@
 window.Quiz = Backbone.Model.extend({
 
     urlRoot: Config.serverUrl+'quizzes/',
-    local: true, // always fetched and saved only locally, never saves on remote
+    //store: new WebSQLStore(db, "todos"),
+    /*local: true, // always fetched and saved only locally, never saves on remote
     remote: false, // never cached, dualStorage is bypassed entirely
-
+	*/
     initialize: function () {
     	 if (!this.get('easyQuestionsIncorrect')) {
              this.set({
@@ -53,6 +54,7 @@ window.Quiz = Backbone.Model.extend({
         'strategicInsightsCalculated' : false,
         'accuracyInsightsCalculated' : false,
         'difficultyInsightsCalculated' : false,
+        'synced':false
     },
     
 	// insights.
@@ -242,7 +244,8 @@ window.Quiz = Backbone.Model.extend({
 
 window.QuizCollection = Backbone.Collection.extend({
     model: Quiz,
-    url: Config.serverUrl+'quizzes/'
+    url: Config.serverUrl+'quizzes/',
+    store: new WebSQLStore(db, "quizzes")
 });
 
 var quizzes = new QuizCollection();
