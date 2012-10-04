@@ -30,31 +30,33 @@ window.QuizView = Backbone.View.extend({
 	    events: {
 	        'click #previous': 'onPreviousClick',
 	        'click #next': 'onNextClick',
-	        'click .q-nav' : 'onQNoClick'
+	        'click .qnolist' : 'onQNoClick'
 	    },
 
 	    onPreviousClick: function () {
 	        this.question.get('closeTimeStamps').push(new Date().getTime());
-	        if (this.index == 0) {
-	            alert('at the start dude');
-	        } else {
-	            this.index--;
-	            this.renderQuestion();
-	        }
+	        this.index--;
+            this.renderQuestion();
+        	$('#previous').show();
+        	$('#next').show();
+        	if(this.index == 0){
+        		$('#previous').hide();
+    	    }
 	    },
 
 	    onNextClick: function () {
 	        this.question.get('closeTimeStamps').push(new Date().getTime());
-	        if (this.index == (this.totalQuestions - 1)) {
-	            alert('at the end dude');
-	        } else {
-	            this.index++;
-	            this.renderQuestion();
-	        }
+	        this.index++;
+            this.renderQuestion();
+        	$('#previous').show();
+        	$('#next').show();
+        	if (this.index == (this.totalQuestions - 1)) {
+        		$('#next').hide();
+    	    }	     
 	    },
 	    
 	    onQNoClick : function (e){
-	    	this.index = e.target.getAttribute('id').split('-')[1];
+	    	this.index = e.target.getAttribute('id'); //.split('-')[1];
 	        this.question.get('closeTimeStamps').push(new Date().getTime());
 	    	this.renderQuestion();
 	    },
@@ -85,6 +87,8 @@ window.QuizView = Backbone.View.extend({
         this.questionView.model = this.question;
         this.questionView.hasAttempted = this.model.get('hasAttempted');
         this.questionView.render();
+        $("#qnum").html((parseInt(this.index)+1));
+        $("#qtotal").html((this.totalQuestions));
         this.question.get('openTimeStamps').push(
         new Date().getTime());
         currentQuizQuestion = this.question;

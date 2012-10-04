@@ -187,6 +187,14 @@ hr.soften {
 	text-align: center;
 }
 
+#next,#previous{
+	cursor: pointer;
+}
+
+#previous{
+	cursor: pointer; 
+}
+
 /* questions
 -------------------------------------------------- */
 .question-header {
