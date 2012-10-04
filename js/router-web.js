@@ -415,70 +415,39 @@ var AppRouter = Backbone.Router.extend({
         practiceView.renderQuestion();
     },
 
+    main: function () {
+        var currentMainView = new MainView();
+        //this.changePage(currentMainView);
+
+        Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: false,
+        keyboard: true,
+        mouseWheel : false,
+        
+        theme: 'simple', // available themes are in /css/theme
+        transition: 'linear', // default/cube/page/concave/linear(2d)
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [{ src: 'js/lib/classList.js', condition: function() { return !document.body.classList; } }]
+  
+      });
+
+    while(currentMainView.scripts.length > 0)
+    {
+        eval(currentMainView.scripts.pop());
+    }
+    
+    Reveal.addEventListener( 'fragmentshown', function( event ) {
+                        currentMainView.currentFragment = $(event.fragment).attr("id");
+                    }
+                 );
+
+    Reveal.addEventListener( 'slidechanged', function( event ) {
+        pgno = event.indexh+1;
+        currentMainView.currentFragment = $(".slides").find("section[pgno="+pgno+"] :first-child").attr("id");
+    } );
+    }
+
 });
-
-if (Config.phonegap == false) {
-    $(document).ready(function () {
-        helper.loadTemplate(Config.viewsArray, function () {
-        	// $('body').append('<header></header><div id="content"></div>');
-            app = new AppRouter();
-            (function (d) {
-                var js, id = 'facebook-jssdk';
-                if (d.getElementById(id)) {
-                    return;
-                }
-                js = d.createElement('script');
-                js.id = id;
-                js.async = true;
-                js.src = "//connect.facebook.net/en_US/all.js";
-                d.getElementsByTagName('head')[0].appendChild(js);
-            }(document));
-            Backbone.history.start();
-        });
-    });
-}
-
-/*if (Config.phonegap == false) {
-    $(document).ready(function () {
-        helper.loadTemplate(['HeaderView', 'LandingView', 'QuizView', 'QuizQuestionView', 'MenuView', 'PracticeTopicsView', 'PracticeQuestionView', 'QuizTopicsView', 'QuizResultsView', 'ProfileView', 'PerformanceView', 'QuizAnalyticsView'], function () {
-            $('body').append('<header></header><div id="content"></div>');
-            app = new AppRouter();
-            (function (d) {
-                var js, id = 'facebook-jssdk';
-                if (d.getElementById(id)) {
-                    return;
-                }
-                js = d.createElement('script');
-                js.id = id;
-                js.async = true;
-                js.src = "//connect.facebook.net/en_US/all.js";
-                d.getElementsByTagName('head')[0].appendChild(js);
-            }(document));
-            Backbone.history.start();
-        });
-    });
-}
-*/
-
-function init() {
-    document.addEventListener("deviceready", onDeviceReady, true);
-}
-
-var onDeviceReady = function () {
-    console.log('on device ready');
-    helper.loadTemplate(['HeaderView', 'LandingView', 'QuizView', 'QuizQuestionView', 'MenuView', 'PracticeTopicsView', 'PracticeQuestionView', 'QuizTopicsView', 'QuizResultsView', 'WordListItemView', 'ProfileView', 'PerformanceView', 'QuizAnalyticsView'], function () {
-        app = new AppRouter();
-        (function (d) {
-            var js, id = 'facebook-jssdk';
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement('script');
-            js.id = id;
-            js.async = true;
-            js.src = "//connect.facebook.net/en_US/all.js";
-            d.getElementsByTagName('head')[0].appendChild(js);
-        }(document));
-        Backbone.history.start();
-    });
-};

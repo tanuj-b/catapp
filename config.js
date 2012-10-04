@@ -27,7 +27,9 @@ var config_mobile_local = {
 	templatePath : "",
 	serverUrl : 'http://localhost/nero/api/',
 	edition : '0',
+	editionName : 'mobile',
     tmplatesFolder : "tpl-mobile",
+    assetPath : '',
     phonegap : false,
     viewsArray : [	'LandingView', 
     				'QuizQuestionView',
@@ -48,6 +50,8 @@ var config_web_local = {
 	templatePath : "",
 	serverUrl : 'http://localhost/nero/api/',
 	edition : '1',
+	editionName : 'web',
+	assetPath : '',
     tmplatesFolder : "tpl-web",
     phonegap : false,
     viewsArray : [	'HeaderView',
@@ -115,5 +119,5 @@ var config_web_server = {
 	    			]
 	};
 
-var Config = config_mobile_local;    
+var Config = config_web_local;    
 

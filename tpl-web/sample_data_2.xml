@@ -1,0 +1,154 @@
+<data>
+<topic id="t1" title="BAR CHARTS" description="Chapter" level="1">
+	<topic id="t2" title="Exam Focus" description="" level="2">
+					<div class="fragment" id="fg1">
+					1.	Bar Charts featured 4-5 times on average in the CAT 2011 and has been an important topic since the CAT went online
+					</div>
+					<div class="fragment" id="fg2">
+					2.	The questions asked from this topic are typically of medium difficulty, making it an easy topic to crack 
+					</div>
+					<div class="fragment" id="fg3">
+					3.	From 2000 onwards, on an average ten questions have been appearing from the Logical Reasoning section. Hence, it is clear that the Logical Reasoning section should be given due importance while preparing for the CAT
+					</div>
+					<div class="fragment" id="fg4">
+					4.	Another thing that should be noted is the preponderance of questions based on tables in the DI section. Perhaps this is due to the simple fact that tables are the most versatile among the modes of data representation, particularly in terms of scope of representation of data
+					</div> </topic>
+
+	<topic id="t3" title="Learning Outcomes" description="What a student would know after finishing the chapter" level="2">
+					<div class="fragment" id="fg5">
+					1.	Visualize data given in charts <br />
+	                2.	Perform quick back of the hand calculations and intuitively rule out options <br />
+	                3.	Make quick comparisons and construct charts from word problems <br />
+					</div>
+					</topic>
+					
+	<topic id="t4" title="Introduction" description="" level="2">
+					<div class="fragment" id="fg6">
+					Bar diagrams (or bar charts) are one of the oldest and commonly used diagrams for presenting data. A bar chart consists of bars, each of which is a thick box. The value of the reading of the bar is determined by the height of the bar.
+					</div>
+					<div class="fragment" id="fg7">
+					Each bar diagram has a title indicating the subject matter depicted in the diagram. Besides, at times, there may be footnotes to explain facts that are not covered in the title 
+					</div>
+					<div class="fragment" id="fg7">
+					The simple bar chart is the ‘simplest’ bar chart which has one continuous variable and one discrete variable. Example below:
+					</div>
+					
+					<topic id="t52" title="Professors Tip" description="Tip" level="3">
+		                <div class="fragment" id="fg8">
+						Bar diagrams are visual aids for presenting statistical data. Very often in bar charts, different colours, shades, dots, dashes, etc are used in the bars to distinguish between different continuous variables being represented. There will always be an explanatory index indicating the meanings of the different colours, shades and marks
+						</div>
+					</topic>
+					
+					<div class="fragment" id="fg9">
+					The types of bar charts covered are: <br />
+					a.	Simple Bar Chart <br />
+					b.	Stacked Bar Chart <br />
+					c.	Composite Bar Chart <br />
+					d.	Simple Bar Chart: <br />
+					</div>
+	</topic>
+					
+					
+					
+	<topic id="t5" title="Simple Bar Chart" description="Subtopic 1" level="2">
+					<div class="fragment" id="fg10">
+					The simple bar chart is the ‘simplest’ bar chart which has one continuous variable and one discrete variable. Example below:<br />
+					</div>
+					<div class="fragment" id="fg11">
+					IMG1
+					</div>
+					<div class="fragment" id="fg12">
+					T1
+					</div>
+					</topic>
+
+	<topic id="t6" title="Stacked Bar Chart" description="Subtopic 2" level="2">
+					<div class="fragment" id="fg13">
+					The length of a bar, on a bar chart, normally represents the magnitude of a single continuous variable. However, in certain cases it might be feasible and infact required to break up the magnitude of the main continuous variable into its constituent parts. When this sort of representation is used, the chart formed is called a stacked bar chart. The chart below shows a stacked bar chart. Stacked bar charts can also be used to display percentage (linked to representation of % on a bar chart)<br />
+					</div>
+					<div class="fragment" id="fg14">
+					IMG2
+					</div>				
+					</topic>
+					
+	<topic id="t7" title="Composite Bar Chart" description="Subtopic 3" level="2">
+					<div class="fragment" id="fg15">
+					One of the primary limitations of a simple bar chart is it can only be used to 4display a single continuous variable. A stacked bar chart can only display a set of continuous variables that can be broken into its constituent parts. However, if 2 or more sets of variables are to be shown on a single bar chart, it is called a composite bar chart. <br />
+					</div>
+					<div class="fragment def" id="fg150">
+						<span class="def-name">Boiling Point of Water</span><br />
+						<span class="def-mean">The temprature at which vapor pressure equals atmospheric pressure</span>
+					</div>
+					<div class="fragment" id="fg16">
+					IMG3
+					</div>				
+					</topic>				
+												
+	<topic id="t8" title="Representation of Percentage on a Stacked Bar Chart" description="Subtopic 4" level="2">
+					<div class="fragment" id="fg17">
+					Sometimes stacked bars can also be used to represent the break-up of some continuous variables. The figure 4 will make it clear. 
+						Such a use of <a class='hotlink' href='#' id="link-fg12">bar charts</a> is quite convenient for comparing 2 or more sets of data
+	                 </div>
+					<div class="fragment" id="fg18">
+					IMG4
+					</div>				
+					</topic>
+
+	<topic id="t9" title="Solved Examples" description="Subtopic 2" level="2">
+					<div class="fragment" id="fg19">
+					IMG4
+					</div>
+					<div class="fragment" id="fg20">
+					Question: If it is estimated that for 2012 Compaq, HP & Dell will grow their computer sales by 5% while the others will grow by 7%, what will be  size of the computer market in 2012
+					A: 12,60,000
+					B: 12,72,000
+					C: 12,84,000
+					D: 13,00,000
+			        E: Cannot be determined
+
+	                 </div>
+					<div class="fragment" id="fg21">
+					Solution: The total market share of Compaq, HP & Dell totals to 50%  <br /> Hence the growth can be calculated as follows  (50% X 5% + 50% X 7%) / 100% <br /> Hence the growth rate is 6%. <br /> A 6% growth on 12,00,000 gives 12,72,000
+					So the answer is B.<br />
+	 				<a class='hotlink' href='#' id="link-t52">Professors Tip</a>
+
+					</div>				
+					</topic>				
+			<!--		
+
+					<div class="fragment" pagebreak="true"></div>
+					<div class="fragment" pagebreak="true"></div>
+					<div class="fragment">
+					Fragment number 02. This is Fragment number xx. This has :
+					<script type="text/javascript">
+						console.log("hello");
+					</script>
+					</div>
+					<div class="fragment">
+					Fragment number 03. This is Fragment number xx. This has :
+					</div>
+					<div class="fragment" pagebreak="topic"></div>
+					<topic id="22" title="Subtopic of 1" description="Yaaron do Yaar" level="2">
+
+					<div class="fragment" id="frag-12">
+					Fragment number 04. This is Fragment number xx. This has :
+					<script type="text/javascript">
+						Reveal.addEventListener( 'fragmentshown', function( event ) {
+	    					console.log("Fragment shown.")
+	    					if($(event.fragment).attr("id") == "frag-12")
+	    						{alert("fraggment 4 was just shown. Cool!");}
+						} );
+					</script>
+					</div>
+					<topic id="33" title="Sub-Subtopic 1" level="3"><div class="fragment">Hi i'm in sub=sub=topic 1</div></topic>
+					</topic>
+					
+
+					<div class="fragment">
+					Fragment number 05. This is Fragment number xx. This has :
+					</div>
+					<div class="fragment">
+					Fragment number 06. This is Fragment number xx. This has :
+					</div> -->
+</topic>
+</data>
