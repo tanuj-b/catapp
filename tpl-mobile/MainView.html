@@ -1,0 +1,29 @@
+<div id="content-left-nav" style="width:100px;float:left;background-color:aqua;font-size:10px;-webkit-user-select: none">
+	<%= toc %>
+</div>
+<div id="reveal-wrapper">
+<div class="reveal" style="padding: 0px 110px 5px 110px;">
+
+	<!-- Used to fade in a background when a specific slide state is reached -->
+	<div class="state-background"></div>
+	
+	<!-- Any section element inside of this container is displayed as a slide -->
+	<div class="slides">
+		<%= slides %>
+	</div>
+
+	<!-- The navigational controls UI -->
+	<aside class="controls">
+		<a class="left" href="#">&#x25C4;</a>
+		<div id="slideCounter"><span id="currentSlide">1</span>/<span id="slideCount">1</span></div>
+		<a class="right" href="#">&#x25BA;</a>
+	</aside>
+
+	<!-- Presentation progress bar -->
+	<div class="progress"><span></span></div>
+	
+</div>
+</div>
+<div id="content-right-bar" style="width:100px;float:right;background-color:aqua;font-size:10px;z-index:30">
+		<%= DefList %>
+</div>

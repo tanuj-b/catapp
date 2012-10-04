@@ -5,13 +5,16 @@
 <meta name="viewport" content="width=320; user-scalable=no" />
 <script src="js/lib/jquery-1.7.2.min.js"></script>
 <script src="config.js"></script>
+
+<link rel="stylesheet" href="css/reveal.main.css">
+<link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+
 <script type="text/javascript">
     if(Config.edition == '0'){
-    	tmplatesFolder ='tpl-mobile';
         document.write('<link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" >');
         document.write('<link rel="stylesheet" href="css/style-mobile.css" >');
     }else{
-    	tmplatesFolder ='tpl-web';
     	document.write('<link href="http://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css">');
     	document.write('<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet" type="text/css">');
     	document.write('<link rel="stylesheet" href="css/bootstrap.min.css">');
@@ -33,12 +36,16 @@
     }
 </script>
 
+
 <!-- The Scripts -->
 <script src="js/lib/underscore-min.js"></script>
 <script src="js/lib/backbone.js"></script>
 <script src="js/lib/backbone-websql.js"></script>
 <!--<script src="js/lib/backbone.localStorage.js"></script> -->
 <!-- <script src="js/lib/backbone.dualstorage.js"></script> -->
+
+<script src="js/lib/jquery.textselectevent.js"></script>
+
 <script src="js/lib/FacebookUser.js"></script>
 <script src="js/lib/highcharts.js"></script>
 <script src="js/lib/highcharts-more.js"></script>
@@ -63,33 +70,30 @@
 <script src="js/models/responses.js"></script>
 
 <script>
-    if(Config.edition == '0'){
-   	 document.write('<script src="js/views-mobile/landingview.js"></' + 'script>');
-   	 document.write('<script src="js/views-mobile/menuview.js"></' + 'script>');
-   	 document.write('<script src="js/views-mobile/practiceview.js"></' + 'script>');
-   	 document.write('<script src="js/views-mobile/quizview.js"></' + 'script>');
-   	 document.write('<script src="js/views-mobile/profileview.js"></' + 'script>');
-   	 document.write('<script src="js/views-mobile/wordlistview.js"></' + 'script>');
-   	 
-   	 document.write('<script src="js/router-mobile.js"></' + 'script>');
-   	 //document.write('<script src="http://jsconsole.com/remote.js?testrexmax"></'+'script>');
-    }else {
-      document.write('<script src="js/views-web/headerview.js"></' + 'script>');
-    	document.write('<script src="js/views-web/landingview.js"></' + 'script>');
-      document.write('<script src="js/views-web/menuview.js"></' + 'script>');
-      document.write('<script src="js/views-web/practiceview.js"></' + 'script>');
-      document.write('<script src="js/views-web/quizview.js"></' + 'script>');
-      document.write('<script src="js/views-web/profileview.js"></' + 'script>');
-      document.write('<script src="js/views-web/performanceview.js"></' + 'script>');
-      document.write('<script src="js/views-web/wordlistview.js"></' + 'script>');
 
-      document.write('<script src="js/router-web.js"></' + 'script>');
-    }
+var views = [
+              "landingview",
+              "menuview",
+              "practiceview",
+              "quizview",
+              "profileview",
+              "wordlistview",
+              "performanceview",
+              "wordlistview"
+            ];
+
+_.each(views,function(item){
+  document.write('<script src="js/views-'+Config.editionName+'/'+item+'.js"></' + 'script>');  
+});
+
+document.write('<script src="js/router-'+Config.editionName+'.js"></' + 'script>');
 
 </script>
 <script src="js/main.js"></script>
 </head>
 <body onload="init();" id="stage" class="theme">
   <div id="fb-root"></div>
+  <script src="js/lib/head.min.js"></script>
+  <script src="js/lib/reveal.js"></script>
 </body>
 </html>

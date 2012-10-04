@@ -401,6 +401,41 @@ var AppRouter = Backbone.Router.extend({
         practiceView.renderQuestion();
     },
 
+    main: function () {
+        var currentMainView = new MainView();
+        //this.changePage(currentMainView);
+
+        Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: false,
+        keyboard: true,
+        mouseWheel : false,
+        
+        theme: 'simple', // available themes are in /css/theme
+        transition: 'linear', // default/cube/page/concave/linear(2d)
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [{ src: 'js/lib/classList.js', condition: function() { return !document.body.classList; } }]
+  
+      });
+
+    while(currentMainView.scripts.length > 0)
+    {
+        eval(currentMainView.scripts.pop());
+    }
+    
+    Reveal.addEventListener( 'fragmentshown', function( event ) {
+                        currentMainView.currentFragment = $(event.fragment).attr("id");
+                    }
+                 );
+
+    Reveal.addEventListener( 'slidechanged', function( event ) {
+        pgno = event.indexh+1;
+        currentMainView.currentFragment = $(".slides").find("section[pgno="+pgno+"] :first-child").attr("id");
+    } );
+    }
+
 });
 
 if (Config.phonegap == false) {
