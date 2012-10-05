@@ -55,7 +55,7 @@ var config_web_local = {
     tmplatesFolder : "tpl-web",
     phonegap : false,
     viewsArray : [	
-    				//'HeaderView',
+    				'HeaderView',
                   	'LandingView',
                   	'MenuView',
                   	'QuizView',
@@ -64,6 +64,7 @@ var config_web_local = {
     				'FlashCardListItemView',
     				'FlashCardView',
     				'MenuView',
+    				'MainView',
     				'PracticeTopicsView',
     				'PracticeView',
     				'PracticeQuestionView',

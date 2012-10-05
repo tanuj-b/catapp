@@ -43,7 +43,24 @@ Backbone.View.prototype.close = function () {
 };
 
 if (Config.phonegap == false) {
-    $(document).ready(onDeviceReady);
+    $(document).ready(function(){
+        helper.loadTemplate(Config.viewsArray, function () {
+        //$('body').append('<header></header><div id="content"></div>');
+        app = new AppRouter();
+        (function (d) {
+            var js, id = 'facebook-jssdk';
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement('script');
+            js.id = id;
+            js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            d.getElementsByTagName('head')[0].appendChild(js);
+        }(document));
+        Backbone.history.start();
+    });
+    });
 }
 
 function init() {

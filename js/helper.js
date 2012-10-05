@@ -32,6 +32,11 @@ window.helper = {
 
 		$.when.apply(null, deferreds).done(callback);
 	},
+	completeHTML : function(object)
+    {
+        return html = $('<div>').append($(object).clone()).remove().html();
+    },
+	
 	/*
 	 * uploadFile: function (file, callbackSuccess) { var self = this; var data =
 	 * new FormData(); data.append('file', file); $.ajax({ url:

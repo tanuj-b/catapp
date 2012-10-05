@@ -353,13 +353,14 @@ window.MainView = Backbone.View.extend({
 		var context = this;
 		var temp = "<section>Loading Slides</section>";
 		$(context.el).html(context.template({slides: temp, toc: temp, DefList : temp}));
-		$(context.el).attr('data-role', 'page');
-        $('body').append($(context.el));
-        $(context.el).page();
-        var transition = $.mobile.defaultPageTransition;
-        $.mobile.changePage($(context.el), {
-            transition: 'none'
-        });
+		/*		
+		//$(context.el).attr('data-role', 'page');
+        //$('body').append($(context.el));
+        //$(context.el).page();
+        //var transition = $.mobile.defaultPageTransition;
+        //$.mobile.changePage($(context.el), {
+        //    transition: 'none'
+        //});*/
 		return this;
 	}
 });
