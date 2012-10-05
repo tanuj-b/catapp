@@ -30,7 +30,8 @@ window.QuizView = Backbone.View.extend({
 	    events: {
 	        'click #previous': 'onPreviousClick',
 	        'click #next': 'onNextClick',
-	        'click .qnolist' : 'onQNoClick'
+	        'click .qnolist' : 'onQNoClick',
+	        'click #submitQuiz' : 'submitQuiz'
 	    },
 
 	    onPreviousClick: function () {
@@ -70,7 +71,7 @@ window.QuizView = Backbone.View.extend({
 
     submitQuiz: function () {
         timer.stop();
-        alert('submitting quiz');
+        //alert('submitting quiz');
     	app.stopQuiz(timer.count);
     },
 

@@ -1,16 +1,17 @@
 <div class="row-fluid">
 	<div class="detail-unit">
 		<div class="heading">
-			<h4>Question <span id="qnum"></span> of <span id="qtotal"></span></h4>
+			<h4 class="green">Question <span id="qnum"></span> of <span id="qtotal"></span></h4>
 		</div>
 		<div class="content">
+			<div class="row-fluid">
 			<p><%= questionText %></p>
+			</div>
+			
 		</div>
-	</div>
-</div>
-<div class="row-fluid">
+		<div class="row-fluid">
 	<div class="span10">
-		<div class="detail-unit">
+		<div class="option-list">
 			<div class="content">
 				<ol type="A">
 					<% var opts = options.split("|:"); for (opt in opts){ %>
@@ -33,5 +34,7 @@
 				><%=(i+1) %></button>
 			<% } %> 
 		</div>
+	</div>
+</div>
 	</div>
 </div>

@@ -51,6 +51,11 @@ h4 {
 h5 {
 	font-size: 15px;
 }
+
+.green {
+	color:#06947A;
+}
+
 .custom {
 	border-radius: 20px;
 	background-color: hsl(0, 0%, 27%) !important;
@@ -157,6 +162,13 @@ hr.soften {
 	border-right: 1px solid #EEE;
 	border-bottom: 1px solid #CCC;
 	background-color: white;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border-left: 1px solid #E4E4E4;
+	border-right: 1px solid #EEE;
+	border-bottom: 1px solid #CCC;
+	box-shadow: 1px 1px 10px 3px #AAA;
 }
 
 .detail-unit .heading {
@@ -215,11 +227,31 @@ hr.soften {
 }
 
 .question-list{
-	margin-top:20px;
+	margin-top: 4px;
+padding-left: 0px;
+padding-right: 0px;
+position: fixed;
+min-height: 600px;
+background: url('../img/side-ribbon.png') repeat;
+background-size: contain;
+-moz-box-shadow: 3px 0px 6px #444;
+-webkit-box-shadow: 3px 0px 6px #444;
+box-shadow: 3px 0px 6px #444;
 }
 
 .option-buttons{
 	margin-top:10px;	
+}
+
+.option-list{
+	position: relative;
+	margin:10px 0px 0px 10px;
+	padding: 10px 10px;
+	background-color: #EEE;
+	border: 1px solid #CCC;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 /* Profile
@@ -288,6 +320,159 @@ hr.soften {
   top: auto;
   bottom: 270px;
 }
+
+
+/* Performance Page
+------------------------------------------ */
+#performance-list{
+margin-top: -16px;
+padding-left: 0px;
+padding-right: 0px;
+position: fixed;
+min-height: 600px;
+background: url('../img/side-ribbon.png') repeat;
+background-size: contain;
+-moz-box-shadow: 3px 0px 6px #444;
+-webkit-box-shadow: 3px 0px 6px #444;
+box-shadow: 3px 0px 6px #444;
+}
+
+/* For the bottom part of the ribbon
+
+.side-ribbon-border{
+background: url('img/side-ribbon-2a.png') no-repeat;
+background-size: contain;
+min-height: 30px;
+position:absolute;
+	bottom:-30px;
+	left:-5.25px;
+}
+*/
+
+
+.performance-list-elements-0{
+margin-top: 30px;
+margin-bottom: 30px;
+margin-left: -2px;
+text-align: center;
+font-weight: bold;
+font-size: 16px;
+}
+
+.performance-list-elements-1{
+margin-top: 10px; 
+color: #c6c6c6;
+text-align: center;
+font-weight: bold;
+padding: 2px;
+padding-bottom: 0px;
+font-size: 14px;}
+
+.performance-list-elements-2{
+padding-bottom: 10px;
+color: #c6c6c6;
+text-align: center;
+font-size: 15px;
+}
+
+.performance-list-text-selected{
+margin-left: 5px;
+color: #c6c6c6;
+font-weight: bold;
+font-family: 'Source Sans Pro', sans-serif;
+font-size: 16px; }
+
+.performance-list-text-unselected{
+margin-left: 5px;	
+color: #c6c6c6; 
+font-weight: normal;
+font-family: 'Source Sans Pro Light', sans-serif;
+font-size: 15px; }
+
+.performance-list-div{
+padding-top: 7px;
+text-align: left;
+}
+
+
+.performance-right-heading {
+margin-top:40px;
+font-size: 30px;
+text-align: left;
+color: #06947A;
+font-weight: 400;
+padding-left: 50px;
+padding-top: 30px;}
+
+.performance-right-expl {
+padding-left: 30px;
+font-size: 15px;
+text-align: left;
+color: #333;
+font-style: italic;
+font-weight: normal;
+margin-bottom: 20px;
+padding-top: 7px;
+}
+
+
+.performance-content-section {
+background: white;
+font-size: 17px;
+padding-top:-4px;
+padding-bottom:-4px;
+margin-bottom: 15px;
+-moz-box-shadow: 1px 2px 3px #999;
+-webkit-box-shadow: 1px 2px 3px #999;
+box-shadow: 1px 2px 3px #999;
+-moz-border-radius: 8px;
+-webkit-border-radius: 8px;
+border-radius: 8px;
+}
+
+.performance-content-left1{
+font-weight: normal;
+text-align: center;
+}
+
+.performance-content-section1{
+padding-left: 10px;
+padding-top: 15px;
+padding-bottom: 15px;
+}
+
+.performance-content-section2{
+padding-left: 10px;
+line-height: 30px;
+padding-top: 15px;
+padding-bottom: 0px; 
+color: #0066B2;
+}
+
+
+.performance-content-text {
+margin-top: 0px;}
+
+.performance-content-text-elements {
+padding: 5px;
+font-size: 16px;
+margin-bottom: 0px;
+text-align: left;
+padding-top: 8px;
+padding-bottom: 0px;	 }
+
+.performance-suggested-category{
+font-weight: bold;
+display: inline block;
+}
+
+.performance-btn{
+
+background: #193D42 !important; 
+color: #eee !important;
+font-family: 'Source Sans Pro', sans-serif;
+margin-top: -10px;
+margin-bottom: 7px; }
 
 /* Responsive
 -------------------------------------------------- */
