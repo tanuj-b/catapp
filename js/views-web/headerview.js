@@ -5,10 +5,22 @@ window.HeaderView = Backbone.View.extend({
 	},
 	
 	events : {
-		'click #sync' : 'onSyncClick',
+		'click #syncUp' : 'onSyncUpClick',
+		'click #syncDown' : 'onSyncDownClick',
+
 	},
     
-	onSyncClick : function() {
+	onSyncUpClick : function() {
+		// the list of completed unsynced quizzes
+    	dao.syncUp();
+	},
+
+	onSyncDownClick : function() {
+		// the list of completed unsynced quizzes
+		dao.getLastSync();
+    },
+	
+	onSyncClick1 : function() {
 		// the list of completed unsynced quizzes
     	var completedQuizzes = quizzes.where({hasAttempted:true,synced:false});
     	var len = completedQuizzes.length;

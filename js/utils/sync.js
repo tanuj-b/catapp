@@ -5,13 +5,44 @@ window.dao =  {
     initialize: function(callback) {
     },
         
+    syncUp : function (){
+    	var completedQuizzes = quizzes.where({hasAttempted:true,synced:false});
+    	var len = completedQuizzes.length;
+    	for (var i = 0; i < len ;i++){
+    		var quiz = completedQuizzes[i];
+    		var optionSelectedPerQuestion = quiz.get('optionSelectedPerQuestion').join(SEPARATOR);
+    		var timeTakenPerQuestion = quiz.get('timeTakenPerQuestion').join(SEPARATOR);
+    		var questionIds = quiz.getQuestionIds().join(SEPARATOR);
+    		var timestamp = new Date().getTime();
+    		var response = new Response({accountId:'1', 
+    			quizId:completedQuizzes[i].get('id'), 
+    			questionIds:questionIds, 
+    			optionsSelected:optionSelectedPerQuestion, 
+    			timeTaken:timeTakenPerQuestion,
+    			timestamp : timestamp
+    		});
+    		helper.changeSync(1);
+    		response.save();	
+    		completedQuizzes[i].set('synced',true);
+    		helper.changeSync(2);
+    		completedQuizzes[i].save();
+    		localStorage.setItem("lastSync", timestamp);
+    	}
+    },
     getLastSync: function(callback) {
-    	var url = Config.serverUrl+'getLastSync/';
+    	var url = Config.serverUrl+'getLastSync/'+localStorage.getItem("lastSync");
         $.ajax({
             url:url,
             dataType:"json",
             success:function (data) {
-                console.log("search success: " + data.length);
+                var len = data.length;
+            	for (var i = 0; i < len ;i++){
+            		var quiz = quizzes.get(data[i].quizId);
+            		quiz.set('synced',true);
+            		quiz.set('hasAttempted',true);
+            		helper.changeSync(2);
+            		quiz.save();
+            	}
             }
         });
     },

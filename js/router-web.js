@@ -1,7 +1,7 @@
 var AppRouter = Backbone.Router.extend({
 
     routes: {
-        "": "landing",
+        "landing": "landing",
         "menu": "menu",
         "profile": "profile",
         "practice": "practice",
@@ -10,7 +10,7 @@ var AppRouter = Backbone.Router.extend({
         "quiz/:id": "startQuiz",
         "practice/:id": "startPractice",
         "getQuestion/:index": "getQuestion",
-        "quizDetailedView":"quizDetailedView"
+        "quizResultsView/:id":"quizResultsView"
 
     },
     
@@ -163,6 +163,9 @@ var AppRouter = Backbone.Router.extend({
                 console.log('local quizzes fetched');
                 if(quizzes.length==0){
                 	self.getQuizzes();
+                    app.landing();
+                }else{
+                    app.landing();
                 }
             }
         });
@@ -285,6 +288,17 @@ var AppRouter = Backbone.Router.extend({
         new LandingView({
             el: $('#content')
         });
+        var html = [];
+    	var quizzesTaken = quizzes.where({hasAttempted:true});
+    	if(quizzesTaken.length == 0){
+        	$('#history').html("You haven't taken any quizzes yet.<br> Please check out our quiz section and try out an appropriate quiz.");
+
+    	}else{
+    	for(var i = 0; i< quizzesTaken.length; i++){
+    		html.push('<a href="#quizResultsView/'+quizzesTaken[i].get('id')+'">Quiz Taken '+(i+1)+'  </a><br>');
+    	};
+    	$('#history').html(html.join(' '));
+    	}
         return;
     },
 
@@ -344,11 +358,11 @@ var AppRouter = Backbone.Router.extend({
     	
     },
     
-    quizDetailedView: function () {
-   	 quizView.close();
-     quizView = new QuizView({
-             model: currentQuiz,
-             index: 0,
+    quizResultsView: function (quizId) {
+    	currentQuiz = quizzes.get(quizId);
+    	new QuizResultsView({
+            model: currentQuiz,
+            el: $('#content')
         });
     },
     
@@ -406,7 +420,7 @@ var AppRouter = Backbone.Router.extend({
 if (Config.phonegap == false) {
     $(document).ready(function () {
         helper.loadTemplate(Config.viewsArray, function () {
-        	 $('body').append('<header></header><div id="content"></div>');
+        	// $('body').append('<header></header><div id="content"></div>');
             app = new AppRouter();
             (function (d) {
                 var js, id = 'facebook-jssdk';

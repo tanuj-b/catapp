@@ -44,6 +44,18 @@ window.Quiz = Backbone.Model.extend({
             	 questionIds: new Array()
              });
          }
+         
+    	 if (!this.get('optionSelectedPerQuestion')) {
+             this.set({
+            	 optionSelectedPerQuestion: new Array()
+             });
+         }
+    	 
+    	 if (!this.get('timeTakenPerQuestion')) {
+             this.set({
+            	 timeTakenPerQuestion: new Array()
+             });
+         }
     },
 
     defaults: {
@@ -192,10 +204,14 @@ window.Quiz = Backbone.Model.extend({
 			var optionUnSelectedTimeStamps = question.get('optionUnSelectedTimeStamps');
 
 			for(options in optionSelectedTimeStamps){
-				numberOfToggles = numberOfToggles + optionSelectedTimeStamps[options].length;
+				if(optionSelectedTimeStamps[options]!=null){
+					numberOfToggles = numberOfToggles + optionSelectedTimeStamps[options].length;
+				}
 			}
 			for(options in optionUnSelectedTimeStamps){
-				numberOfToggles = numberOfToggles + optionUnSelectedTimeStamps[options].length;
+				if(optionUnSelectedTimeStamps[options]!=null){
+					numberOfToggles = numberOfToggles + optionUnSelectedTimeStamps[options].length;
+				}
 			}
 			if(numberOfToggles > toggleThreshHold){
 				this.get('toggleBetweenOptions').push(i);
@@ -219,6 +235,8 @@ window.Quiz = Backbone.Model.extend({
 				}else if (question.isOptionSelectedCorrect()==false){
 					this.set('totalIncorrect', this.get('totalIncorrect')+1);
 				}
+				this.get('optionSelectedPerQuestion').push(question.get('optionSelected'));
+				this.get('timeTakenPerQuestion').push(question.get('timeTaken'));
 			}
 			this.set('hasAttempted',true);
 		}

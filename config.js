@@ -1,7 +1,8 @@
 //Config Variables
 var db = openDatabase("nero", "", "nero client tables", 10*1024*1024);
 
-db.transaction(function (tx) {
+
+/*db.transaction(function (tx) {
    tx.executeSql("DROP TABLE quizzes");
 });
 db.transaction(function (tx) {
@@ -13,6 +14,11 @@ db.transaction(function (tx) {
 db.transaction(function (tx) {
 	tx.executeSql("DROP TABLE practice");
 });
+
+localStorage.clear();  
+*/
+localStorage.setItem('lastSync',0);
+
 
 var SEPARATOR = '|:';
 
