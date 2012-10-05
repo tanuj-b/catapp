@@ -7,16 +7,46 @@ window.MainView = Backbone.View.extend({
 	scripts: [],
 	currentFragment: null,
 	previousFragment: null,
+	currentSelection: null,
 
 	initialize : function() {
 		// this.render();
 		var context = this;
 		$(document).bind('textselect.mainview', context.textSelectHandler);
+
+		$(function(){
+		    $.contextMenu({
+		        selector: '.reveal', 
+		        build: function($trigger, e) {
+		            // this callback is executed every time the menu is to be shown
+		            // its results are destroyed every time the menu is hidden
+		            // e is the original contextmenu event, containing e.pageX and e.pageY (amongst other data)
+		            return {
+		                callback: function(key, options) {
+		                    
+		                    if(key=="addNotes")
+		                    {
+		                      
+		                        console.log(context.currentSelection + " added to notes");
+		                    }                    
+		                },
+		                items: {
+		                    "addNotes": {name: "Add To Notes"},
+		                    "sep1": "---------",
+		                    "cancel": {name: "Cancel"}
+		                    }
+		                };
+		            }
+		        });
+		    });
+
 	},
 
 	textSelectHandler : function (evt, string, element) {
         	//function to launch menu here.
-
+        	//how to get the string
+        	this.currentSelection = string;
+        	$('#reveal-wrapper').contextMenu();
     },
 
 	events : {

@@ -451,6 +451,7 @@ var AppRouter = Backbone.Router.extend({
         pgno = event.indexh+1;
         currentMainView.currentFragment = $(".slides").find("section[pgno="+pgno+"] :first-child").attr("id");
     } );
-    }
 
-});
+    }
+}
+);
