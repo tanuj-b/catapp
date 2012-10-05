@@ -10,12 +10,9 @@ var AppRouter = Backbone.Router.extend({
         "quiz/:id": "startQuiz",
         "practice/:id": "startPractice",
         "getQuestion/:index": "getQuestion",
-<<<<<<< HEAD
         "quizResultsView/:id":"quizResultsView"
-=======
         "quizDetailedView":"quizDetailedView",
         "learn" : "main"
->>>>>>> Basic changes to cleanup code and integrate content part
 
     },
     
