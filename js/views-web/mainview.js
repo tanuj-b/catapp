@@ -10,7 +10,7 @@ window.MainView = Backbone.View.extend({
 	currentSelection: null,
 
 	initialize : function() {
-		// this.render();
+		this.render();
 		var context = this;
 		$(document).bind('textselect.mainview', context.textSelectHandler);
 
@@ -54,7 +54,7 @@ window.MainView = Backbone.View.extend({
 	},
 
 	hotLinker : function (evt){
-
+		console.log("are we there yet?");
 		linkedTopicID = $(evt.currentTarget).attr("id");
 
 		if(linkedTopicID == "back-to-topic")
@@ -248,7 +248,7 @@ window.MainView = Backbone.View.extend({
 
 	        if($(fragments[i])[0].tagName == "TOPIC")
 	        {
-	        	var breakAtTopic = true;
+	        	var breakAtTopic = false;
 	        	var breakAtTopicLevelMax = 2;
 
 	        	if(breakAtTopic && sectionHTML && $(fragments[i]).attr("level")<=breakAtTopicLevelMax) //require break at topic and no content is already present
@@ -336,7 +336,7 @@ window.MainView = Backbone.View.extend({
 			i++;
 		});
 		if(result)
-			result = "<a class='hotlink' id='back-to-topic' href='#'>Back</a><ul class='TOC_l"+level+"'>" + result + "</ul>";
+			result = "<ul class='TOC_l"+level+"'>" + result + "</ul>";
 
 		return result;
 	},
@@ -367,7 +367,7 @@ window.MainView = Backbone.View.extend({
 		var topicToDisplayData = context.loadTopic("sample_data_2","t1");
 		context.renderTemp();
 		
-		var slides = context.parseIntoSections(topicToDisplayData,$(this.el).find(".slides"),window.heightForContent);
+		var slides = context.parseIntoSections(topicToDisplayData,$(this.el).find(".slides"),0.9*window.innerHeight);
 
 		//should not be window height but some other number?
 		$(this.el).html(this.template({slides: slides, toc: context.renderTOC(context.TOC,"",1), DefList : context.renderDefList(context.DefList)}));

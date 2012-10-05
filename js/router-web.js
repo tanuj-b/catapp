@@ -418,9 +418,9 @@ var AppRouter = Backbone.Router.extend({
     },
 
     main: function () {
-        var currentMainView = new MainView();
-        currentMainView.el = $("#content");
-        currentMainView.render();
+        var currentMainView = new MainView({el: $("#content")});
+        //currentMainView.el = $("#content");
+        //currentMainView.render();
 
         Reveal.initialize({
         controls: true,
