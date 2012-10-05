@@ -41,3 +41,31 @@ Backbone.View.prototype.close = function () {
         this.onClose();
     }
 };
+
+if (Config.phonegap == false) {
+    $(document).ready(onDeviceReady);
+}
+
+function init() {
+    document.addEventListener("deviceready", onDeviceReady, true);
+}
+
+var onDeviceReady = function () {
+    helper.loadTemplate(Config.viewsArray, function () {
+        if(!Config.phonegap)
+                $('body').append('<header></header><div id="content"></div>');
+        app = new AppRouter();
+        (function (d) {
+            var js, id = 'facebook-jssdk';
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement('script');
+            js.id = id;
+            js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            d.getElementsByTagName('head')[0].appendChild(js);
+        }(document));
+        Backbone.history.start();
+    });
+};
