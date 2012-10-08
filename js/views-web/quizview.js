@@ -31,7 +31,7 @@ window.QuizView = Backbone.View.extend({
 	        'click #previous': 'onPreviousClick',
 	        'click #next': 'onNextClick',
 	        'click .qnolist' : 'onQNoClick',
-	        'click #submitQuiz' : 'submitQuiz'
+	        'click #submit' : 'submitQuiz'
 	    },
 
 	    onPreviousClick: function () {
