@@ -2,7 +2,7 @@
 var db = openDatabase("nero", "", "nero client tables", 10*1024*1024);
 
 
-/*db.transaction(function (tx) {
+db.transaction(function (tx) {
    tx.executeSql("DROP TABLE quizzes");
 });
 db.transaction(function (tx) {
@@ -16,7 +16,7 @@ db.transaction(function (tx) {
 });
 
 localStorage.clear();  
-*/
+
 localStorage.setItem('lastSync',0);
 
 
@@ -107,7 +107,8 @@ var config_web_server = {
 		assetPath : '',
 	    tmplatesFolder : "tpl-web",
 	    phonegap : false,
-	    viewsArray : [	'HeaderView',
+	    viewsArray : [	
+	    				'HeaderView',
 	                  	'LandingView',
 	                  	'MenuView',
 	                  	'QuizView',
@@ -116,6 +117,7 @@ var config_web_server = {
 	    				'FlashCardListItemView',
 	    				'FlashCardView',
 	    				'MenuView',
+	    				'MainView',
 	    				'PracticeTopicsView',
 	    				'PracticeView',
 	    				'PracticeQuestionView',

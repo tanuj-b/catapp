@@ -35,12 +35,18 @@
     },
 
     // Helper to grab which common ancestor the text has
-    getOrigin = function (input) {
-      return docSel && docSel.createRange().parentElement()
+   
+   getOrigin = function (input) {
+   /*    return docSel && docSel.createRange().parentElement()
         || input
         || winSel && winSel.getRangeAt(0).commonAncestorContainer
         || document.body;
+    */
+  
     },
+
+        //GIVING SOME SORT OF ERROR, WILL LOOK INTO IT LATER.
+
 
     // Create our custom event namespace
     $me = $.event.special.textselect = {
@@ -75,18 +81,22 @@
         // Grab currently selected text and its common ancestor element
         var
           curText = getSelected(evt),
-          conElement = $(evt.originalEvent.target).is(':input') ?
+       /*   conElement = $(evt.originalEvent.target).is(':input') ?
             getOrigin(evt.originalEvent.target) :
             getOrigin();
 
-        if (conElement.nodeType === 3) conElement = conElement.parentNode;
+        if (conElement.nodeType === 3) conElement = conElement.parentNode;*/
 
         // If it differs from the old selected text, trigger event
-        if (selObj.str !== curText || selObj.el !== conElement) {
+        if (selObj.str !== curText // || selObj.el !== conElement
+
+          ) {
 
           // Set currently selected text (and element) to the actual currently
           // selected text and element
-          selObj = { str : curText, el : conElement };
+          selObj = { str : curText, el : //conElement 
+            null //TAKE THIS OUT OR DIE ----- TB
+         };
 
           // Change event type to our custom event
           evt.type = 'textselect';
