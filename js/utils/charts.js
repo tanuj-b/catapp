@@ -1,6 +1,7 @@
 var correctCode = '#339900';
 var incorrectCode = '#CC0000';
 var unattemptedCode = '#eae8e8';
+var lineColor = "#000";
 
 window.drawTimeChart = function () {
 
@@ -16,7 +17,9 @@ window.drawTimeChart = function () {
             text: ''
         },
         xAxis: {
-            categories: []
+        	 title: {
+                 text: 'Question Numbers'
+             }        
         },
         yAxis: {
             min: 0,
@@ -87,6 +90,7 @@ window.drawTimeChart = function () {
         }
     }
     options.series.push(series);
+    options.legend.enabled = false;
     chart = new Highcharts.Chart(options);
 };
 
@@ -281,99 +285,6 @@ window.drawDifficultyChart = function () {
     chart = new Highcharts.Chart(options);
 };
 
-
-window.drawStratChart1 = function () {
-    var options = {
-        chart: {
-            renderTo: 'strat-chart',
-            type: 'columnrange'
-            	
-        },
-        title: {
-            text: 'Time distribution'
-        },
-        subtitle: {
-            text: ''
-        },
-        xAxis: {
-        	title: {
-                text: 'Questions'
-            },
-            tickInterval: 1
-        },
-        yAxis: {
-        	title: {
-                text: 'Time (sec)'
-            }
-        },
-        legend: {
-            layout: 'vertical',
-            backgroundColor: '#FFFFFF',
-            align: 'left',
-            verticalAlign: 'top',
-            x: 100,
-            y: 70,
-            floating: true,
-            shadow: true
-        },
-
-        tooltip: {
-            formatter: function () {
-                return '' + 'Q' + this.x + ': ' + this.y + ' sec';
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        series: []
-    };
-    
-    var series = {
-            data: [],
-            /*dataLabels: {
-                enabled: true,
-                color: '#FFFFFF',
-                align: 'right',
-                x: -3,
-                y: 10,
-                formatter: function() {
-                    return this.y;
-                },
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
-            }*/
-        };
-    var questionIds = currentQuiz.getQuestionIds();
-    var len = questionIds.length;
-    var offset = quizQuestions.get(questionIds[0]).get('openTimeStamps')[0];
-    for (var i = 0; i < len; i++) {
-        var question = quizQuestions.get(questionIds[i]);
-        var openTimeStamps = question.get('openTimeStamps');
-        var closeTimeStamps = question.get('closeTimeStamps');
-        var num = openTimeStamps.length;
-        for(var j=0;j<num;j++){
-        	min = (openTimeStamps[j] - offset)/1000;
-        	min = parseFloat(min.toFixed(1));
-        	if(!closeTimeStamps[j]){
-        		max = parseFloat(currentQuiz.get('timeTaken'));
-        	}else{
-        	max = (closeTimeStamps[j] - offset)/1000;
-        	max = parseFloat(max.toFixed(1));
-        	}
-        	series.data.push({x:(i+1), low: min, high: max});
-        }
-    }
-    options.yAxis.max = currentQuiz.get('timeTaken');
-    options.xAxis.max = len;
-    options.series.push(series);
-    chart = new Highcharts.Chart(options);
-};
-
 window.drawStratChart = function () {
     var options = {
         chart: {
@@ -389,7 +300,7 @@ window.drawStratChart = function () {
         },
         xAxis: {
         	title: {
-                text: 'Questions'
+                text: 'Question Numbers'
             },
             tickInterval: 1
         },
@@ -397,7 +308,7 @@ window.drawStratChart = function () {
         	title: {
                 text: 'Time (sec)'
             },
-            tickInterval: 1,
+            tickInterval: 5,
             min:0
         },
         legend: {
@@ -485,5 +396,60 @@ window.drawStratChart = function () {
     options.yAxis.max = currentQuiz.get('timeTaken');
     options.xAxis.max = len;
     options.series = series;
+    options.legend.enabled = false;
+    chart = new Highcharts.Chart(options);
+};
+
+
+window.drawHistoryChart = function () {
+    var options = {
+            chart: {
+                renderTo: 'history-chart',
+                type: 'line',
+                marginRight: 130,
+                marginBottom: 25
+            },
+            title: {
+                text: 'Accuracy History',
+                x: -20 //center
+            },
+            xAxis: {
+                categories: ['Quiz 1', 'Quiz 2', 'Quiz 3', 'Quiz 4', 'Quiz 5']
+            },
+            yAxis: {
+                title: {
+                    text: 'Accuracy %'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y +'%';
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Probability',
+                data: [7.0, 6.9, 9.5, 14.5, 18.2]
+            }, {
+                name: 'Number System',
+                data: [-0.2, 0.8, 5.7, 11.3, 17.0]
+            }, {
+                name: 'Statistics',
+                data: [3.9, 4.2, 5.7, 8.5, 11.9]
+            }]
+        };
     chart = new Highcharts.Chart(options);
 };

@@ -215,10 +215,12 @@ window.QuizResultsView = Backbone.View.extend({
  		$(this.el).html(this.template({'totalQuestions':length,'correct':correct,'incorrect':incorrect,'unattempted':unattempted,'totalTime':this.model.get('allotedTime'),'timeTaken':this.model.get('timeTaken'),'avgTime':'xx','accuracyInsights':accuracyInsights,'strategicInsights':strategicInsights,'difficultyInsights':difficultyInsights}));	
  		drawTimeChart();
         drawDifficultyChart();
+        drawHistoryChart();
         drawStratChart();
-    	$('#difficulty-div').hide();
- 		$('#historical-div').hide();
+        $('#difficulty-div').hide();
+ 		$('#history-div').hide();
  		$('#strategy-div').hide();
+ 		$("tspan:contains('Highcharts.com')").hide();
 		return this;
     }
 });
