@@ -70,7 +70,39 @@ window.helper = {
 	hideAlert : function() {
 		$('.alert').hide();
 	},
-
+	
+	formatTime : function(time){
+		var hrs = ~~ (time / 3600);
+		var mins = ~~ ((time % 3600) / 60);
+		var secs = time % 60;
+		var formattedTime = '';
+		if(hrs!=null && hrs!='' ){
+			formattedTime += ' ' +hrs;
+			if(hrs=='1'){
+				formattedTime += ' hr';
+			}else{
+				formattedTime += ' hrs';			
+			}
+		}
+		if(mins!=null && mins!='' ){
+			formattedTime += ' ' +mins;
+			if(mins=='1'){
+				formattedTime += ' min';
+			}else{
+				formattedTime += ' mins';			
+			}
+		}
+		if(secs!=null && secs!='' ){
+			formattedTime += ' ' +secs;
+			if(secs=='1'){
+				formattedTime += ' sec';
+			}else{
+				formattedTime += ' secs';			
+			}
+		}
+		return formattedTime;
+	}, 
+	
 	updateQuizTimer : function() {
 		$('#time').html(timer.count);
 		var qtimer = currentQuizQuestion.get('timeTaken');
