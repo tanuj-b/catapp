@@ -1,5 +1,10 @@
 /* Common
 -------------------------------------------------- */
+html, body, #content, .container{
+    height: 100%;
+    min-height: 100%;
+}
+
 body {
 	position: relative;
 	padding-top: 50px;
@@ -116,18 +121,20 @@ hr.soften {
 	border-right: 1px solid #EEE;
 	border-bottom: 1px solid #CCC;
 	background-color: white;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
 	border-left: 1px solid #E4E4E4;
 	border-right: 1px solid #EEE;
 	border-bottom: 1px solid #CCC;
-	box-shadow: 1px 1px 10px 3px #AAA;
+	-moz-box-shadow: 3px 0px 6px #aaa;
+	-webkit-box-shadow: 3px 0px 6px #aaa;
+	box-shadow: 3px 0px 6px #aaa;
 }
 
 .detail-unit .heading {
 	border-bottom: 1px solid #CCC;
-	padding: 5px 20px 0 20px;
+	padding: 5px 20px;
 }
 
 .detail-unit .content {
@@ -141,7 +148,10 @@ hr.soften {
 
 .detail-unit .linen {
 	margin-top: 10px;
-	background: white url('../img/linen.png') top center repeat;
+	background: white url('../img/dashboard-ribbon.png');
+	background-size:85% 100%;
+	background-repeat:no-repeat;
+	border-bottom:none;
 }
 
 .navbar-inverse .navbar-inner {
@@ -161,16 +171,20 @@ hr.soften {
 	padding: 15px 10px 16px
 }
 
-/* Sidebar for Docs
+/* Sidebar
 -------------------------------------------------- */
 .sidebar {
-	background: url('../img/side-ribbon.png') repeat-y;
+	height: 100%;
+    min-height: 100%;
+	background: url('../img/side-ribbon.jpg') repeat-y;
 	padding-top: 50px;
 	background-size: 100% auto;
 	-webkit-background-size: 100% auto; /*  Safari  */
 	-khtml-background-size: 100% auto; /*  Konqueror  */
 	-moz-background-size: 100% auto;
 	background-size: 100% auto; /*  Firefox  */
+	-webkit-box-shadow: #444 3px 0px 6px;
+	box-shadow: #444 3px 0px 6px;
 }
 
 /* Dashboard
@@ -195,6 +209,11 @@ hr.soften {
 	padding: .5%;
 	max-width: 90%;
 }
+
+.quiz-topics .detail-unit{
+	padding-bottom:10px;
+}
+
 
 /* questions
 -------------------------------------------------- */
@@ -222,12 +241,9 @@ hr.soften {
 	border-radius: 3px;
 }
 
-.performance .sidenav>li {
-	margin-bottom: 20px;
-}
 
 .quizview .sidenav>li, .quiz-analytics .sidenav>li{
-	padding:5px
+	padding:10px
 }
 .quizview .sidenav>li>a, .quiz-analytics .sidenav>li>a {
 	display: block;
@@ -238,6 +254,15 @@ hr.soften {
 	font-size: 20px;
 }
 
+.quizview > .row-fluid, .performance > .row-fluid, .quiz-analytics > .row-fluid{
+    height: 100%;
+    min-height: 100%;
+}
+
+.quizview .detail-unit{
+    height: 100%;
+    min-height: 100%;
+}
 
 /* Performance
 -------------------------------------------------- */
@@ -278,8 +303,16 @@ hr.soften {
 		rgba(0, 0, 0, .1);
 }
 
-.quiz-analytics{
-	
+.quiz-analytics .box{
+	padding : 10px 0px 20px 0px;
+	border-bottom: 5px solid #CCC; 
+}
+
+.quiz-analytics .score{
+	font-size: 40px;
+	text-align: center;
+	color: #0066B2;
+	font-weight: bold;
 }
 
 /* Responsive

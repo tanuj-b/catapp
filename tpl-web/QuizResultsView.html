@@ -3,6 +3,7 @@
 	<div class="row-fluid">
 		<div class="span2 sidebar">
 			<ul class="nav nav-list sidenav">
+				<li><a>Question No.</a></li>
 				<% for(var i=0; i
 				<totalQuestions; i++){
 			%>
@@ -13,7 +14,10 @@
 		<div class="span10">
 			<div class="detail-unit">
 				<div class="content">
-					<div class="row-fluid">
+					<div class="row-fluid score box">
+						YOU SCORED <span>65 %</span>
+					</div>
+					<div class="row-fluid box">
 						<div class="span6" style="text-align: center">
 							<h4 style="border-bottom: 1px solid #CCC; padding-bottom: 10px">Accuracy
 								Stats</h4>
@@ -41,8 +45,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row-fluid"
-						style="border-top: 5px solid #CCC; margin-top: 20px; padding-top: 5px">
+					<div class="row-fluid box"> 
 						<ul class="nav nav-pills">
 							<li class="active"><a id="time" class="insightItem">Time</a></li>
 							<li class="divider">|</li>
