@@ -1,7 +1,7 @@
 var correctCode = '#339900';
 var incorrectCode = '#CC0000';
-var unattemptedCode = '#eae8e8';
-var lineColor = "#000";
+var unattemptedCode = '#eacbad';
+var lineColor = "#C6C6C6";
 
 window.drawTimeChart = function () {
 
@@ -115,7 +115,7 @@ window.drawDifficultyChart = function () {
         },
         xAxis: {
             title: {
-                text: 'Difficulty Level'
+                text: 'Topic'
             },
             min: 0,
             minorGridLineWidth: 0,
@@ -128,14 +128,20 @@ window.drawDifficultyChart = function () {
                 }
             },
           plotLines: [{
-            color: '#FF0000',
+            color: lineColor,
             width: 2,
             value: 2
         },{
-            color: '#FF0000',
+            color: lineColor,
             width: 2,
             value: 4
-        }],
+        },
+        {
+            color: lineColor,
+            width: 2,
+            value: 6
+        },
+        ],
             plotBands: [{ 
                 from: 0,
                 to: 2,
@@ -145,9 +151,30 @@ window.drawDifficultyChart = function () {
                         color: '#606060'
                     }
                 }
-            }, { 
+            }, 
+            { 
                 from: 2,
                 to: 4,
+                label: {
+                    text: 'RC',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            },
+            { 
+                from: 4,
+                to: 6,
+                label: {
+                    text: 'RC',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            },
+            { 
+                from: 6,
+                to: 8,
                 label: {
                     text: 'VR',
                     style: {
@@ -414,12 +441,14 @@ window.drawHistoryChart = function () {
                 x: -20 //center
             },
             xAxis: {
-                categories: ['Quiz 1', 'Quiz 2', 'Quiz 3', 'Quiz 4', 'Quiz 5']
+                categories: ['Quiz N-4', 'Quiz N-3', 'Quiz N-2', 'Quiz N-1', 'Quiz N']
             },
             yAxis: {
                 title: {
                     text: 'Accuracy %'
                 },
+                min:0,
+                max:100,
                 plotLines: [{
                     value: 0,
                     width: 1,
@@ -441,14 +470,18 @@ window.drawHistoryChart = function () {
                 borderWidth: 0
             },
             series: [{
-                name: 'Probability',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2]
+                name: 'Permutations and Combinations',
+                data: [70, 60, 90, 30, 20]
             }, {
                 name: 'Number System',
-                data: [-0.2, 0.8, 5.7, 11.3, 17.0]
+                data: [20, 40, 60, 80, 50]
             }, {
-                name: 'Statistics',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9]
+                name: 'Geometry',
+                data: [50, 42, 57, 85, 18]
+            },
+            {
+                name: 'Equations',
+                data: [62, 89, 20, 85, 15]
             }]
         };
     chart = new Highcharts.Chart(options);
