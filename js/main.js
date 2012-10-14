@@ -15,22 +15,6 @@ var activeFlashCardView = new FlashCardView();
 
 var timer = new Timer(1000, null, []); // we will have just one global timer object shared across quizzes and practice
 
-var AppView = function AppView() {
-
-    /* this.showView(view) = function(){
-    if (this.currentView){
-      this.currentView.close();
-    }
-
-    this.currentView = view;
-    return this.currentView.render();
-
-    //$("#mainContent").html(this.currentView.el);
-    //think about what to do with this
-  }*/
-
-};
-
 Backbone.View.prototype.close = function () {
     if (this.beforeClose) {
         this.beforeClose();

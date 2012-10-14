@@ -3,12 +3,10 @@
 	<div class="row-fluid">
 		<div class="span2 sidebar">
 			<ul class="nav nav-list sidenav">
-				<li><a>Question No.</a></li>
-				<% for(var i=0; i
+				<li><a>Question No.</a></li> <% for(var i=0; i
 				<totalQuestions; i++){
 			%>
-				<li><a href="#"><%=(i+1)
-						%></a></li>
+				<li><a href="#quizDetailedView/<%=i%>"><%=(i+1) %></a></li>
 				<% } %> 
 		</div>
 		<div class="span10">
@@ -45,7 +43,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row-fluid box"> 
+					<div class="row-fluid box">
 						<ul class="nav nav-pills">
 							<li class="active"><a id="time" class="insightItem">Time</a></li>
 							<li class="divider">|</li>
@@ -57,29 +55,39 @@
 						</ul>
 						<div class="row-fluid" id="time-div">
 							<div class="row-fluid"
-								style="border: solid 1px #CCC; background-color: #FCFDCC; text-align: center">
-								<h4><%=accuracyInsights%></h4>
+								style="border: solid 1px #CCC; background-color: #FCFDCC;">
+								<%=accuracyInsights %>
 							</div>
 							<div id="time-chart" class="row-fluid"></div>
 						</div>
 						<div class="row-fluid" id="difficulty-div">
 							<div class="row-fluid"
-								style="border: solid 1px #CCC; background-color: #FCFDCC; text-align: center">
-								<h4><%=difficultyInsights%></h4>
+								style="border: solid 1px #CCC; background-color: #FCFDCC;">
+								<%=difficultyInsights %>
 							</div>
 							<div id="difficulty-chart" class="row-fluid"></div>
 						</div>
 						<div class="row-fluid" id="history-div">
 							<div class="row-fluid"
-								style="border: solid 1px #CCC; background-color: #FCFDCC; text-align: center">
-								<h4>This looks like your first test.</h4>
+								style="border: solid 1px #CCC; background-color: #FCFDCC;">
+								<ul>
+									<li>Consistent performance in <span class="green bold">Geometry</span>
+										in the last 4 tests - <span class="blue bold">improvement
+											from 50% accuracy to 100% accuracy</span>; you are currently at the
+										highest level
+									</li>
+									<li><span class="green bold">Permutation and
+											Combinations</span> has been your focus area for the last 3 quizzes
+										- <span class="blue bold">practise this topic and learn
+											to leave tough questions in the mock tests</span></li>
+								</ul>
 							</div>
 							<div id="history-chart" class="row-fluid"></div>
 						</div>
 						<div class="row-fluid" id="strategy-div">
 							<div class="row-fluid"
-								style="border: solid 1px #CCC; background-color: #FCFDCC; text-align: center">
-								<h4><%=strategicInsights%></h4>
+								style="border: solid 1px #CCC; background-color: #FCFDCC;">
+								<%=strategicInsights %>
 							</div>
 							<div id="strat-chart" class="row-fluid"></div>
 						</div>

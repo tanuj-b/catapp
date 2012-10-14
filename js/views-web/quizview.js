@@ -124,8 +124,21 @@ window.QuizQuestionView = Backbone.View.extend({
 	    },
     render : function() {
 		$('#question').html(this.template(this.model.toJSON()));
-		return this;
-	}
+		$('#solution').hide();
+		  if (this.hasAttempted) {
+	            this.renderInfo();
+	        }
+	        return this;
+	    },
+
+	    renderInfo: function () {
+	    	$('#solution').show();
+	        $('#solution').html('<span class="green bold">Correct Answer</span> : ' + this.model.get('correctOption'));
+	        $('#solution').append('<br><div class="sol"><span class="green bold">Solution</span> : '+this.model.get('explanation')+'</div>');
+	        $('#solution').append('<br><div class="stats"><span class="green bold">Average Accuracy</span> : 50 % <span class="green bold"> Average Time</span> : 1 min <span class="green bold">Top 20% Time</span> : 30 sec <span class="badge badge-success">2012 CAT</span></div>');
+	        $('#time').html(this.model.get('timeTaken'));
+	        $('#submit').hide();
+	    }
     
 });
 
@@ -155,15 +168,10 @@ window.QuizResultsView = Backbone.View.extend({
         var correct = this.model.get('totalCorrect');
         var incorrect = this.model.get('totalIncorrect');
         var unattempted = parseInt(length) - (parseInt(correct) + parseInt(incorrect));
-        this.model.difficultyLevelInsights();
-        this.model.strategicInsights();
-        var accuracyInsights = this.model.accuracyInsights();
-        var difficultyInsights = 'Easy questions you got wrong :' + this.model.get('easyQuestionsIncorrect') + ' <br>';
-        difficultyInsights = difficultyInsights+'Easy questions you did not attempt :' + this.model.get('easyQuestionsMissed') + ' <br>';
-		difficultyInsights = difficultyInsights+'Difficult Questions you got right :' + this.model.get('difficultQuestionsAnswered') + ' <br>';
-        var strategicInsights = 'Time wasted on lengthy questions :' + this.model.get('wastedTimeOnlengthyQuestions') + '<br>';
-        strategicInsights = strategicInsights+'Toggled too many times between options :' + this.model.get('toggleBetweenOptions') + '<br>';
-        $(this.el).html(this.template({'totalQuestions':length,'correct':correct,'incorrect':incorrect,'unattempted':unattempted,'totalTime':helper.formatTime(this.model.get('allotedTime')),'timeTaken':helper.formatTime(this.model.get('timeTaken')),'avgTime':'xx','accuracyInsights':accuracyInsights,'strategicInsights':strategicInsights,'difficultyInsights':difficultyInsights}));	
+        var accuracyInsights = insights.accuracyInsights(this.model);
+        var difficultyInsights = insights.difficultyLevelInsights(this.model);
+        var strategicInsights = insights.strategicInsights(this.model);
+        $(this.el).html(this.template({'totalQuestions':length,'correct':correct,'incorrect':incorrect,'unattempted':unattempted,'totalTime':helper.formatTime(this.model.get('allotedTime')),'timeTaken':helper.formatTime(this.model.get('timeTaken')),'avgTime':'1 min 30 secs','accuracyInsights':accuracyInsights,'strategicInsights':strategicInsights,'difficultyInsights':difficultyInsights}));	
  		drawTimeChart();
         drawDifficultyChart();
         drawHistoryChart();

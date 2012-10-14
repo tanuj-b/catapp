@@ -117,7 +117,7 @@ window.drawDifficultyChart = function () {
             title: {
                 text: 'Topic'
             },
-            min: 0,
+            min: -1,
             minorGridLineWidth: 0,
             gridLineWidth: 0,
             alternateGridColor: null,
@@ -207,7 +207,7 @@ window.drawDifficultyChart = function () {
                 to: 2,
                 color: 'rgba(68, 170, 213, 0.1)',
                 label: {
-                    text: 'Normal',
+                    text: 'Medium',
                     style: {
                         color: '#606060'
                     }
@@ -217,7 +217,7 @@ window.drawDifficultyChart = function () {
                 to: 3,
                 color: 'rgba(0, 0, 0, 0)',
                 label: {
-                    text: 'Normal',
+                    text: 'Hard',
                     style: {
                         color: '#606060'
                     }
@@ -227,7 +227,7 @@ window.drawDifficultyChart = function () {
                 to: 4,
                 color: 'rgba(68, 170, 213, 0.1)',
                 label: {
-                    text: 'Difficult',
+                    text: 'Super Tough',
                     style: {
                         color: '#606060'
                     }
@@ -242,7 +242,7 @@ window.drawDifficultyChart = function () {
         legend: {
             layout: 'vertical',
             align: 'left',
-            verticalAlign: 'top',
+            verticalAlign: 'bottom',
             x: 100,
             y: 70,
             floating: true,
@@ -309,6 +309,7 @@ window.drawDifficultyChart = function () {
     }
     options.xAxis.max = (2*seriesLen);
     options.series=series;
+    options.legend.enabled = false;
     chart = new Highcharts.Chart(options);
 };
 
@@ -471,17 +472,17 @@ window.drawHistoryChart = function () {
             },
             series: [{
                 name: 'Permutations and Combinations',
-                data: [70, 60, 90, 30, 20]
+                data: [20, 20, 20, 30, 25]
             }, {
                 name: 'Number System',
-                data: [20, 40, 60, 80, 50]
+                data: [90, 90, 80, 80, 67]
             }, {
                 name: 'Geometry',
-                data: [50, 42, 57, 85, 18]
+                data: [50, 55, 70, 80, 100]
             },
             {
                 name: 'Equations',
-                data: [62, 89, 20, 85, 15]
+                data: [60, 40, 50, 70, 100]
             }]
         };
     chart = new Highcharts.Chart(options);

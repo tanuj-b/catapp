@@ -11,7 +11,7 @@ var AppRouter = Backbone.Router.extend({
         "practice/:id": "startPractice",
         "getQuestion/:index": "getQuestion",
         "quizResultsView/:id":"quizResultsView",
-        "quizDetailedView":"quizDetailedView",
+        "quizDetailedView/:id":"quizDetailedView",
         "learn" : "main"
 
     },
@@ -368,8 +368,13 @@ var AppRouter = Backbone.Router.extend({
         });
     },
     
-    quizAnalyticsView: function () {
-        new QuizAnalyticsView({});
+    quizDetailedView: function (index) {
+        new QuizView({
+            model: currentQuiz,
+            index: index,
+            el: $('#content')
+        });
+
     },
 
     practice: function (id) {
